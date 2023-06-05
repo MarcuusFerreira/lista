@@ -90,6 +90,16 @@ CREATE TABLE LISTA_PRODUTO (
     INDEX (ID_PRODUTO)
 );
 
+DROP USER IF EXISTS 'SISTEMA_LISTA'@'LOCALHOST';
+
+FLUSH PRIVILEGES;
+
+CREATE USER 'SISTEMA_LISTA'@'LOCALHOST' IDENTIFIED BY 'Aterbar!086418$';
+
+GRANT SELECT, UPDATE, DELETE ON DB_LISTA_MINIMO.* TO 'SISTEMA_LISTA'@'LOCALHOST';
+
+FLUSH PRIVILEGES;
+
 /*Sempre que for colocar uma clausula where procure seguir a seguinte ordem nos filtros por tipo de dado da coluna:
 
 	1 - NUMERICOS
