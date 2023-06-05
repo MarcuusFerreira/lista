@@ -14,8 +14,8 @@ public class Banco {
 	private static final String BANCODADOS = "exemplos";
 	private static final String CONEXAO = "jdbc:mysql://localhost:3306/" 
 					+ BANCODADOS + "?useSSL=false&serverTimezone=UTC&useTimezone=true";
-	private static final String USER = "root";
-	private static final String PASSWORD = "admrh2022";
+	private static final String USER = "XXXXXXXXXXX";
+	private static final String PASSWORD = "XXXXXXXXXXX";
 	
 	public static Connection getConnection(){
 		try {
