@@ -1,6 +1,7 @@
 package model.bo;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import model.dao.ClienteDAO;
@@ -11,6 +12,11 @@ import model.exception.ErroCadastroException;
 public class ClienteBO {
 	
 	private ClienteDAO dao;
+	/* String no Java começa no indice 0 logo a posição 10 é o indice 9 e 
+	 a posicao 11 é o indice 10*/
+	private int POSICAO_PRIMEIRO_DIGITO = 9;
+	private int POSICAO_SEGUNDO_DIGITO = 10;
+	private int PESO_VALIDAR_CPF = 10;
 
 	public Cliente cadastrarNovoClienteBO(Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
 		if(dao.cpfJaExiste(cliente.getCpf())) {
@@ -36,7 +42,24 @@ public class ClienteBO {
 		cpfsInvalidos.add("99999999999");
 		if(cpf.length() != 11 || cpfsInvalidos.contains(cpf)) {
 			cpfValido = false;
+		} else {
+			if(calcularCpf(cpf)) {
+				cpfValido = false;
+			}
 		}
 		return cpfValido;
+	}
+
+	private boolean calcularCpf(String cpf) {
+		boolean calculoValido = true;
+		int primeiroDigito = Character.getNumericValue(cpf.charAt(POSICAO_PRIMEIRO_DIGITO));
+		int segundoDigito = Character.getNumericValue(cpf.charAt(POSICAO_SEGUNDO_DIGITO));
+		int calculoPrimeiroDigitoVerificador = 0;
+		int peso = PESO_VALIDAR_CPF;
+		for(int i = 0; i < 9; i++) {
+			calculoPrimeiroDigitoVerificador += Character.getNumericValue(cpf.charAt(i)) * peso;
+			peso --;
+		}
+		return calculoValido;
 	}
 }
