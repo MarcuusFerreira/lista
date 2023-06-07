@@ -30,7 +30,7 @@ public class ClienteBO {
 		boolean cpfValido = true;
 		Set<String> cpfsInvalidos = new HashSet<String>();
 		cpfsInvalidos.add("11111111111");
-		cpfsInvalidos.add("22222222222");
+		cpfsInvalidos.add("22222222222z");
 		cpfsInvalidos.add("33333333333");
 		cpfsInvalidos.add("44444444444");
 		cpfsInvalidos.add("55555555555");

@@ -4,18 +4,26 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import model.entity.Cliente;
-import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
 import model.exception.ErroLoginException;
 
 public class ClienteDAO {
 
+	/*Oque falta nessa classe:
+	 * Atualizar cliente
+	 * Excluir cliente
+	 * Consultar cliente
+	 * Consultar todos clientes*/
+	
 	public Cliente cadastrarNovoClienteDAO(Cliente cliente) throws ErroCadastroException {
 		Connection connection = Banco.getConnection();
 		String sql = "INSERT INTO CLIENTE (NOME_CLIENTE, CPF, DATA_NASCIMENTO, "
-				+ "DATA_CADASTRO, TIPO_USUARIO, NOME_USUARIO, SENHA) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		+ "DATA_CADASTRO, TIPO_USUARIO, NOME_USUARIO, SENHA) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(connection, sql);
 		ResultSet resultado = null;
 		try {
@@ -63,7 +71,7 @@ public class ClienteDAO {
 		return cpfExiste;
 	}
 
-	public boolean verificarCredenciais(Cliente cliente) {
+	public boolean verificarCredenciais(Cliente cliente) throws ErroLoginException {
 		boolean credencialExisteNoSistema = false;
 		Connection connection = Banco.getConnection();
 		String sql = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, "
@@ -78,8 +86,8 @@ public class ClienteDAO {
 				cliente.setIdCliente(resultado.getBigDecimal(1));
 				cliente.setNomeCliente(resultado.getString(2));
 				cliente.setCpf(resultado.getString(3));
-				cliente.setDataNascimento(resultado.getDate(4));
-				cliente.setDataCadastro(resultado.getDate(5));
+				cliente.setDataNascimento(LocalDate.parse(resultado.getString(4)));
+				cliente.setDataCadastro(LocalDate.parse(resultado.getString(5)));
 				cliente.setTipoUsuario(resultado.getInt(6));
 				cliente.setNomeUsuario(resultado.getString(7));
 				cliente.setSenha(resultado.getString(8));
@@ -95,5 +103,4 @@ public class ClienteDAO {
 
 		return credencialExisteNoSistema;
 	}
-
 }
