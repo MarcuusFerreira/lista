@@ -152,6 +152,11 @@ public class PainelCadastroUsuario extends JPanel  {
 		});
 
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		add(btnVoltar, "4, 26");
 		add(btnCadastrar, "6, 26");
 
