@@ -5,7 +5,6 @@ import java.awt.EventQueue;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -42,8 +41,6 @@ public class TelaCadastroUsuario extends JFrame {
 	private MaskFormatter mascaraCep;
 	private JTextField textUsuario;
 	private JPasswordField textSenha;
-	private DatePickerSettings dateSettings;
-	private DateTimePicker dataTeste;
 	private JTextField textDataNascimento;
 	private ClienteController controller;
 	private JButton btnCadastrar;
@@ -137,10 +134,6 @@ public class TelaCadastroUsuario extends JFrame {
 
 		lblDataNascimento = new JLabel("Data de nascimento:");
 		contentPane.add(lblDataNascimento, "4, 12, right, default");
-
-		// Configurações da parte de DATAS do componente
-		dateSettings = new DatePickerSettings();
-		dateSettings.setAllowKeyboardEditing(false);
 		
 		textDataNascimento = new JTextField();
 		contentPane.add(textDataNascimento, "6, 12, fill, default");
@@ -149,14 +142,7 @@ public class TelaCadastroUsuario extends JFrame {
 		btnPegarData = new JButton("...");
 		btnPegarData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Atributos próprios do componente datePicker (date e time)
-				LocalDate dataSelecionada = dataTeste.getDatePicker().getDate();
-				
-				LocalDateTime dataComHora = LocalDateTime.of(dataSelecionada, null);
-
-				JOptionPane.showMessageDialog(null, "Data selecionada: " + dataSelecionada.toString());
-				JOptionPane.showMessageDialog(null, "Data e hora selecionada: " + dataComHora.toString());
-				
+				// codificar aqui o date picker
 			}
 		});
 		contentPane.add(btnPegarData, "8, 12");
@@ -184,9 +170,13 @@ public class TelaCadastroUsuario extends JFrame {
 				cliente.setNomeCliente(textNome.getText());
 				cliente.setCpf(textCpf.getText());
 				//cliente.setDataNascimento(LocalDate.parse(textDataNascimento.getText()));
+				cliente.setDataNascimento(LocalDate.now());
+				cliente.setDataCadastro(LocalDate.now());
+				cliente.setTipoUsuario(1);
 				cliente.setNomeUsuario(textUsuario.getText());
 				cliente.setSenha(textSenha.getSelectedText());
 				try {
+					controller = new ClienteController();
 					controller.cadastrarNovoClienteController(cliente);
 				} catch (ErroCadastroException mensagem) {
 					JOptionPane.showMessageDialog(null, mensagem);

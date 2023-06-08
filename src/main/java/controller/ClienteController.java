@@ -10,6 +10,7 @@ public class ClienteController {
 	private ClienteBO bo;
 	
 	public Cliente cadastrarNovoClienteController (Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
+		bo = new ClienteBO();
 		return bo.cadastrarNovoClienteBO(cliente);
 	}
 }

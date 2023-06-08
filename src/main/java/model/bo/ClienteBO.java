@@ -17,6 +17,7 @@ public class ClienteBO {
 	private static final int PESO_VALIDA_SEGUNDO_DIGITO = 11;
 
 	public Cliente cadastrarNovoClienteBO(Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
+		dao = new ClienteDAO();
 		if(dao.cpfJaExiste(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF já cadastrado!");
 		}

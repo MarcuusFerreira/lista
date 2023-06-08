@@ -25,7 +25,6 @@ public class ClienteDAO {
 		String sql = "INSERT INTO CLIENTE (NOME_CLIENTE, CPF, DATA_NASCIMENTO, "
 		+ "DATA_CADASTRO, TIPO_USUARIO, NOME_USUARIO, SENHA) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(connection, sql);
-		ResultSet resultado = null;
 		try {
 			stmt.setString(1, cliente.getNomeCliente());
 			stmt.setString(2, cliente.getCpf());
@@ -36,9 +35,9 @@ public class ClienteDAO {
 			stmt.setString(7, cliente.getSenha());
 			stmt.execute();
 
-			resultado = stmt.getGeneratedKeys();
+			ResultSet resultado = stmt.getGeneratedKeys();
 			if (resultado.next()) {
-				cliente.setIdCliente(resultado.getBigDecimal(1));
+				cliente.setIdCliente(resultado.getInt(1));
 			}
 		} catch (SQLException mensagem) {
 			throw new ErroCadastroException("Erro Cadastro de Cliente, por favor contate o administrador");
@@ -83,7 +82,7 @@ public class ClienteDAO {
 			pstmt.setString(2, cliente.getSenha());
 			resultado = pstmt.executeQuery();
 			if (resultado.next()) {
-				cliente.setIdCliente(resultado.getBigDecimal(1));
+				cliente.setIdCliente(resultado.getInt(1));
 				cliente.setNomeCliente(resultado.getString(2));
 				cliente.setCpf(resultado.getString(3));
 				cliente.setDataNascimento(LocalDate.parse(resultado.getString(4)));

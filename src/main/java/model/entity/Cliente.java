@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class Cliente {
 	
-	private BigDecimal idCliente;
+	private Integer idCliente;
 	private String nomeCliente;
 	private String cpf;
 	private LocalDate dataNascimento;
@@ -18,11 +18,11 @@ public class Cliente {
 		super();
 	}
 
-	public BigDecimal getIdCliente() {
+	public Integer getIdCliente() {
 		return idCliente;
 	}
 
-	public void setIdCliente(BigDecimal idCliente) {
+	public void setIdCliente(Integer idCliente) {
 		this.idCliente = idCliente;
 	}
 
