@@ -100,7 +100,6 @@ public class ClienteDAO {
 			Banco.closePreparedStatement(pstmt);
 			Banco.closeConnection(connection);
 		}
-
 		return credencialExisteNoSistema;
 	}
 }

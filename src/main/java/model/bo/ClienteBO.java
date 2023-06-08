@@ -20,32 +20,10 @@ public class ClienteBO {
 		if(dao.cpfJaExiste(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF já cadastrado!");
 		}
-		if (!validarCpf(cliente.getCpf())) {
+		if (!calcularCpf(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF é Inválido!");
 		}
 		return dao.cadastrarNovoClienteDAO(cliente);
-	}
-
-	private boolean validarCpf(String cpf) {
-		boolean cpfValido = true;
-		Set<String> cpfsInvalidos = new HashSet<String>();
-		cpfsInvalidos.add("11111111111");
-		cpfsInvalidos.add("22222222222z");
-		cpfsInvalidos.add("33333333333");
-		cpfsInvalidos.add("44444444444");
-		cpfsInvalidos.add("55555555555");
-		cpfsInvalidos.add("66666666666");
-		cpfsInvalidos.add("77777777777");
-		cpfsInvalidos.add("88888888888");
-		cpfsInvalidos.add("99999999999");
-		if(cpf.length() != 11 || cpfsInvalidos.contains(cpf)) {
-			cpfValido = false;
-		} else {
-			if(!calcularCpf(cpf)) {
-				cpfValido = false;
-			}
-		}
-		return cpfValido;
 	}
 
 	private boolean calcularCpf(String cpf) {

@@ -26,5 +26,10 @@
 		    <artifactId>jgoodies-forms</artifactId>
 		    <version>1.6.0</version>
 	</dependency>
+	<dependency>
+		<groupId>projeto_dd</groupId>
+		<artifactId>projeto_dd</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
   </dependencies>
 </project>
