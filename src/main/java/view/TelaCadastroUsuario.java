@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -14,6 +15,12 @@ import javax.swing.text.MaskFormatter;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import controller.ClienteController;
+import model.entity.Cliente;
+import model.exception.CpfInvalidoException;
+import model.exception.ErroCadastroException;
+
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,11 +40,20 @@ public class TelaCadastroUsuario extends JFrame {
 	private JTextField textNome;
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCep;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField textUsuario;
+	private JPasswordField textSenha;
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
 	private JTextField textDataNascimento;
+	private ClienteController controller;
+	private JButton btnCadastrar;
+	private JFormattedTextField textCpf;
+	private JButton btnVoltar;
+	private JButton btnLimpar;
+	private JButton btnPegarData;
+	private JLabel lblNomeCompleto;
+	private Component lblCpf;
+	private JLabel lblDataNascimento;
 
 	/**
 	 * Launch the application.
@@ -103,46 +119,34 @@ public class TelaCadastroUsuario extends JFrame {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 
-		JLabel lblNomeCompleto = new JLabel("Nome completo:");
+		lblNomeCompleto = new JLabel("Nome completo:");
 		contentPane.add(lblNomeCompleto, "4, 4, right, default");
 
 		textNome = new JTextField();
 		contentPane.add(textNome, "6, 4, fill, default");
 		textNome.setColumns(10);
 
-		JLabel lblCpf = new JLabel("CPF:");
+		lblCpf = new JLabel("CPF:");
 		contentPane.add(lblCpf, "4, 8, right, default");
 
 		mascaraCpf = new MaskFormatter("###.###.###-##");
 		mascaraCpf.setValueContainsLiteralCharacters(false);
 
-		JFormattedTextField textCpf = new JFormattedTextField(mascaraCpf);
+		textCpf = new JFormattedTextField(mascaraCpf);
 		contentPane.add(textCpf, "6, 8, fill, default");
 
-		JLabel lblDataNascimento = new JLabel("Data de nascimento:");
+		lblDataNascimento = new JLabel("Data de nascimento:");
 		contentPane.add(lblDataNascimento, "4, 12, right, default");
 
 		// Configurações da parte de DATAS do componente
 		dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		textDataNascimento = new JTextField();
 		contentPane.add(textDataNascimento, "6, 12, fill, default");
 		textDataNascimento.setColumns(10);
 		
-		JButton btnPegarData = new JButton("...");
+		btnPegarData = new JButton("...");
 		btnPegarData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Atributos próprios do componente datePicker (date e time)
@@ -163,29 +167,40 @@ public class TelaCadastroUsuario extends JFrame {
 		JLabel lblUsuario = new JLabel("Usuário:");
 		contentPane.add(lblUsuario, "4, 16, right, default");
 
-		textField = new JTextField();
-		contentPane.add(textField, "6, 16, fill, default");
-		textField.setColumns(10);
+		textUsuario = new JTextField();
+		contentPane.add(textUsuario, "6, 16, fill, default");
+		textUsuario.setColumns(10);
 
 		JLabel lblSenha = new JLabel("Senha:");
 		contentPane.add(lblSenha, "4, 20, right, default");
 
-		passwordField = new JPasswordField();
-		contentPane.add(passwordField, "6, 20, fill, default");
+		textSenha = new JPasswordField();
+		contentPane.add(textSenha, "6, 20, fill, default");
 		
-		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Cliente cliente = new Cliente();
+				cliente.setNomeCliente(textNome.getText());
+				cliente.setCpf(textCpf.getText());
+				//cliente.setDataNascimento(LocalDate.parse(textDataNascimento.getText()));
+				cliente.setNomeUsuario(textUsuario.getText());
+				cliente.setSenha(textSenha.getSelectedText());
+				try {
+					controller.cadastrarNovoClienteController(cliente);
+				} catch (ErroCadastroException mensagem) {
+					JOptionPane.showMessageDialog(null, mensagem);
+				} catch (CpfInvalidoException mensagem) {
+					JOptionPane.showMessageDialog(null, mensagem);
+				}
 			}
 		});
 		
-		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar = new JButton("Voltar");
 		contentPane.add(btnVoltar, "4, 24");
 		contentPane.add(btnCadastrar, "6, 24");
 		
-		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar = new JButton("Limpar");
 		contentPane.add(btnLimpar, "8, 24");
-		
 	}
-
 }
