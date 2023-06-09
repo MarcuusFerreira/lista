@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.JTextComponent;
 import javax.swing.text.MaskFormatter;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
@@ -23,8 +25,14 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import controller.ClienteController;
+import model.entity.Cliente;
+import model.exception.CpfInvalidoException;
+import model.exception.ErroCadastroException;
+
 public class PainelCadastroUsuario extends JPanel  {
 	private JTextField textNome;
+	private JFormattedTextField textCpf;
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCep;
 	private JTextField textField;
@@ -32,6 +40,9 @@ public class PainelCadastroUsuario extends JPanel  {
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
 	private JTextField textDataNascimento;
+	protected ClienteController controller;
+	protected JTextComponent textSenha;
+	protected AbstractButton textUsuario;
 
 	/**
 	 * Create the panel.
@@ -97,7 +108,7 @@ public class PainelCadastroUsuario extends JPanel  {
 			//não faz nada
 		}
 
-		JFormattedTextField textCpf = new JFormattedTextField(mascaraCpf);
+		final JFormattedTextField textCpf = new JFormattedTextField(mascaraCpf);
 		add(textCpf, "6, 10, fill, default");
 
 		JLabel lblDataNascimento = new JLabel("Data de nascimento:");
@@ -148,6 +159,23 @@ public class PainelCadastroUsuario extends JPanel  {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Cliente cliente = new Cliente();
+				cliente.setNomeCliente(textNome.getText());
+				cliente.setCpf(textCpf.getText());   // precisou colocar a palavra reservada final pra funcionar 
+				//cliente.setDataNascimento(LocalDate.parse(textDataNascimento.getText()));
+				cliente.setDataNascimento(LocalDate.now());
+				cliente.setDataCadastro(LocalDate.now());
+				cliente.setTipoUsuario(1);
+				cliente.setNomeUsuario(textUsuario.getText());
+				cliente.setSenha(textSenha.getSelectedText());
+				try {
+					controller = new ClienteController();
+					controller.cadastrarNovoClienteController(cliente);
+				} catch (ErroCadastroException mensagem) {
+					JOptionPane.showMessageDialog(null, mensagem);
+				} catch (CpfInvalidoException mensagem) {
+					JOptionPane.showMessageDialog(null, mensagem);
+				}
 			}
 		});
 

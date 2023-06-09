@@ -84,13 +84,13 @@ public class TelaLogin extends JFrame {
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
 			}
 		});
 		contentPane.add(btnEntrar, "1, 12, 8, 1, center, default");
 
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				PainelCadastroUsuario painelCadastro = new PainelCadastroUsuario();
 				setContentPane(painelCadastro);
