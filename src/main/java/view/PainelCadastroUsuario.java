@@ -49,7 +49,7 @@ public class PainelCadastroUsuario extends JPanel  {
 	 * @throws ParseException 
 	 */
 	public PainelCadastroUsuario() {
-		setBounds(100, 100, 450, 420);
+		setBounds(100, 100, 450, 490);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,

@@ -47,7 +47,7 @@ public class TelaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 420);
+		frame.setBounds(100, 100, 450, 490);
 		frame.setLocationRelativeTo(null); // Centralizar na tela
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -62,14 +62,23 @@ public class TelaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				PainelCadastroUsuario painelCadastro = new PainelCadastroUsuario();
 				frame.setContentPane(painelCadastro);
-				frame.setBounds(100, 100, 450, 420);
+				frame.setBounds(100, 100, 450, 490);
 				frame.setLocationRelativeTo(null);
 				frame.revalidate();
 			}
 		});
 		mnUsuarios.add(mntmCadastrarUsuario);
 		
-		JMenuItem mntmMostrarUsuarios = new JMenuItem("Mostar Usuários");
+		JMenuItem mntmMostrarUsuarios = new JMenuItem("Mostrar Usuários");
+		mntmMostrarUsuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			PainelMostrarClientes painelMostrarClientes = new PainelMostrarClientes();
+			frame.setContentPane(painelMostrarClientes);
+			frame.setBounds(100, 100, 450, 490);
+			frame.setLocationRelativeTo(null);
+			frame.revalidate();
+			}
+		});
 		mnUsuarios.add(mntmMostrarUsuarios);
 		
 		JMenu mnListas = new JMenu("Listas");
@@ -80,14 +89,14 @@ public class TelaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				PainelCadastroListas painelCadastroLista = new PainelCadastroListas();
 				frame.setContentPane(painelCadastroLista);
-				frame.setBounds(100, 100, 450, 420);
+				frame.setBounds(100, 100, 450, 490);
 				frame.setLocationRelativeTo(null);
 				frame.revalidate();
 			}
 		});
 		mnListas.add(mntmCadastrarLista);
 		
-		JMenuItem mntmMostrarListas = new JMenuItem("Mostar Listas");
+		JMenuItem mntmMostrarListas = new JMenuItem("Mostrar Listas");
 		mnListas.add(mntmMostrarListas);
 		
 		JMenu mnSobre = new JMenu("Sobre");

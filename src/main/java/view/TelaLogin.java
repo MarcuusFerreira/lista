@@ -94,7 +94,7 @@ public class TelaLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				PainelCadastroUsuario painelCadastro = new PainelCadastroUsuario();
 				setContentPane(painelCadastro);
-				setBounds(100, 100, 450, 420);
+				setBounds(100, 100, 450, 470);
 				setLocationRelativeTo(null);
 				revalidate();
 			}
