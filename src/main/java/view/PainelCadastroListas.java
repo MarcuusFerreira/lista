@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -28,7 +29,7 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.SwingConstants;
 
-public class PainelCadastroListas extends JPanel  {
+public class PainelCadastroListas extends JPanel {
 	private JComboBox cbNomeListas;
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCep;
@@ -37,48 +38,26 @@ public class PainelCadastroListas extends JPanel  {
 
 	/**
 	 * Create the panel.
-	 * @throws ParseException 
+	 * 
+	 * @throws ParseException
 	 */
 	public PainelCadastroListas() {
 		setBounds(100, 100, 450, 490);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
-		
+		setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, },
+				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("default:grow"), FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
+
 		JLabel lblCadastroLista = new JLabel("Cadastro de Lista");
 		add(lblCadastroLista, "1, 2, 8, 1, center, default");
 
@@ -91,13 +70,12 @@ public class PainelCadastroListas extends JPanel  {
 		cbNomeListas.addItem("Lista do Mercado 2");
 		cbNomeListas.addItem("Lista do Mercado 3");
 		add(cbNomeListas, "6, 6, fill, default");
-		
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
 			mascaraCpf.setValueContainsLiteralCharacters(false);
 		} catch (ParseException e) {
-			//não faz nada
+			// não faz nada
 		}
 
 		// Configurações da parte de DATAS do componente
@@ -121,21 +99,28 @@ public class PainelCadastroListas extends JPanel  {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
+
 		JLabel lblProduto = new JLabel("Produto:");
 		add(lblProduto, "4, 10, right, default");
-		
+
 		JComboBox cbProdutos = new JComboBox();
-		cbProdutos.setSelectedIndex(-1);
 		add(cbProdutos, "6, 10, fill, default");
-		
+		String[] produtos = { "Arroz", "Feijão", "Macarrão", "Óleo de cozinha", "Leite", "Pão", "Carne", "Frango",
+				"Legumes", "Frutas" };
+		Arrays.sort(produtos);
+
+		for (String produto : produtos) {
+			cbProdutos.addItem(produto);
+		}
+		cbProdutos.setSelectedIndex(-1);
+
 		JButton btnAdicionar = new JButton("+");
 		add(btnAdicionar, "8, 10");
-		
+
 		JLabel lblProdutoSelecionados = new JLabel("Produtos Selecionados");
 		lblProdutoSelecionados.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblProdutoSelecionados, "6, 14");
-		
+
 		JList listaDeProdutos = new JList();
 		add(listaDeProdutos, "6, 16, 1, 7, fill, default");
 		add(btnVoltar, "4, 26");
