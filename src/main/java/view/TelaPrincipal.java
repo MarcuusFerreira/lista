@@ -17,7 +17,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class TelaPrincipal {
 
-	private JFrame frame;
+	private JFrame frmTelaPrincipal;
 
 	/**
 	 * Launch the application.
@@ -27,7 +27,7 @@ public class TelaPrincipal {
 			public void run() {
 				try {
 					TelaPrincipal window = new TelaPrincipal();
-					window.frame.setVisible(true);
+					window.frmTelaPrincipal.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,13 +46,14 @@ public class TelaPrincipal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 490);
-		frame.setLocationRelativeTo(null); // Centralizar na tela
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmTelaPrincipal = new JFrame();
+		frmTelaPrincipal.setTitle("Tela Principal");
+		frmTelaPrincipal.setBounds(100, 100, 450, 490);
+		frmTelaPrincipal.setLocationRelativeTo(null); // Centralizar na tela
+		frmTelaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		frmTelaPrincipal.setJMenuBar(menuBar);
 		
 		JMenu mnUsuarios = new JMenu("Usuários");
 		menuBar.add(mnUsuarios);
@@ -61,10 +62,11 @@ public class TelaPrincipal {
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PainelCadastroUsuario painelCadastro = new PainelCadastroUsuario();
-				frame.setContentPane(painelCadastro);
-				frame.setBounds(100, 100, 450, 490);
-				frame.setLocationRelativeTo(null);
-				frame.revalidate();
+				frmTelaPrincipal.setContentPane(painelCadastro);
+				frmTelaPrincipal.setTitle("Cadastrar Usuário");
+				frmTelaPrincipal.setBounds(100, 100, 450, 490);
+				frmTelaPrincipal.setLocationRelativeTo(null);
+				frmTelaPrincipal.revalidate();
 			}
 		});
 		mnUsuarios.add(mntmCadastrarUsuario);
@@ -73,10 +75,11 @@ public class TelaPrincipal {
 		mntmMostrarUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			PainelMostrarClientes painelMostrarClientes = new PainelMostrarClientes();
-			frame.setContentPane(painelMostrarClientes);
-			frame.setBounds(100, 100, 450, 490);
-			frame.setLocationRelativeTo(null);
-			frame.revalidate();
+			frmTelaPrincipal.setContentPane(painelMostrarClientes);
+			frmTelaPrincipal.setTitle("Listagem de Clientes");
+			frmTelaPrincipal.setBounds(100, 100, 450, 490);
+			frmTelaPrincipal.setLocationRelativeTo(null);
+			frmTelaPrincipal.revalidate();
 			}
 		});
 		mnUsuarios.add(mntmMostrarUsuarios);
@@ -88,10 +91,11 @@ public class TelaPrincipal {
 		mntmCadastrarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PainelCadastroListas painelCadastroLista = new PainelCadastroListas();
-				frame.setContentPane(painelCadastroLista);
-				frame.setBounds(100, 100, 450, 490);
-				frame.setLocationRelativeTo(null);
-				frame.revalidate();
+				frmTelaPrincipal.setContentPane(painelCadastroLista);
+				frmTelaPrincipal.setTitle("Cadastro de Lista");
+				frmTelaPrincipal.setBounds(100, 100, 450, 490);
+				frmTelaPrincipal.setLocationRelativeTo(null);
+				frmTelaPrincipal.revalidate();
 			}
 		});
 		mnListas.add(mntmCadastrarLista);
@@ -110,7 +114,7 @@ public class TelaPrincipal {
 			}
 		});
 		mnSobre.add(mntmSobreNos);
-		frame.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
+		frmTelaPrincipal.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
