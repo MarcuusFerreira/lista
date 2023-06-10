@@ -35,14 +35,15 @@ public class PainelCadastroUsuario extends JPanel  {
 	private JFormattedTextField textCpf;
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCep;
-	private JTextField textField;
-	private JPasswordField passwordField;
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
 	private JTextField textDataNascimento;
 	protected ClienteController controller;
-	protected JTextComponent textSenha;
-	protected AbstractButton textUsuario;
+	private JButton btnVoltar;
+	private JButton btnLimpar;
+	private JButton btnPegarData;
+	private JTextField textNomeUsuario;
+	private JPasswordField textSenha;
 
 	/**
 	 * Create the panel.
@@ -108,7 +109,7 @@ public class PainelCadastroUsuario extends JPanel  {
 			//não faz nada
 		}
 
-		final JFormattedTextField textCpf = new JFormattedTextField(mascaraCpf);
+		textCpf = new JFormattedTextField(mascaraCpf);
 		add(textCpf, "6, 10, fill, default");
 
 		JLabel lblDataNascimento = new JLabel("Data de nascimento:");
@@ -122,7 +123,7 @@ public class PainelCadastroUsuario extends JPanel  {
 		add(textDataNascimento, "6, 14, fill, default");
 		textDataNascimento.setColumns(10);
 
-		JButton btnPegarData = new JButton("...");
+		btnPegarData = new JButton("...");
 		btnPegarData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Atributos próprios do componente datePicker (date e time)
@@ -145,20 +146,24 @@ public class PainelCadastroUsuario extends JPanel  {
 
 		JLabel lblUsuario = new JLabel("Usuário:");
 		add(lblUsuario, "4, 18, right, default");
-
-		textField = new JTextField();
-		add(textField, "6, 18, fill, default");
-		textField.setColumns(10);
+		
+		textNomeUsuario = new JTextField();
+		textNomeUsuario.setColumns(10);
+		add(textNomeUsuario, "6, 18, fill, default");
 
 		JLabel lblSenha = new JLabel("Senha:");
 		add(lblSenha, "4, 22, right, default");
 
-		passwordField = new JPasswordField();
-		add(passwordField, "6, 22, fill, default");
-
+		textSenha = new JPasswordField();
+		add(textSenha, "6, 22, fill, default");
+		add(btnVoltar, "4, 26");
+		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (validarCampos()) {
+					JOptionPane.showMessageDialog(null, "Existem campos em branco");
+				}
 				Cliente cliente = new Cliente();
 				cliente.setNomeCliente(textNome.getText());
 				cliente.setCpf(textCpf.getText());   // precisou colocar a palavra reservada final pra funcionar 
@@ -166,7 +171,7 @@ public class PainelCadastroUsuario extends JPanel  {
 				cliente.setDataNascimento(LocalDate.now());
 				cliente.setDataCadastro(LocalDate.now());
 				cliente.setTipoUsuario(1);
-				cliente.setNomeUsuario(textUsuario.getText());
+				cliente.setNomeUsuario(textNomeUsuario.getText());
 				cliente.setSenha(textSenha.getSelectedText());
 				try {
 					controller = new ClienteController();
@@ -177,18 +182,43 @@ public class PainelCadastroUsuario extends JPanel  {
 					JOptionPane.showMessageDialog(null, mensagem);
 				}
 			}
+
+			
 		});
 
-		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		add(btnVoltar, "4, 26");
+		
+		
 		add(btnCadastrar, "6, 26");
 
-		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				textNome.setText("");
+				textCpf.setText("");
+				textDataNascimento.setText("");
+				textNomeUsuario.setText("");
+				textSenha.setText("");
+			}
+		});
 		add(btnLimpar, "8, 26");
+	}
+	
+	private boolean validarCampos() {
+		boolean retorno = false;
+		if(textNome.getText().trim().isBlank() ||
+			textCpf.getText().trim().isBlank() ||
+			textDataNascimento.getText().trim().isBlank() ||
+			textNomeUsuario.getText().trim().isBlank() ||
+			textSenha.getSelectedText().trim().isBlank()) {
+			retorno = true;
+		}
+		return retorno;
 	}
 }

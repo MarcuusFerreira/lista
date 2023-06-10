@@ -55,7 +55,7 @@ public class ClienteDAO {
 		PreparedStatement stmt = Banco.getPreparedStatement(connection, sql);
 		ResultSet resultado = null;
 		try {
-			stmt.setString(1, sql);
+			stmt.setString(1, cpf);
 			resultado = stmt.executeQuery();
 			if (resultado.next()) {
 				cpfExiste = true;
