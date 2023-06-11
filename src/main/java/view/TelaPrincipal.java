@@ -87,7 +87,7 @@ public class TelaPrincipal {
 		JMenu mnListas = new JMenu("Listas");
 		menuBar.add(mnListas);
 		
-		JMenuItem mntmCadastrarLista = new JMenuItem("Cadastrar Lista");
+		JMenuItem mntmCadastrarLista = new JMenuItem("Cadastrar Listas");
 		mntmCadastrarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PainelCadastroListas painelCadastroLista = new PainelCadastroListas();

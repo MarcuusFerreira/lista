@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
@@ -28,6 +29,8 @@ import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JRadioButton;
 
 public class PainelCadastroListas extends JPanel {
 	private JComboBox cbNomeListas;
@@ -35,6 +38,8 @@ public class PainelCadastroListas extends JPanel {
 	private MaskFormatter mascaraCep;
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
+	private JTable tableProdutos;
+	private String[] nomesColunas = { "Unidade de medida", "Nome" };
 
 	/**
 	 * Create the panel.
@@ -53,12 +58,12 @@ public class PainelCadastroListas extends JPanel {
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
 						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("default:grow"), FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow"),
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
 						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
 
-		JLabel lblCadastroLista = new JLabel("Cadastro de Lista");
+		JLabel lblCadastroLista = new JLabel("Cadastro de Lista e Produto");
 		add(lblCadastroLista, "1, 2, 8, 1, center, default");
 
 		JLabel lblNomeLista = new JLabel("Nome da Lista:");
@@ -100,33 +105,43 @@ public class PainelCadastroListas extends JPanel {
 			}
 		});
 
-		JLabel lblProduto = new JLabel("Produto:");
-		add(lblProduto, "4, 10, right, default");
-
 		JComboBox cbProdutos = new JComboBox();
-		add(cbProdutos, "6, 10, fill, default");
-		String[] produtos = { "Arroz", "Feijão", "Macarrão", "Óleo de cozinha", "Leite", "Pão", "Carne", "Frango",
-				"Legumes", "Frutas" };
-		Arrays.sort(produtos);
-
-		for (String produto : produtos) {
-			cbProdutos.addItem(produto);
-		}
+		add(cbProdutos, "6, 8, fill, default");
 		cbProdutos.setSelectedIndex(-1);
+		cbProdutos.addItem("Óleo de cozinha");
+		cbProdutos.addItem("Arroz");
+		cbProdutos.addItem("Leite");
+
+		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
+		add(lblNewLabel, "4, 10");
+
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Quantidade");
+		add(rdbtnNewRadioButton, "6, 10");
+
+		JRadioButton rdbtnKilogramas = new JRadioButton("Kilogramas");
+		add(rdbtnKilogramas, "6, 12");
+
+		JFormattedTextField formattedTextField = new JFormattedTextField();
+		add(formattedTextField, "6, 14, fill, default");
 
 		JButton btnAdicionar = new JButton("+");
-		add(btnAdicionar, "8, 10");
+		add(btnAdicionar, "8, 14");
 
 		JLabel lblProdutoSelecionados = new JLabel("Produtos Selecionados");
 		lblProdutoSelecionados.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblProdutoSelecionados, "6, 14");
+		add(lblProdutoSelecionados, "6, 16");
 
-		JList listaDeProdutos = new JList();
-		add(listaDeProdutos, "6, 16, 1, 7, fill, default");
+		tableProdutos = new JTable();
+		this.limparTabelaProdutos();
+		add(tableProdutos, "6, 18, fill, fill");
 		add(btnVoltar, "4, 26");
 		add(btnCadastrarLista, "6, 26");
 
 		JButton btnLimpar = new JButton("Limpar");
 		add(btnLimpar, "8, 26");
+	}
+
+	private void limparTabelaProdutos() {
+		tableProdutos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
 	}
 }
