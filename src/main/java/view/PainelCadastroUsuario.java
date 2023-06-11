@@ -29,6 +29,8 @@ import controller.ClienteController;
 import model.entity.Cliente;
 import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class PainelCadastroUsuario extends JPanel  {
 	private JTextField textNome;
@@ -44,6 +46,7 @@ public class PainelCadastroUsuario extends JPanel  {
 	private JButton btnPegarData;
 	private JTextField textNomeUsuario;
 	private JPasswordField textSenha;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Create the panel.
@@ -53,12 +56,13 @@ public class PainelCadastroUsuario extends JPanel  {
 		setBounds(100, 100, 450, 490);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.DEFAULT_COLSPEC,},
 			new RowSpec[] {
@@ -89,18 +93,20 @@ public class PainelCadastroUsuario extends JPanel  {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
-		JLabel lblNewLabel = new JLabel("Cadastro de Usuário");
-		add(lblNewLabel, "1, 2, 8, 1, center, default");
-
-		JLabel lblNomeCompleto = new JLabel("Nome completo:");
-		add(lblNomeCompleto, "4, 6, right, default");
-
-		textNome = new JTextField();
-		add(textNome, "6, 6, fill, default");
-		textNome.setColumns(10);
+		lblNewLabel = new JLabel("Cadastro de Usuário");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblNewLabel, "3, 4, 5, 1");
+		
+				JLabel lblNomeCompleto = new JLabel("Nome completo:");
+				add(lblNomeCompleto, "3, 6, right, default");
+		
+				textNome = new JTextField();
+				add(textNome, "5, 6, fill, default");
+				textNome.setColumns(10);
 
 		JLabel lblCpf = new JLabel("CPF:");
-		add(lblCpf, "4, 10, right, default");
+		add(lblCpf, "3, 10, right, default");
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -110,17 +116,17 @@ public class PainelCadastroUsuario extends JPanel  {
 		}
 
 		textCpf = new JFormattedTextField(mascaraCpf);
-		add(textCpf, "6, 10, fill, default");
+		add(textCpf, "5, 10, fill, default");
 
 		JLabel lblDataNascimento = new JLabel("Data de nascimento:");
-		add(lblDataNascimento, "4, 14, right, default");
+		add(lblDataNascimento, "3, 14, right, default");
 
 		// Configurações da parte de DATAS do componente
 		dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
 
 		textDataNascimento = new JTextField();
-		add(textDataNascimento, "6, 14, fill, default");
+		add(textDataNascimento, "5, 14, fill, default");
 		textDataNascimento.setColumns(10);
 
 		btnPegarData = new JButton("...");
@@ -136,7 +142,7 @@ public class PainelCadastroUsuario extends JPanel  {
 
 			}
 		});
-		add(btnPegarData, "8, 14");
+		add(btnPegarData, "7, 14, left, default");
 
 		try {
 			mascaraCep = new MaskFormatter("##.###-##");
@@ -145,17 +151,17 @@ public class PainelCadastroUsuario extends JPanel  {
 		}
 
 		JLabel lblUsuario = new JLabel("Usuário:");
-		add(lblUsuario, "4, 18, right, default");
+		add(lblUsuario, "3, 18, right, default");
 		
 		textNomeUsuario = new JTextField();
 		textNomeUsuario.setColumns(10);
-		add(textNomeUsuario, "6, 18, fill, default");
+		add(textNomeUsuario, "5, 18, fill, default");
 
 		JLabel lblSenha = new JLabel("Senha:");
-		add(lblSenha, "4, 22, right, default");
+		add(lblSenha, "3, 22, right, default");
 
 		textSenha = new JPasswordField();
-		add(textSenha, "6, 22, fill, default");
+		add(textSenha, "5, 22, fill, default");
 		
 		
 		
@@ -194,8 +200,8 @@ public class PainelCadastroUsuario extends JPanel  {
 			}
 		});
 		
-		add(btnVoltar, "4, 26");
-		add(btnCadastrar, "6, 26");
+		add(btnVoltar, "3, 26");
+		add(btnCadastrar, "5, 26");
 
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
@@ -208,7 +214,7 @@ public class PainelCadastroUsuario extends JPanel  {
 				textSenha.setText("");
 			}
 		});
-		add(btnLimpar, "8, 26");
+		add(btnLimpar, "7, 26");
 	}
 	
 	private boolean validarCampos() {

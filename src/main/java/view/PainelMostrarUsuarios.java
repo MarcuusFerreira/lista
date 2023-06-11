@@ -29,10 +29,11 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
 import model.entity.Cliente;
+import java.awt.Font;
 //import model.exception.ClienteComTelefoneException;
 //import model.seletor.ClienteSeletor;
 
-public class PainelMostrarClientes extends JPanel {
+public class PainelMostrarUsuarios extends JPanel {
 	private JTable tblClientes;
 	private ArrayList<Cliente> clientes;
 	private String[] nomesColunas = { "Nome", "CPF", "CEP", "Total de Listas", "Ativo?" };
@@ -87,7 +88,7 @@ public class PainelMostrarClientes extends JPanel {
 //		}
 //	}
 	
-	public PainelMostrarClientes() {
+	public PainelMostrarUsuarios() {
 		setBounds(100, 100, 450, 490);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -137,8 +138,9 @@ public class PainelMostrarClientes extends JPanel {
 		});
 						
 						lblNewLabel = new JLabel("Listagem de Clientes");
+						lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 						lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						add(lblNewLabel, "2, 2, 4, 1");
+						add(lblNewLabel, "2, 2, 5, 1");
 				
 						lblCpf = new JLabel("CPF:");
 						this.add(lblCpf, "2, 6, fill, center");

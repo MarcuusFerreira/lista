@@ -31,6 +31,8 @@ import javax.swing.JList;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
+import java.awt.Font;
+import javax.swing.JCheckBox;
 
 public class PainelCadastroListas extends JPanel {
 	private JComboBox cbNomeListas;
@@ -63,11 +65,18 @@ public class PainelCadastroListas extends JPanel {
 						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
 
-		JLabel lblCadastroLista = new JLabel("Cadastro de Lista e Produto");
+		JLabel lblCadastroLista = new JLabel("Adicione uma Lista seus Produtos");
+		lblCadastroLista.setFont(new Font("Tahoma", Font.BOLD, 14));
 		add(lblCadastroLista, "1, 2, 8, 1, center, default");
+		
+		JLabel lblDesejaAdicionarUma = new JLabel("Deseja utilizar a última lista criada?");
+		add(lblDesejaAdicionarUma, "6, 4, center, center");
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Sim");
+		add(chckbxNewCheckBox, "8, 4");
 
 		JLabel lblNomeLista = new JLabel("Nome da Lista:");
-		add(lblNomeLista, "4, 6, right, default");
+		add(lblNomeLista, "4, 6, left, default");
 
 		cbNomeListas = new JComboBox();
 		cbNomeListas.setSelectedIndex(-1);
@@ -113,7 +122,7 @@ public class PainelCadastroListas extends JPanel {
 		cbProdutos.addItem("Leite");
 
 		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
-		add(lblNewLabel, "4, 10");
+		add(lblNewLabel, "4, 10, left, default");
 
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Quantidade");
 		add(rdbtnNewRadioButton, "6, 10");
@@ -121,11 +130,13 @@ public class PainelCadastroListas extends JPanel {
 		JRadioButton rdbtnKilogramas = new JRadioButton("Kilogramas");
 		add(rdbtnKilogramas, "6, 12");
 
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		add(formattedTextField, "6, 14, fill, default");
+		JFormattedTextField frmtdtxtfldKgOuUnidade = new JFormattedTextField();
+		frmtdtxtfldKgOuUnidade.setToolTipText("Use Kg ou Unidade");
+		frmtdtxtfldKgOuUnidade.setHorizontalAlignment(SwingConstants.CENTER);
+		add(frmtdtxtfldKgOuUnidade, "6, 14, fill, default");
 
 		JButton btnAdicionar = new JButton("+");
-		add(btnAdicionar, "8, 14");
+		add(btnAdicionar, "8, 14, left, default");
 
 		JLabel lblProdutoSelecionados = new JLabel("Produtos Selecionados");
 		lblProdutoSelecionados.setHorizontalAlignment(SwingConstants.CENTER);
@@ -134,6 +145,9 @@ public class PainelCadastroListas extends JPanel {
 		tableProdutos = new JTable();
 		this.limparTabelaProdutos();
 		add(tableProdutos, "6, 18, fill, fill");
+		
+		JButton btnAdicionar_1 = new JButton("-");
+		add(btnAdicionar_1, "8, 18, left, top");
 		add(btnVoltar, "4, 26");
 		add(btnCadastrarLista, "6, 26");
 

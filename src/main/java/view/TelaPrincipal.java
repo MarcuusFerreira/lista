@@ -14,6 +14,12 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.GridLayout;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaPrincipal {
 
@@ -51,13 +57,13 @@ public class TelaPrincipal {
 		frmTelaPrincipal.setBounds(100, 100, 450, 490);
 		frmTelaPrincipal.setLocationRelativeTo(null); // Centralizar na tela
 		frmTelaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		frmTelaPrincipal.setJMenuBar(menuBar);
-		
+
 		JMenu mnUsuarios = new JMenu("Usuários");
 		menuBar.add(mnUsuarios);
-		
+
 		JMenuItem mntmCadastrarUsuario = new JMenuItem("Cadastrar Usuário");
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -70,23 +76,23 @@ public class TelaPrincipal {
 			}
 		});
 		mnUsuarios.add(mntmCadastrarUsuario);
-		
+
 		JMenuItem mntmMostrarUsuarios = new JMenuItem("Mostrar Usuários");
 		mntmMostrarUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			PainelMostrarClientes painelMostrarClientes = new PainelMostrarClientes();
-			frmTelaPrincipal.setContentPane(painelMostrarClientes);
-			frmTelaPrincipal.setTitle("Listagem de Clientes");
-			frmTelaPrincipal.setBounds(100, 100, 450, 490);
-			frmTelaPrincipal.setLocationRelativeTo(null);
-			frmTelaPrincipal.revalidate();
+				PainelMostrarUsuarios painelMostrarClientes = new PainelMostrarUsuarios();
+				frmTelaPrincipal.setContentPane(painelMostrarClientes);
+				frmTelaPrincipal.setTitle("Listagem de Clientes");
+				frmTelaPrincipal.setBounds(100, 100, 450, 490);
+				frmTelaPrincipal.setLocationRelativeTo(null);
+				frmTelaPrincipal.revalidate();
 			}
 		});
 		mnUsuarios.add(mntmMostrarUsuarios);
-		
+
 		JMenu mnListas = new JMenu("Listas");
 		menuBar.add(mnListas);
-		
+
 		JMenuItem mntmCadastrarLista = new JMenuItem("Cadastrar Listas");
 		mntmCadastrarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,61 +105,49 @@ public class TelaPrincipal {
 			}
 		});
 		mnListas.add(mntmCadastrarLista);
-		
+
 		JMenuItem mntmMostrarListas = new JMenuItem("Mostrar Listas");
 		mnListas.add(mntmMostrarListas);
-		
+
 		JMenu mnSobre = new JMenu("Sobre");
 		menuBar.add(mnSobre);
-		
+
 		JMenuItem mntmSobreNos = new JMenuItem("Sobre Nós");
 		mntmSobreNos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String message = "Software pensado e devenvolvido por:\n - Guilherme Caon \n- Marcus Ferreira\n- Vinicius Alves";
-		        JOptionPane.showMessageDialog(null, message, "Sobre nós", JOptionPane.INFORMATION_MESSAGE);
+				String message = "Software pensado e devenvolvido por:\n - Guilherme Caon \n- Marcus Ferreira\n- Vinicius Alves\n";
+				JOptionPane.showMessageDialog(null, message, "Sobre nós", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		mnSobre.add(mntmSobreNos);
-		frmTelaPrincipal.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
+
+		JMenu mnAdm = new JMenu("Adm");
+		menuBar.add(mnAdm);
+
+		JMenuItem mntmCadastroProdutos = new JMenuItem("CRUD de produtos");
+		mntmCadastroProdutos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PainelCadastroProdutosAdministrador painelCadastroProdutosAdministrador = new PainelCadastroProdutosAdministrador();
+				frmTelaPrincipal.setContentPane(painelCadastroProdutosAdministrador);
+				frmTelaPrincipal.setTitle("CRUD de Produtos");
+				frmTelaPrincipal.setBounds(100, 100, 450, 490);
+				frmTelaPrincipal.setLocationRelativeTo(null);
+				frmTelaPrincipal.revalidate();
+
+			}
+		});
+		mnAdm.add(mntmCadastroProdutos);
+		frmTelaPrincipal.getContentPane().setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+						FormSpecs.DEFAULT_COLSPEC, },
+				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
+
+		JLabel lblNewLabel = new JLabel("Bem vindo ao sistema, navegue usando o MenuBar acima");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		frmTelaPrincipal.getContentPane().add(lblNewLabel, "4, 8, center, center");
 	}
 
 }
