@@ -61,13 +61,13 @@ public class TelaPrincipal {
 		JMenuBar menuBar = new JMenuBar();
 		frmTelaPrincipal.setJMenuBar(menuBar);
 
-		JMenu mnUsuarios = new JMenu("Usuários");
-		menuBar.add(mnUsuarios);
+		JMenu mnClientes = new JMenu("Clientes");
+		menuBar.add(mnClientes);
 
-		JMenuItem mntmCadastrarUsuario = new JMenuItem("Cadastrar Usuário");
-		mntmCadastrarUsuario.addActionListener(new ActionListener() {
+		JMenuItem mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
+		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PainelCadastroUsuario painelCadastro = new PainelCadastroUsuario();
+				PainelCadastroCliente painelCadastro = new PainelCadastroCliente();
 				frmTelaPrincipal.setContentPane(painelCadastro);
 				frmTelaPrincipal.setTitle("Cadastrar Usuário");
 				frmTelaPrincipal.setBounds(100, 100, 450, 490);
@@ -75,10 +75,10 @@ public class TelaPrincipal {
 				frmTelaPrincipal.revalidate();
 			}
 		});
-		mnUsuarios.add(mntmCadastrarUsuario);
+		mnClientes.add(mntmCadastrarCliente);
 
-		JMenuItem mntmMostrarUsuarios = new JMenuItem("Mostrar Usuários");
-		mntmMostrarUsuarios.addActionListener(new ActionListener() {
+		JMenuItem mntmMostrarClientes = new JMenuItem("Mostrar Clientes");
+		mntmMostrarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PainelMostrarUsuarios painelMostrarClientes = new PainelMostrarUsuarios();
 				frmTelaPrincipal.setContentPane(painelMostrarClientes);
@@ -88,7 +88,7 @@ public class TelaPrincipal {
 				frmTelaPrincipal.revalidate();
 			}
 		});
-		mnUsuarios.add(mntmMostrarUsuarios);
+		mnClientes.add(mntmMostrarClientes);
 
 		JMenu mnListas = new JMenu("Listas");
 		menuBar.add(mnListas);

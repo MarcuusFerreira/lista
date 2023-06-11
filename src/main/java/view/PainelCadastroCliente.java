@@ -32,7 +32,7 @@ import model.exception.ErroCadastroException;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class PainelCadastroUsuario extends JPanel  {
+public class PainelCadastroCliente extends JPanel  {
 	private JTextField textNome;
 	private JFormattedTextField textCpf;
 	private MaskFormatter mascaraCpf;
@@ -46,13 +46,13 @@ public class PainelCadastroUsuario extends JPanel  {
 	private JButton btnPegarData;
 	private JTextField textNomeUsuario;
 	private JPasswordField textSenha;
-	private JLabel lblNewLabel;
+	private JLabel lblCliente;
 
 	/**
 	 * Create the panel.
 	 * @throws ParseException 
 	 */
-	public PainelCadastroUsuario() {
+	public PainelCadastroCliente() {
 		setBounds(100, 100, 450, 490);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -93,10 +93,10 @@ public class PainelCadastroUsuario extends JPanel  {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
-		lblNewLabel = new JLabel("Cadastro de Usuário");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblNewLabel, "3, 4, 5, 1");
+		lblCliente = new JLabel("Cadastro de Cliente");
+		lblCliente.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblCliente, "3, 4, 5, 1");
 		
 				JLabel lblNomeCompleto = new JLabel("Nome completo:");
 				add(lblNomeCompleto, "3, 6, right, default");

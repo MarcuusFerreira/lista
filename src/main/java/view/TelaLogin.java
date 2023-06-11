@@ -23,7 +23,7 @@ public class TelaLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	private PainelCadastroUsuario painelCadastroUsuario;
+	private PainelCadastroCliente painelCadastroUsuario;
 
 	/**
 	 * Launch the application.
@@ -93,7 +93,7 @@ public class TelaLogin extends JFrame {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PainelCadastroUsuario painelCadastro = new PainelCadastroUsuario();
+				PainelCadastroCliente painelCadastro = new PainelCadastroCliente();
 				setContentPane(painelCadastro);
 				setBounds(100, 100, 450, 470);
 				setLocationRelativeTo(null);
