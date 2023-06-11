@@ -129,6 +129,9 @@ public class PainelCadastroListas extends JPanel {
 
 		JRadioButton rdbtnKilogramas = new JRadioButton("Kilogramas");
 		add(rdbtnKilogramas, "6, 12");
+		
+		JLabel lblQuantidadekg = new JLabel("Quantidade/Peso:");
+		add(lblQuantidadekg, "4, 14, right, default");
 
 		JFormattedTextField frmtdtxtfldKgOuUnidade = new JFormattedTextField();
 		frmtdtxtfldKgOuUnidade.setToolTipText("Use Kg ou Unidade");
@@ -144,7 +147,7 @@ public class PainelCadastroListas extends JPanel {
 
 		tableProdutos = new JTable();
 		this.limparTabelaProdutos();
-		add(tableProdutos, "6, 18, fill, fill");
+		add(tableProdutos, "6, 18, 1, 3, fill, fill");
 		
 		JButton btnAdicionar_1 = new JButton("-");
 		add(btnAdicionar_1, "8, 18, left, top");
