@@ -41,7 +41,7 @@ public class PainelCadastroListas extends JPanel {
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
 	private JTable tableProdutos;
-	private String[] nomesColunas = { "Unidade de medida", "Nome" };
+	private String[] nomesColunas = { "Unidade de medida", "Nome do Produto" };
 
 	/**
 	 * Create the panel.

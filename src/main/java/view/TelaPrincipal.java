@@ -78,6 +78,16 @@ public class TelaPrincipal {
 		mnListas.add(mntmCadastrarLista);
 
 		JMenuItem mntmMostrarListas = new JMenuItem("Mostrar Listas");
+		mntmMostrarListas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PainelMostrarListas painelMostrarListas = new PainelMostrarListas();
+				frmTelaPrincipal.setContentPane(painelMostrarListas);
+				frmTelaPrincipal.setTitle("Mostrar Listas");
+				frmTelaPrincipal.setBounds(100, 100, 450, 490);
+				frmTelaPrincipal.setLocationRelativeTo(null);
+				frmTelaPrincipal.revalidate();
+			}
+		});
 		mnListas.add(mntmMostrarListas);
 
 		JMenu mnSobre = new JMenu("Sobre");
