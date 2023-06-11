@@ -156,7 +156,8 @@ public class PainelCadastroUsuario extends JPanel  {
 
 		textSenha = new JPasswordField();
 		add(textSenha, "6, 22, fill, default");
-		add(btnVoltar, "4, 26");
+		
+		
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -193,7 +194,7 @@ public class PainelCadastroUsuario extends JPanel  {
 			}
 		});
 		
-		
+		add(btnVoltar, "4, 26");
 		add(btnCadastrar, "6, 26");
 
 		btnLimpar = new JButton("Limpar");
