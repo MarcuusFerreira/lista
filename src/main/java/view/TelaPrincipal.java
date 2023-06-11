@@ -61,35 +61,6 @@ public class TelaPrincipal {
 		JMenuBar menuBar = new JMenuBar();
 		frmTelaPrincipal.setJMenuBar(menuBar);
 
-		JMenu mnClientes = new JMenu("Clientes");
-		menuBar.add(mnClientes);
-
-		JMenuItem mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
-		mntmCadastrarCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PainelCadastroCliente painelCadastro = new PainelCadastroCliente();
-				frmTelaPrincipal.setContentPane(painelCadastro);
-				frmTelaPrincipal.setTitle("Cadastrar Usuário");
-				frmTelaPrincipal.setBounds(100, 100, 450, 490);
-				frmTelaPrincipal.setLocationRelativeTo(null);
-				frmTelaPrincipal.revalidate();
-			}
-		});
-		mnClientes.add(mntmCadastrarCliente);
-
-		JMenuItem mntmMostrarClientes = new JMenuItem("Mostrar Clientes");
-		mntmMostrarClientes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PainelMostrarUsuarios painelMostrarClientes = new PainelMostrarUsuarios();
-				frmTelaPrincipal.setContentPane(painelMostrarClientes);
-				frmTelaPrincipal.setTitle("Listagem de Clientes");
-				frmTelaPrincipal.setBounds(100, 100, 450, 490);
-				frmTelaPrincipal.setLocationRelativeTo(null);
-				frmTelaPrincipal.revalidate();
-			}
-		});
-		mnClientes.add(mntmMostrarClientes);
-
 		JMenu mnListas = new JMenu("Listas");
 		menuBar.add(mnListas);
 
@@ -136,6 +107,32 @@ public class TelaPrincipal {
 
 			}
 		});
+		
+				JMenuItem mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
+				mnAdm.add(mntmCadastrarCliente);
+				mntmCadastrarCliente.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						PainelCadastroCliente painelCadastro = new PainelCadastroCliente();
+						frmTelaPrincipal.setContentPane(painelCadastro);
+						frmTelaPrincipal.setTitle("Cadastrar Cliente");
+						frmTelaPrincipal.setBounds(100, 100, 450, 490);
+						frmTelaPrincipal.setLocationRelativeTo(null);
+						frmTelaPrincipal.revalidate();
+					}
+				});
+		
+				JMenuItem mntmMostrarClientes = new JMenuItem("Mostrar Clientes");
+				mnAdm.add(mntmMostrarClientes);
+				mntmMostrarClientes.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						PainelMostrarUsuarios painelMostrarClientes = new PainelMostrarUsuarios();
+						frmTelaPrincipal.setContentPane(painelMostrarClientes);
+						frmTelaPrincipal.setTitle("Listagem de Clientes");
+						frmTelaPrincipal.setBounds(100, 100, 450, 490);
+						frmTelaPrincipal.setLocationRelativeTo(null);
+						frmTelaPrincipal.revalidate();
+					}
+				});
 		mnAdm.add(mntmCadastroProdutos);
 		frmTelaPrincipal.getContentPane().setLayout(new FormLayout(
 				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
