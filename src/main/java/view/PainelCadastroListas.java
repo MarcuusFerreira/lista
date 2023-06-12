@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,6 +32,8 @@ import javax.swing.JList;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
+
+import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JCheckBox;
 
@@ -42,7 +45,11 @@ public class PainelCadastroListas extends JPanel {
 	private DateTimePicker dataTeste;
 	private JTable tableProdutos;
 	private String[] nomesColunas = { "Unidade de medida", "Nome do Produto" };
-
+	public JFrame frmTelaPrincipal;
+	private JFormattedTextField textKgOuUnidade;
+	private JComboBox cbProdutos;
+	private JRadioButton rdbtnQuantidade;
+	private JRadioButton rdbtnKilogramas;
 	/**
 	 * Create the panel.
 	 * 
@@ -68,10 +75,10 @@ public class PainelCadastroListas extends JPanel {
 		JLabel lblCadastroLista = new JLabel("Adicione uma Lista seus Produtos");
 		lblCadastroLista.setFont(new Font("Tahoma", Font.BOLD, 14));
 		add(lblCadastroLista, "1, 2, 8, 1, center, default");
-		
+
 		JLabel lblDesejaAdicionarUma = new JLabel("Deseja utilizar a última lista criada?");
 		add(lblDesejaAdicionarUma, "6, 4, center, center");
-		
+
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Sim");
 		add(chckbxNewCheckBox, "8, 4");
 
@@ -107,14 +114,14 @@ public class PainelCadastroListas extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 			}
 		});
 
-		JComboBox cbProdutos = new JComboBox();
+		cbProdutos = new JComboBox();
 		add(cbProdutos, "6, 8, fill, default");
 		cbProdutos.setSelectedIndex(-1);
 		cbProdutos.addItem("Óleo de cozinha");
@@ -124,19 +131,19 @@ public class PainelCadastroListas extends JPanel {
 		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
 		add(lblNewLabel, "4, 10, left, default");
 
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Quantidade");
-		add(rdbtnNewRadioButton, "6, 10");
+		rdbtnQuantidade = new JRadioButton("Quantidade");
+		add(rdbtnQuantidade, "6, 10");
 
-		JRadioButton rdbtnKilogramas = new JRadioButton("Kilogramas");
+		rdbtnKilogramas = new JRadioButton("Kilogramas");
 		add(rdbtnKilogramas, "6, 12");
-		
+
 		JLabel lblQuantidadekg = new JLabel("Quantidade/Peso:");
 		add(lblQuantidadekg, "4, 14, right, default");
 
-		JFormattedTextField frmtdtxtfldKgOuUnidade = new JFormattedTextField();
-		frmtdtxtfldKgOuUnidade.setToolTipText("Use Kg ou Unidade");
-		frmtdtxtfldKgOuUnidade.setHorizontalAlignment(SwingConstants.CENTER);
-		add(frmtdtxtfldKgOuUnidade, "6, 14, fill, default");
+		textKgOuUnidade = new JFormattedTextField();
+		textKgOuUnidade.setToolTipText("Use Kg ou Unidade");
+		textKgOuUnidade.setHorizontalAlignment(SwingConstants.CENTER);
+		add(textKgOuUnidade, "6, 14, fill, default");
 
 		JButton btnAdicionar = new JButton("+");
 		add(btnAdicionar, "8, 14, left, default");
@@ -148,14 +155,37 @@ public class PainelCadastroListas extends JPanel {
 		tableProdutos = new JTable();
 		this.limparTabelaProdutos();
 		add(tableProdutos, "6, 18, 1, 3, fill, fill");
-		
+
 		JButton btnAdicionar_1 = new JButton("-");
 		add(btnAdicionar_1, "8, 18, left, top");
 		add(btnVoltar, "4, 26");
 		add(btnCadastrarLista, "6, 26");
 
 		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limparCampos();
+			}
+
+		});
 		add(btnLimpar, "8, 26");
+	}
+
+	private void limparCampos() {
+		// Limpar campos de texto
+		textKgOuUnidade.setText("");
+
+		// Limpar seleção dos JComboBox
+		cbNomeListas.setSelectedIndex(-1);
+		cbProdutos.setSelectedIndex(-1);
+
+		// Limpar seleção dos JRadioButtons
+		rdbtnQuantidade.setSelected(false);
+		rdbtnKilogramas.setSelected(false);
+
+		// Limpar tabela de produtos
+		limparTabelaProdutos();
+
 	}
 
 	private void limparTabelaProdutos() {
