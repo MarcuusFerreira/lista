@@ -21,7 +21,7 @@ public class ClienteBO {
 		if(dao.cpfJaExiste(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF já cadastrado!");
 		}
-		if (!calcularCpf(cliente.getCpf())) {
+		if (calcularCpf(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF é Inválido!");
 		}
 		return dao.cadastrarNovoClienteDAO(cliente);

@@ -179,7 +179,7 @@ public class PainelCadastroCliente extends JPanel  {
 				cliente.setDataCadastro(LocalDate.now());
 				cliente.setTipoUsuario(1);
 				cliente.setNomeUsuario(textNomeUsuario.getText());
-				cliente.setSenha(textSenha.getSelectedText());
+				cliente.setSenha(textSenha.getText());
 				try {
 					controller = new ClienteController();
 					controller.cadastrarNovoClienteController(cliente);
@@ -223,7 +223,7 @@ public class PainelCadastroCliente extends JPanel  {
 			textCpf.getText().trim().isBlank() ||
 			textDataNascimento.getText().trim().isBlank() ||
 			textNomeUsuario.getText().trim().isBlank() ||
-			textSenha.getSelectedText().trim().isBlank()) {
+			textSenha.getText().trim().isBlank()) {
 			retorno = true;
 		}
 		return retorno;

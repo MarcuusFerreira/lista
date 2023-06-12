@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+
+import javax.swing.JOptionPane;
 
 import model.entity.Cliente;
 import model.exception.ErroCadastroException;
@@ -22,8 +22,7 @@ public class ClienteDAO {
 	
 	public Cliente cadastrarNovoClienteDAO(Cliente cliente) throws ErroCadastroException {
 		Connection connection = Banco.getConnection();
-		String sql = "INSERT INTO CLIENTE (NOME_CLIENTE, CPF, DATA_NASCIMENTO, "
-		+ "DATA_CADASTRO, TIPO_USUARIO, NOME_USUARIO, SENHA) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO CLIENTE (NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, TIPO_USUARIO, NOME_USUARIO, SENHA) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(connection, sql);
 		try {
 			stmt.setString(1, cliente.getNomeCliente());
@@ -38,9 +37,18 @@ public class ClienteDAO {
 			ResultSet resultado = stmt.getGeneratedKeys();
 			if (resultado.next()) {
 				cliente.setIdCliente(resultado.getInt(1));
+				JOptionPane.showMessageDialog(null, "Passei no if de insert");
 			}
+			JOptionPane.showMessageDialog(null, "Passei aqui");
 		} catch (SQLException mensagem) {
-			throw new ErroCadastroException("Erro Cadastro de Cliente, por favor contate o administrador");
+			throw new ErroCadastroException("Erro Cadastro de Cliente, por favor contate o administrador" + mensagem
+					+ cliente.getNomeCliente() + "\n" 
+					+ cliente.getCpf() + "\n"
+					+ cliente.getDataNascimento() + "\n"
+					+ cliente.getDataCadastro() + "\n"
+					+ cliente.getTipoUsuario() + "\n"
+					+ cliente.getNomeUsuario() + "\n"
+					+ cliente.getSenha() + "\n");
 		} finally {
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(connection);
@@ -51,19 +59,17 @@ public class ClienteDAO {
 	public boolean cpfJaExiste(String cpf) throws ErroCadastroException {
 		boolean cpfExiste = false;
 		Connection connection = Banco.getConnection();
-		String sql = "SELECT CPF FROM CLIENTES WHERE CPF = ?";
+		String sql = "SELECT CPF FROM CLIENTE WHERE CPF = ?";
 		PreparedStatement stmt = Banco.getPreparedStatement(connection, sql);
-		ResultSet resultado = null;
 		try {
 			stmt.setString(1, cpf);
-			resultado = stmt.executeQuery();
+			ResultSet resultado = stmt.executeQuery();
 			if (resultado.next()) {
 				cpfExiste = true;
 			}
 		} catch (SQLException e) {
-			throw new ErroCadastroException("Erro ao consultar o CPF no banco, favor consulte o administrador");
+			throw new ErroCadastroException("Erro ao consultar o CPF no banco, favor consulte o administrador" + e);
 		} finally {
-			Banco.closeResultSet(resultado);
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(connection);
 		}

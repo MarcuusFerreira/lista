@@ -5,21 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.JLabel;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.GridLayout;
-import net.miginfocom.swing.MigLayout;
 
 public class TelaPrincipal {
 
