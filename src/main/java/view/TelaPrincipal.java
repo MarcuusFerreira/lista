@@ -50,7 +50,7 @@ public class TelaPrincipal {
 	private void initialize() {
 		frmTelaPrincipal = new JFrame();
 		frmTelaPrincipal.setTitle("Tela Principal");
-		frmTelaPrincipal.setBounds(100, 100, 450, 490);
+		frmTelaPrincipal.setBounds(100, 100, 610, 650);
 		frmTelaPrincipal.setLocationRelativeTo(null); // Centralizar na tela
 		frmTelaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -66,7 +66,7 @@ public class TelaPrincipal {
 				PainelCadastroListas painelCadastroLista = new PainelCadastroListas();
 				frmTelaPrincipal.setContentPane(painelCadastroLista);
 				frmTelaPrincipal.setTitle("Cadastro de Lista");
-				frmTelaPrincipal.setBounds(100, 100, 450, 490);
+				frmTelaPrincipal.setBounds(100, 100, 610, 650);
 				frmTelaPrincipal.setLocationRelativeTo(null);
 				frmTelaPrincipal.revalidate();
 			}
@@ -79,7 +79,7 @@ public class TelaPrincipal {
 				PainelMostrarListas painelMostrarListas = new PainelMostrarListas();
 				frmTelaPrincipal.setContentPane(painelMostrarListas);
 				frmTelaPrincipal.setTitle("Mostrar Listas");
-				frmTelaPrincipal.setBounds(100, 100, 450, 490);
+				frmTelaPrincipal.setBounds(100, 100, 610, 650);
 				frmTelaPrincipal.setLocationRelativeTo(null);
 				frmTelaPrincipal.revalidate();
 			}
@@ -108,7 +108,7 @@ public class TelaPrincipal {
 				PainelCadastroCliente painelCadastro = new PainelCadastroCliente();
 				frmTelaPrincipal.setContentPane(painelCadastro);
 				frmTelaPrincipal.setTitle("Cadastrar Cliente");
-				frmTelaPrincipal.setBounds(100, 100, 450, 490);
+				frmTelaPrincipal.setBounds(100, 100, 610, 650);
 				frmTelaPrincipal.setLocationRelativeTo(null);
 				frmTelaPrincipal.revalidate();
 			}
@@ -124,7 +124,7 @@ public class TelaPrincipal {
 						PainelCadastroProdutosAdministrador painelCadastroProdutosAdministrador = new PainelCadastroProdutosAdministrador();
 						frmTelaPrincipal.setContentPane(painelCadastroProdutosAdministrador);
 						frmTelaPrincipal.setTitle("CRUD de Produtos");
-						frmTelaPrincipal.setBounds(100, 100, 450, 490);
+						frmTelaPrincipal.setBounds(100, 100, 610, 650);
 						frmTelaPrincipal.setLocationRelativeTo(null);
 						frmTelaPrincipal.revalidate();
 
@@ -135,7 +135,7 @@ public class TelaPrincipal {
 				PainelMostrarClientes painelMostrarClientes = new PainelMostrarClientes();
 				frmTelaPrincipal.setContentPane(painelMostrarClientes);
 				frmTelaPrincipal.setTitle("Listagem de Clientes");
-				frmTelaPrincipal.setBounds(100, 100, 450, 490);
+				frmTelaPrincipal.setBounds(100, 100, 610, 650);
 				frmTelaPrincipal.setLocationRelativeTo(null);
 				frmTelaPrincipal.revalidate();
 			}

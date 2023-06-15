@@ -64,7 +64,7 @@ public class PainelMostrarClientes extends JPanel {
 	private int totalPaginas = 0;
 	private JButton btnVoltarPagina;
 	private JButton btnAvancarPagina;
-	private JLabel lblNewLabel;
+	private JLabel lblMostrarClientes;
 	private JButton btnAvancarPagina_1;
 //	private ClienteSeletor seletor = new ClienteSeletor();
 
@@ -90,7 +90,7 @@ public class PainelMostrarClientes extends JPanel {
 //	}
 
 	public PainelMostrarClientes() {
-		setBounds(100, 100, 450, 490);
+		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(
 				new ColumnSpec[] { FormSpecs.UNRELATED_GAP_COLSPEC, ColumnSpec.decode("61px"),
@@ -122,10 +122,10 @@ public class PainelMostrarClientes extends JPanel {
 			}
 		});
 
-		lblNewLabel = new JLabel("Listagem de Clientes");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblNewLabel, "2, 2, 5, 1");
+		lblMostrarClientes = new JLabel("Mostrar de Clientes");
+		lblMostrarClientes.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblMostrarClientes.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblMostrarClientes, "2, 2, 5, 1");
 
 		lblCpf = new JLabel("CPF:");
 		this.add(lblCpf, "2, 6, fill, center");
@@ -170,7 +170,6 @@ public class PainelMostrarClientes extends JPanel {
 		this.add(dtNascimentoFinal, "4, 10, 3, 1, fill, default");
 
 		btnGerarPlanilha = new JButton("Gerar Planilha");
-		btnGerarPlanilha.setEnabled(false);
 		btnGerarPlanilha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();

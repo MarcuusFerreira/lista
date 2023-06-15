@@ -53,60 +53,45 @@ public class PainelCadastroCliente extends JPanel  {
 	 * @throws ParseException 
 	 */
 	public PainelCadastroCliente() {
-		setBounds(100, 100, 450, 490);
+		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.DEFAULT_COLSPEC,
+				ColumnSpec.decode("30px"),
+				ColumnSpec.decode("105px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
+				ColumnSpec.decode("336px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,},
+				ColumnSpec.decode("102px"),},
 			new RowSpec[] {
+				RowSpec.decode("36px"),
+				RowSpec.decode("17px"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
+				RowSpec.decode("20px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("23px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("23px"),}));
 		
 		lblCliente = new JLabel("Cadastro de Cliente");
 		lblCliente.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblCliente, "3, 4, 5, 1");
+		add(lblCliente, "2, 2, 5, 1, fill, top");
 		
 				JLabel lblNomeCompleto = new JLabel("Nome completo:");
-				add(lblNomeCompleto, "3, 6, right, default");
+				add(lblNomeCompleto, "2, 4, right, center");
 		
 				textNome = new JTextField();
-				add(textNome, "5, 6, fill, default");
+				add(textNome, "4, 4, fill, top");
 				textNome.setColumns(10);
 
 		JLabel lblCpf = new JLabel("CPF:");
-		add(lblCpf, "3, 10, right, default");
+		add(lblCpf, "2, 6, right, center");
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -116,17 +101,17 @@ public class PainelCadastroCliente extends JPanel  {
 		}
 
 		textCpf = new JFormattedTextField(mascaraCpf);
-		add(textCpf, "5, 10, fill, default");
+		add(textCpf, "4, 6, fill, top");
 
 		JLabel lblDataNascimento = new JLabel("Data de nascimento:");
-		add(lblDataNascimento, "3, 14, right, default");
+		add(lblDataNascimento, "2, 8, right, center");
 
 		// Configurações da parte de DATAS do componente
 		dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
 
 		textDataNascimento = new JTextField();
-		add(textDataNascimento, "5, 14, fill, default");
+		add(textDataNascimento, "4, 8, fill, center");
 		textDataNascimento.setColumns(10);
 
 		btnPegarData = new JButton("...");
@@ -142,7 +127,7 @@ public class PainelCadastroCliente extends JPanel  {
 
 			}
 		});
-		add(btnPegarData, "7, 14, left, default");
+		add(btnPegarData, "6, 8, left, top");
 
 		try {
 			mascaraCep = new MaskFormatter("##.###-##");
@@ -151,17 +136,17 @@ public class PainelCadastroCliente extends JPanel  {
 		}
 
 		JLabel lblUsuario = new JLabel("Usuário:");
-		add(lblUsuario, "3, 18, right, default");
+		add(lblUsuario, "2, 10, right, center");
 		
 		textNomeUsuario = new JTextField();
 		textNomeUsuario.setColumns(10);
-		add(textNomeUsuario, "5, 18, fill, default");
+		add(textNomeUsuario, "4, 10, fill, top");
 
 		JLabel lblSenha = new JLabel("Senha:");
-		add(lblSenha, "3, 22, right, default");
+		add(lblSenha, "2, 12, right, center");
 
 		textSenha = new JPasswordField();
-		add(textSenha, "5, 22, fill, default");
+		add(textSenha, "4, 12, fill, top");
 		
 		
 		
@@ -200,8 +185,8 @@ public class PainelCadastroCliente extends JPanel  {
 			}
 		});
 		
-		add(btnVoltar, "3, 26");
-		add(btnCadastrar, "5, 26");
+		add(btnVoltar, "2, 14, fill, top");
+		add(btnCadastrar, "4, 14, fill, top");
 
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
@@ -214,7 +199,7 @@ public class PainelCadastroCliente extends JPanel  {
 				textSenha.setText("");
 			}
 		});
-		add(btnLimpar, "7, 26");
+		add(btnLimpar, "6, 14, fill, top");
 	}
 	
 	private boolean validarCampos() {

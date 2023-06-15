@@ -82,7 +82,7 @@ public class PainelMostrarListas extends JPanel {
 //	}
 	
 	public PainelMostrarListas() {
-		setBounds(100, 100, 450, 490);
+		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.UNRELATED_GAP_COLSPEC,
