@@ -33,15 +33,16 @@ import java.awt.Font;
 //import model.exception.ClienteComTelefoneException;
 //import model.seletor.ClienteSeletor;
 
-public class PainelMostrarUsuarios extends JPanel {
+public class PainelMostrarClientes extends JPanel {
 	private JTable tblClientes;
 	private ArrayList<Cliente> clientes;
 	private String[] nomesColunas = { "Nome", "CPF", "CEP", "Total de Listas", "Ativo?" };
 	private JTextField txtNome;
 	private MaskFormatter mascaraCpf;
 	private JFormattedTextField txtCPF;
-	
-	//componentes externos -> dependência "LGoodDatePicker" foi adicionada no pom.xml
+
+	// componentes externos -> dependência "LGoodDatePicker" foi adicionada no
+	// pom.xml
 	private DatePicker dtNascimentoInicial;
 	private DatePicker dtNascimentoFinal;
 	private JButton btnEditar;
@@ -53,11 +54,11 @@ public class PainelMostrarUsuarios extends JPanel {
 	private JLabel lblDataNascimentoDe;
 	private JLabel lblAte;
 	private JLabel lblPaginacao;
-	
-	private ClienteController controller = new ClienteController();
+
+	private ClienteController clienteController = new ClienteController();
 	private Cliente clienteSelecionado;
-	
-	//Atributos para a PAGINAÇÃO
+
+	// Atributos para a PAGINAÇÃO
 	private final int TAMANHO_PAGINA = 5;
 	private int paginaAtual = 1;
 	private int totalPaginas = 0;
@@ -66,7 +67,7 @@ public class PainelMostrarUsuarios extends JPanel {
 	private JLabel lblNewLabel;
 	private JButton btnAvancarPagina_1;
 //	private ClienteSeletor seletor = new ClienteSeletor();
-	
+
 	private void limparTabelaClientes() {
 		tblClientes.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
 	}
@@ -87,36 +88,20 @@ public class PainelMostrarUsuarios extends JPanel {
 //			model.addRow(novaLinhaDaTabela);
 //		}
 //	}
-	
-	public PainelMostrarUsuarios() {
+
+	public PainelMostrarClientes() {
 		setBounds(100, 100, 450, 490);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("61px"),
-				ColumnSpec.decode("94px"),
-				ColumnSpec.decode("center:101px"),
-				ColumnSpec.decode("94px"),
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("29px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("30px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("30px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("35px"),
-				FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC,
-				RowSpec.decode("133px"),
-				RowSpec.decode("22px"),
-				RowSpec.decode("23px"),
-				RowSpec.decode("33px"),}));
+		setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.UNRELATED_GAP_COLSPEC, ColumnSpec.decode("61px"),
+						ColumnSpec.decode("94px"), ColumnSpec.decode("center:101px"), ColumnSpec.decode("94px"),
+						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, },
+				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.PARAGRAPH_GAP_ROWSPEC, RowSpec.decode("29px"), FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("30px"),
+						FormSpecs.LINE_GAP_ROWSPEC, RowSpec.decode("30px"), FormSpecs.LINE_GAP_ROWSPEC,
+						RowSpec.decode("35px"), FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, RowSpec.decode("133px"),
+						RowSpec.decode("22px"), RowSpec.decode("23px"), RowSpec.decode("33px"), }));
 
 		tblClientes = new JTable();
 		this.limparTabelaClientes(); // Adicionei essa linha
@@ -136,26 +121,26 @@ public class PainelMostrarUsuarios extends JPanel {
 				}
 			}
 		});
-						
-						lblNewLabel = new JLabel("Listagem de Clientes");
-						lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-						lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						add(lblNewLabel, "2, 2, 5, 1");
-				
-						lblCpf = new JLabel("CPF:");
-						this.add(lblCpf, "2, 6, fill, center");
-				txtCPF = new JFormattedTextField(mascaraCpf);
-				this.add(txtCPF, "4, 6, 3, 1, fill, default");
-				txtCPF.setColumns(10);
-		
-				btnBuscar = new JButton("Buscar");
-				btnBuscar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+
+		lblNewLabel = new JLabel("Listagem de Clientes");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblNewLabel, "2, 2, 5, 1");
+
+		lblCpf = new JLabel("CPF:");
+		this.add(lblCpf, "2, 6, fill, center");
+		txtCPF = new JFormattedTextField(mascaraCpf);
+		this.add(txtCPF, "4, 6, 3, 1, fill, default");
+		txtCPF.setColumns(10);
+
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 //				buscarClientesComFiltros();
 //				atualizarTabelaClientes();
-					}
-				});
-				this.add(btnBuscar, "5, 12, fill, default");
+			}
+		});
+		this.add(btnBuscar, "5, 12, fill, default");
 		this.add(tblClientes, "2, 14, 5, 1, fill, fill");
 
 		lblNome = new JLabel("Nome:");
@@ -183,32 +168,32 @@ public class PainelMostrarUsuarios extends JPanel {
 
 		dtNascimentoFinal = new DatePicker();
 		this.add(dtNascimentoFinal, "4, 10, 3, 1, fill, default");
-		
-				btnGerarPlanilha = new JButton("Gerar Planilha");
-				btnGerarPlanilha.setEnabled(false);
-				btnGerarPlanilha.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
-						janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
 
-						int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
-						if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
-							String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
-							//TODO decomentar na aula 11
-							//controller.gerarRelatorio(clientes, caminhoEscolhido);
-						}
-					}
-				});
-				
-				btnAvancarPagina_1 = new JButton("Voltar");
-				btnAvancarPagina_1.setEnabled(false);
-				add(btnAvancarPagina_1, "3, 16");
-				this.add(btnGerarPlanilha, "2, 17, 2, 1");
-		
+		btnGerarPlanilha = new JButton("Gerar Planilha");
+		btnGerarPlanilha.setEnabled(false);
+		btnGerarPlanilha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
+				janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
+
+				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
+				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
+					clienteController = new ClienteController();
+					clienteController.exportarDadosController(clientes, caminhoEscolhido);
+				}
+			}
+		});
+
+		btnAvancarPagina_1 = new JButton("Voltar");
+		btnAvancarPagina_1.setEnabled(false);
+		add(btnAvancarPagina_1, "3, 16");
+		this.add(btnGerarPlanilha, "2, 17, 2, 1");
+
 		btnExcluir = new JButton("Excluir");
 		btnExcluir.setEnabled(false);
 //		btnExcluir.addActionListener(new ActionListener() {
-			
+
 //			@Override
 //			public void actionPerformed(ActionEvent e) {
 //				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente selecionado?");
@@ -239,7 +224,7 @@ public class PainelMostrarUsuarios extends JPanel {
 //		});
 //		btnVoltarPagina.setEnabled(false);
 //		add(btnVoltarPagina, "6, 12, 5, 1, fill, top");
-		
+
 		btnAvancarPagina = new JButton("Avançar");
 		btnAvancarPagina.setEnabled(false);
 		btnAvancarPagina.addActionListener(new ActionListener() {
@@ -252,18 +237,18 @@ public class PainelMostrarUsuarios extends JPanel {
 			}
 		});
 		add(btnAvancarPagina, "5, 16");
-		
+
 		lblPaginacao = new JLabel("0 / 0");
 		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblPaginacao, "4, 16, fill, center");
-		
-				btnEditar = new JButton("Editar");
-				btnEditar.setEnabled(false);
-				this.add(btnEditar, "5, 17, fill, default");
-		
+
+		btnEditar = new JButton("Editar");
+		btnEditar.setEnabled(false);
+		this.add(btnEditar, "5, 17, fill, default");
+
 //		atualizarQuantidadePaginas();
 	}
-	
+
 //	private void atualizarQuantidadePaginas() {
 //		//Cálculo do total de páginas (poderia ser feito no backend)
 ////		int totalRegistros = controller.contarTotalRegistrosComFiltros(seletor);
@@ -302,7 +287,7 @@ public class PainelMostrarUsuarios extends JPanel {
 //		atualizarQuantidadePaginas();
 //	}
 
-	//Torna o btnEditar acessível externamente à essa classe
+	// Torna o btnEditar acessível externamente à essa classe
 	public JButton getBtnEditar() {
 		return this.btnEditar;
 	}

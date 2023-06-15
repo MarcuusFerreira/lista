@@ -1,5 +1,6 @@
 package model.bo;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,10 +8,12 @@ import model.dao.ClienteDAO;
 import model.entity.Cliente;
 import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
+import model.geradores.GeradorPlanilha;
 
 public class ClienteBO {
 	
 	private ClienteDAO dao;
+	public Object exportarDadosBO;
 	/* String no Java começa no indice 0 logo a posição 10 é o indice 9 e 
 	 a posicao 11 é o indice 10*/
 	private static final int PESO_VALIDA_PRIMEIRO_DIGITO = 10;
@@ -61,5 +64,12 @@ public class ClienteBO {
 			calculoValido = false;
 		}
 		return calculoValido;
+	}
+
+	public void exportarDadosBO(ArrayList<Cliente> clientes, String caminhoEscolhido) {
+
+		GeradorPlanilha geradorPlanilha = new GeradorPlanilha();
+		
+		
 	}
 }

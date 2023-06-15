@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class Produto {
 	
-	private BigDecimal idProduto;
+	private Integer idProduto;
 	private String nome;
 	private LocalDate dataCadastro;
 	private String descricao;
@@ -14,10 +14,10 @@ public class Produto {
 	public Produto() {
 		
 	}
-	public BigDecimal getIdProduto() {
+	public Integer getIdProduto() {
 		return idProduto;
 	}
-	public void setIdProduto(BigDecimal idProduto) {
+	public void setIdProduto(Integer idProduto) {
 		this.idProduto = idProduto;
 	}
 	public String getNome() {

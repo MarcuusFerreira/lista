@@ -101,19 +101,6 @@ public class TelaPrincipal {
 		JMenu mnAdm = new JMenu("Adm");
 		menuBar.add(mnAdm);
 
-		JMenuItem mntmCadastroProdutos = new JMenuItem("CRUD de produtos");
-		mntmCadastroProdutos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PainelCadastroProdutosAdministrador painelCadastroProdutosAdministrador = new PainelCadastroProdutosAdministrador();
-				frmTelaPrincipal.setContentPane(painelCadastroProdutosAdministrador);
-				frmTelaPrincipal.setTitle("CRUD de Produtos");
-				frmTelaPrincipal.setBounds(100, 100, 450, 490);
-				frmTelaPrincipal.setLocationRelativeTo(null);
-				frmTelaPrincipal.revalidate();
-
-			}
-		});
-
 		JMenuItem mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
 		mnAdm.add(mntmCadastrarCliente);
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
@@ -129,9 +116,23 @@ public class TelaPrincipal {
 
 		JMenuItem mntmMostrarClientes = new JMenuItem("Mostrar Clientes");
 		mnAdm.add(mntmMostrarClientes);
+		
+				JMenuItem mntmCadastroProdutos = new JMenuItem("CRUD de produtos");
+				menuBar.add(mntmCadastroProdutos);
+				mntmCadastroProdutos.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						PainelCadastroProdutosAdministrador painelCadastroProdutosAdministrador = new PainelCadastroProdutosAdministrador();
+						frmTelaPrincipal.setContentPane(painelCadastroProdutosAdministrador);
+						frmTelaPrincipal.setTitle("CRUD de Produtos");
+						frmTelaPrincipal.setBounds(100, 100, 450, 490);
+						frmTelaPrincipal.setLocationRelativeTo(null);
+						frmTelaPrincipal.revalidate();
+
+					}
+				});
 		mntmMostrarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PainelMostrarUsuarios painelMostrarClientes = new PainelMostrarUsuarios();
+				PainelMostrarClientes painelMostrarClientes = new PainelMostrarClientes();
 				frmTelaPrincipal.setContentPane(painelMostrarClientes);
 				frmTelaPrincipal.setTitle("Listagem de Clientes");
 				frmTelaPrincipal.setBounds(100, 100, 450, 490);
@@ -139,7 +140,6 @@ public class TelaPrincipal {
 				frmTelaPrincipal.revalidate();
 			}
 		});
-		mnAdm.add(mntmCadastroProdutos);
 		frmTelaPrincipal.getContentPane().setLayout(new FormLayout(
 				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
 						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
