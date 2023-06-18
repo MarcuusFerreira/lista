@@ -33,7 +33,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import com.github.lgooddatepicker.components.DatePicker;
 
-public class PainelCadastroCliente extends JPanel  {
+public class PainelCadastroCliente extends JPanel {
 	private JTextField textNome;
 	private JFormattedTextField textCpf;
 	private MaskFormatter mascaraCpf;
@@ -46,49 +46,48 @@ public class PainelCadastroCliente extends JPanel  {
 	private JTextField textNomeUsuario;
 	private JPasswordField textSenha;
 	private JLabel lblCliente;
-	private DatePicker dtNascimentoInicial;
+	private DatePicker dtNascimento;
 
 	/**
 	 * Create the panel.
-	 * @throws ParseException 
+	 * 
+	 * @throws ParseException
 	 */
 	public PainelCadastroCliente() {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("30px"),
-				ColumnSpec.decode("105px"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("336px:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("102px"),},
-			new RowSpec[] {
-				RowSpec.decode("36px"),
-				RowSpec.decode("17px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				RowSpec.decode("31px"),
-				RowSpec.decode("20px"),
-				RowSpec.decode("23px"),
-				RowSpec.decode("23px"),
-				RowSpec.decode("31px"),
-				RowSpec.decode("20px"),
-				RowSpec.decode("31px"),
-				RowSpec.decode("20px"),
-				RowSpec.decode("31px"),
-				RowSpec.decode("23px"),}));
-		
+		setLayout(new FormLayout(
+				new ColumnSpec[] { ColumnSpec.decode("30px"), ColumnSpec.decode("105px"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("336px:grow"), FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("102px"), },
+				new RowSpec[] { RowSpec.decode("36px"), RowSpec.decode("17px"), FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("20px"), RowSpec.decode("31px"), RowSpec.decode("20px"), RowSpec.decode("23px"),
+						RowSpec.decode("23px"), RowSpec.decode("31px"), RowSpec.decode("20px"), RowSpec.decode("31px"),
+						RowSpec.decode("20px"), RowSpec.decode("31px"), RowSpec.decode("23px"), }));
+
 		lblCliente = new JLabel("Cadastro de Cliente");
 		lblCliente.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblCliente, "2, 2, 5, 1, fill, top");
-		
-				JLabel lblNomeCompleto = new JLabel("Nome completo:");
-				add(lblNomeCompleto, "2, 4, right, center");
-		
-				textNome = new JTextField();
-				add(textNome, "4, 4, fill, top");
-				textNome.setColumns(10);
+
+		JLabel lblNomeCompleto = new JLabel("Nome completo:");
+		add(lblNomeCompleto, "2, 4, right, center");
+
+		textNome = new JTextField();
+		add(textNome, "4, 4, fill, top");
+		textNome.setColumns(10);
+		// Adiciona um listener para definir o foco no campo textNome quando o painel
+		// for exibido
+		addAncestorListener(new javax.swing.event.AncestorListener() {
+			public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+				textNome.requestFocusInWindow();
+			}
+
+			public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+			}
+
+			public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+			}
+		});
 
 		JLabel lblCpf = new JLabel("CPF:");
 		add(lblCpf, "2, 6, right, center");
@@ -97,19 +96,19 @@ public class PainelCadastroCliente extends JPanel  {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
 			mascaraCpf.setValueContainsLiteralCharacters(false);
 		} catch (ParseException e) {
-			//não faz nada
+			// não faz nada
 		}
 
 		textCpf = new JFormattedTextField(mascaraCpf);
 		add(textCpf, "4, 6, fill, top");
-		
-		dtNascimentoInicial = new DatePicker();
-		dtNascimentoInicial.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
+
+		dtNascimento = new DatePicker();
+		dtNascimento.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
-		add(dtNascimentoInicial, "4, 8, fill, fill");
+		add(dtNascimento, "4, 8, fill, fill");
 
 		JLabel lblDataNascimento = new JLabel("Data de nascimento:");
 		add(lblDataNascimento, "2, 8, right, center");
@@ -126,7 +125,7 @@ public class PainelCadastroCliente extends JPanel  {
 
 		JLabel lblUsuario = new JLabel("Usuário:");
 		add(lblUsuario, "2, 10, right, center");
-		
+
 		textNomeUsuario = new JTextField();
 		textNomeUsuario.setColumns(10);
 		add(textNomeUsuario, "4, 10, fill, top");
@@ -136,9 +135,7 @@ public class PainelCadastroCliente extends JPanel  {
 
 		textSenha = new JPasswordField();
 		add(textSenha, "4, 12, fill, top");
-		
-		
-		
+
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -147,9 +144,15 @@ public class PainelCadastroCliente extends JPanel  {
 				}
 				Cliente cliente = new Cliente();
 				cliente.setNomeCliente(textNome.getText());
-				cliente.setCpf(textCpf.getText());   // precisou colocar a palavra reservada final pra funcionar 
-				//cliente.setDataNascimento(LocalDate.parse(textDataNascimento.getText()));
-				cliente.setDataNascimento(LocalDate.now());
+				String cpfSemMascara = null;
+				try {
+					cpfSemMascara = (String) mascaraCpf.stringToValue(textCpf.getText());
+					cliente.setCpf(cpfSemMascara);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				cliente.setDataNascimento(dtNascimento.getDate());
 				cliente.setDataCadastro(LocalDate.now());
 				cliente.setTipoUsuario(1);
 				cliente.setNomeUsuario(textNomeUsuario.getText());
@@ -164,7 +167,6 @@ public class PainelCadastroCliente extends JPanel  {
 				}
 			}
 
-			
 		});
 
 		btnVoltar = new JButton("Voltar");
@@ -173,31 +175,30 @@ public class PainelCadastroCliente extends JPanel  {
 				
 			}
 		});
-		
+
 		add(btnVoltar, "2, 14, fill, top");
 		add(btnCadastrar, "4, 14, fill, top");
 
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
 				textNome.setText("");
 				textCpf.setText("");
-				dtNascimentoInicial.setText(""); 
+				dtNascimento.setText("");
 				textNomeUsuario.setText("");
 				textSenha.setText("");
+				textNome.requestFocus();
+
 			}
 		});
 		add(btnLimpar, "6, 14, fill, top");
 	}
-	
+
 	private boolean validarCampos() {
 		boolean retorno = false;
-		if(textNome.getText().trim().isBlank() ||
-			textCpf.getText().trim().isBlank() ||
-			dtNascimentoInicial.getText().trim().isBlank() ||
-			textNomeUsuario.getText().trim().isBlank() ||
-			textSenha.getText().trim().isBlank()) {
+		if (textNome.getText().trim().isBlank() || textCpf.getText().trim().isBlank()
+				|| dtNascimento.getText().trim().isBlank() || textNomeUsuario.getText().trim().isBlank()
+				|| textSenha.getText().trim().isBlank()) {
 			retorno = true;
 		}
 		return retorno;
