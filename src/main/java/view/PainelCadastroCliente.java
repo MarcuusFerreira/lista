@@ -31,6 +31,7 @@ import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import com.github.lgooddatepicker.components.DatePicker;
 
 public class PainelCadastroCliente extends JPanel  {
 	private JTextField textNome;
@@ -39,14 +40,13 @@ public class PainelCadastroCliente extends JPanel  {
 	private MaskFormatter mascaraCep;
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
-	private JTextField textDataNascimento;
 	protected ClienteController controller;
 	private JButton btnVoltar;
 	private JButton btnLimpar;
-	private JButton btnPegarData;
 	private JTextField textNomeUsuario;
 	private JPasswordField textSenha;
 	private JLabel lblCliente;
+	private DatePicker dtNascimentoInicial;
 
 	/**
 	 * Create the panel.
@@ -59,7 +59,7 @@ public class PainelCadastroCliente extends JPanel  {
 				ColumnSpec.decode("30px"),
 				ColumnSpec.decode("105px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("336px"),
+				ColumnSpec.decode("336px:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("102px"),},
 			new RowSpec[] {
@@ -69,7 +69,7 @@ public class PainelCadastroCliente extends JPanel  {
 				RowSpec.decode("20px"),
 				RowSpec.decode("31px"),
 				RowSpec.decode("20px"),
-				RowSpec.decode("31px"),
+				RowSpec.decode("23px"),
 				RowSpec.decode("23px"),
 				RowSpec.decode("31px"),
 				RowSpec.decode("20px"),
@@ -102,6 +102,14 @@ public class PainelCadastroCliente extends JPanel  {
 
 		textCpf = new JFormattedTextField(mascaraCpf);
 		add(textCpf, "4, 6, fill, top");
+		
+		dtNascimentoInicial = new DatePicker();
+		dtNascimentoInicial.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		add(dtNascimentoInicial, "4, 8, fill, fill");
 
 		JLabel lblDataNascimento = new JLabel("Data de nascimento:");
 		add(lblDataNascimento, "2, 8, right, center");
@@ -109,25 +117,6 @@ public class PainelCadastroCliente extends JPanel  {
 		// Configurações da parte de DATAS do componente
 		dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
-
-		textDataNascimento = new JTextField();
-		add(textDataNascimento, "4, 8, fill, center");
-		textDataNascimento.setColumns(10);
-
-		btnPegarData = new JButton("...");
-		btnPegarData.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Atributos próprios do componente datePicker (date e time)
-				LocalDate dataSelecionada = dataTeste.getDatePicker().getDate();
-
-				LocalDateTime dataComHora = LocalDateTime.of(dataSelecionada, null);
-
-				JOptionPane.showMessageDialog(null, "Data selecionada: " + dataSelecionada.toString());
-				JOptionPane.showMessageDialog(null, "Data e hora selecionada: " + dataComHora.toString());
-
-			}
-		});
-		add(btnPegarData, "6, 8, left, top");
 
 		try {
 			mascaraCep = new MaskFormatter("##.###-##");
@@ -194,7 +183,7 @@ public class PainelCadastroCliente extends JPanel  {
 			public void actionPerformed(ActionEvent e) {
 				textNome.setText("");
 				textCpf.setText("");
-				textDataNascimento.setText("");
+				dtNascimentoInicial.setText(""); 
 				textNomeUsuario.setText("");
 				textSenha.setText("");
 			}
@@ -206,7 +195,7 @@ public class PainelCadastroCliente extends JPanel  {
 		boolean retorno = false;
 		if(textNome.getText().trim().isBlank() ||
 			textCpf.getText().trim().isBlank() ||
-			textDataNascimento.getText().trim().isBlank() ||
+			dtNascimentoInicial.getText().trim().isBlank() ||
 			textNomeUsuario.getText().trim().isBlank() ||
 			textSenha.getText().trim().isBlank()) {
 			retorno = true;
