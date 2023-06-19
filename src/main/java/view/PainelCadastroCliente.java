@@ -1,12 +1,11 @@
 package view;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -14,12 +13,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.JTextComponent;
 import javax.swing.text.MaskFormatter;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
-import com.github.lgooddatepicker.components.DateTimePicker;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -29,9 +28,6 @@ import controller.ClienteController;
 import model.entity.Cliente;
 import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import com.github.lgooddatepicker.components.DatePicker;
 
 public class PainelCadastroCliente extends JPanel {
 	private JTextField textNome;
@@ -39,7 +35,6 @@ public class PainelCadastroCliente extends JPanel {
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCep;
 	private DatePickerSettings dateSettings;
-	private DateTimePicker dataTeste;
 	protected ClienteController controller;
 	private JButton btnVoltar;
 	private JButton btnLimpar;
@@ -162,7 +157,7 @@ public class PainelCadastroCliente extends JPanel {
 					cpfSemMascara = (String) mascaraCpf.stringToValue(textCpf.getText());
 					cliente.setCpf(cpfSemMascara);
 				} catch (ParseException e1) {
-					e1.printStackTrace();
+//					e1.printStackTrace();
 				}
 				cliente.setDataNascimento(dtNascimento.getDate());
 				cliente.setDataCadastro(LocalDate.now());
