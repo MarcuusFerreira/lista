@@ -37,9 +37,7 @@ public class ClienteDAO {
 			ResultSet resultado = stmt.getGeneratedKeys();
 			if (resultado.next()) {
 				cliente.setIdCliente(resultado.getInt(1));
-				JOptionPane.showMessageDialog(null, "Passei no if de insert");
 			}
-			JOptionPane.showMessageDialog(null, "Passei aqui");
 		} catch (SQLException mensagem) {
 			throw new ErroCadastroException("Erro Cadastro de Cliente, por favor contate o administrador" + mensagem
 					+ cliente.getNomeCliente() + "\n" 

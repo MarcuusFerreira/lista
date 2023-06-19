@@ -2,6 +2,7 @@ package model.bo;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import model.dao.ClienteDAO;
@@ -24,14 +25,14 @@ public class ClienteBO {
 		if(dao.cpfJaExiste(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF já cadastrado!");
 		}
-//		if (calcularCpf(cliente.getCpf())) {
-//			throw new CpfInvalidoException("CPF é Inválido!");
-//		}
+		if (calcularCpf(cliente.getCpf())) {
+			throw new CpfInvalidoException("CPF é Inválido!");
+		}
 		return dao.cadastrarNovoClienteDAO(cliente);
 	}
 
 	private boolean calcularCpf(String cpf) {
-		boolean calculoValido = true;
+		boolean calculoValido = false;
 		String cpfValidador = cpf.substring(0,9);
 		int pesoPrimeiroDigito = PESO_VALIDA_PRIMEIRO_DIGITO;
 		int pesoSegundoDigito = PESO_VALIDA_SEGUNDO_DIGITO;
@@ -61,15 +62,33 @@ public class ClienteBO {
 		cpfValidador = cpfValidador + segundoDigitoVerificador;
 		
 		if(!cpfValidador.equals(cpf)) {
-			calculoValido = false;
+			calculoValido = true;
+		}
+		if(cpfInvalidos(cpfValidador)) {
+			calculoValido = true;
 		}
 		return calculoValido;
 	}
 
+	private boolean cpfInvalidos(String cpf) {
+		boolean retorno = false;
+		List<String> cpfs = new ArrayList<String>();
+		cpfs.add("11111111111");
+		cpfs.add("22222222222");
+		cpfs.add("33333333333");
+		cpfs.add("44444444444");
+		cpfs.add("55555555555");
+		cpfs.add("66666666666");
+		cpfs.add("77777777777");
+		cpfs.add("88888888888");
+		cpfs.add("99999999999");
+		if(cpfs.contains(cpf)) {
+			retorno = true;
+		}
+		return retorno;
+	}
+	
 	public void exportarDadosBO(ArrayList<Cliente> clientes, String caminhoEscolhido) {
-
 		GeradorPlanilha geradorPlanilha = new GeradorPlanilha();
-		
-		
 	}
 }

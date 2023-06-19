@@ -139,9 +139,7 @@ public class PainelCadastroCliente extends JPanel {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (validarCampos()) {
-					JOptionPane.showMessageDialog(null, "Existem campos em branco");
-				}
+				controller = new ClienteController();
 				Cliente cliente = new Cliente();
 				cliente.setNomeCliente(textNome.getText());
 				String cpfSemMascara = null;
@@ -149,7 +147,6 @@ public class PainelCadastroCliente extends JPanel {
 					cpfSemMascara = (String) mascaraCpf.stringToValue(textCpf.getText());
 					cliente.setCpf(cpfSemMascara);
 				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				cliente.setDataNascimento(dtNascimento.getDate());
@@ -158,7 +155,6 @@ public class PainelCadastroCliente extends JPanel {
 				cliente.setNomeUsuario(textNomeUsuario.getText());
 				cliente.setSenha(textSenha.getText());
 				try {
-					controller = new ClienteController();
 					controller.cadastrarNovoClienteController(cliente);
 				} catch (ErroCadastroException mensagem) {
 					JOptionPane.showMessageDialog(null, mensagem);
@@ -192,15 +188,5 @@ public class PainelCadastroCliente extends JPanel {
 			}
 		});
 		add(btnLimpar, "6, 14, fill, top");
-	}
-
-	private boolean validarCampos() {
-		boolean retorno = false;
-		if (textNome.getText().trim().isBlank() || textCpf.getText().trim().isBlank()
-				|| dtNascimento.getText().trim().isBlank() || textNomeUsuario.getText().trim().isBlank()
-				|| textSenha.getText().trim().isBlank()) {
-			retorno = true;
-		}
-		return retorno;
 	}
 }
