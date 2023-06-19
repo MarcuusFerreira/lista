@@ -56,13 +56,28 @@ public class PainelCadastroCliente extends JPanel {
 	public PainelCadastroCliente() {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(new FormLayout(
-				new ColumnSpec[] { ColumnSpec.decode("30px"), ColumnSpec.decode("105px"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("336px:grow"), FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("102px"), },
-				new RowSpec[] { RowSpec.decode("36px"), RowSpec.decode("17px"), FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("20px"), RowSpec.decode("31px"), RowSpec.decode("20px"), RowSpec.decode("23px"),
-						RowSpec.decode("23px"), RowSpec.decode("31px"), RowSpec.decode("20px"), RowSpec.decode("31px"),
-						RowSpec.decode("20px"), RowSpec.decode("31px"), RowSpec.decode("23px"), }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("30px"),
+				ColumnSpec.decode("115px"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("336px:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("102px"),},
+			new RowSpec[] {
+				RowSpec.decode("36px"),
+				RowSpec.decode("17px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("23px"),
+				RowSpec.decode("23px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("23px"),}));
 
 		lblCliente = new JLabel("Cadastro de Cliente");
 		lblCliente.setFont(new Font("Tahoma", Font.BOLD, 14));
