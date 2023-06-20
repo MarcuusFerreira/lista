@@ -44,12 +44,13 @@ public class PainelCadastroListas extends JPanel {
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
 	private JTable tableProdutos;
-	private String[] nomesColunas = { "Unidade de medida", "Nome do Produto" };
+	private String[] nomesColunas = { "Nome da Lista", "Nome do Setor","Nome do Produto", "Unidade de medida", "Quantidade/Peso" };
 	public JFrame frmTelaPrincipal;
 	private JFormattedTextField textKgOuUnidade;
 	private JComboBox cbProdutos;
 	private JRadioButton rdbtnQuantidade;
 	private JRadioButton rdbtnKilogramas;
+	private JTextField tFListaNova;
 	/**
 	 * Create the panel.
 	 * 
@@ -58,19 +59,46 @@ public class PainelCadastroListas extends JPanel {
 	public PainelCadastroListas() {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(new FormLayout(
-				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, },
-				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow"),
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,}));
 
 		JLabel lblCadastroLista = new JLabel("Adicione uma Lista seus Produtos");
 		lblCadastroLista.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -79,11 +107,8 @@ public class PainelCadastroListas extends JPanel {
 		JLabel lblDesejaAdicionarUma = new JLabel("Deseja utilizar a última lista criada?");
 		add(lblDesejaAdicionarUma, "6, 4, center, center");
 
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Sim");
-		add(chckbxNewCheckBox, "8, 4");
-
 		JLabel lblNomeLista = new JLabel("Nome da Lista:");
-		add(lblNomeLista, "4, 6, left, default");
+		add(lblNomeLista, "4, 6, right, default");
 
 		cbNomeListas = new JComboBox();
 		cbNomeListas.setSelectedIndex(-1);
@@ -120,46 +145,70 @@ public class PainelCadastroListas extends JPanel {
 
 			}
 		});
-
-		cbProdutos = new JComboBox();
-		add(cbProdutos, "6, 8, fill, default");
-		cbProdutos.setSelectedIndex(-1);
-		cbProdutos.addItem("Óleo de cozinha");
-		cbProdutos.addItem("Arroz");
-		cbProdutos.addItem("Leite");
+				
+				JLabel lblOuCrieUma = new JLabel("Ou Crie uma nova:");
+				add(lblOuCrieUma, "4, 8, right, default");
+				
+				tFListaNova = new JTextField();
+				add(tFListaNova, "6, 8, fill, default");
+				tFListaNova.setColumns(10);
+				
+				JButton btnAdicionar_2 = new JButton("+");
+				btnAdicionar_2.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
+				add(btnAdicionar_2, "8, 8, left, default");
+				
+				JLabel lblSetor = new JLabel("Setor:");
+				add(lblSetor, "4, 10, right, default");
+				
+				JComboBox cbProdutos_1 = new JComboBox();
+				cbProdutos_1.setSelectedIndex(-1);
+				add(cbProdutos_1, "6, 10, fill, default");
+				
+				JLabel lblProduto = new JLabel("Produto:");
+				add(lblProduto, "4, 12, right, default");
+		
+				cbProdutos = new JComboBox();
+				add(cbProdutos, "6, 12, fill, default");
+				cbProdutos.setSelectedIndex(-1);
+				cbProdutos.addItem("Óleo de cozinha");
+				cbProdutos.addItem("Arroz");
+				cbProdutos.addItem("Leite");
 
 		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
-		add(lblNewLabel, "4, 10, left, default");
+		add(lblNewLabel, "4, 14, left, default");
 
 		rdbtnQuantidade = new JRadioButton("Quantidade");
-		add(rdbtnQuantidade, "6, 10");
+		add(rdbtnQuantidade, "6, 14");
 
 		rdbtnKilogramas = new JRadioButton("Kilogramas");
-		add(rdbtnKilogramas, "6, 12");
+		add(rdbtnKilogramas, "6, 16");
 
 		JLabel lblQuantidadekg = new JLabel("Quantidade/Peso:");
-		add(lblQuantidadekg, "4, 14, right, default");
+		add(lblQuantidadekg, "4, 18, right, default");
 
 		textKgOuUnidade = new JFormattedTextField();
 		textKgOuUnidade.setToolTipText("Use Kg ou Unidade");
 		textKgOuUnidade.setHorizontalAlignment(SwingConstants.CENTER);
-		add(textKgOuUnidade, "6, 14, fill, default");
+		add(textKgOuUnidade, "6, 18, fill, default");
 
 		JButton btnAdicionar = new JButton("+");
-		add(btnAdicionar, "8, 14, left, default");
+		add(btnAdicionar, "8, 18, left, default");
 
 		JLabel lblProdutoSelecionados = new JLabel("Produtos Selecionados");
 		lblProdutoSelecionados.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblProdutoSelecionados, "6, 16");
+		add(lblProdutoSelecionados, "6, 20");
 
 		tableProdutos = new JTable();
 		this.limparTabelaProdutos();
-		add(tableProdutos, "6, 18, 1, 3, fill, fill");
+		add(tableProdutos, "6, 22, 1, 3, fill, fill");
 
 		JButton btnAdicionar_1 = new JButton("-");
-		add(btnAdicionar_1, "8, 18, left, top");
-		add(btnVoltar, "4, 26");
-		add(btnCadastrarLista, "6, 26");
+		add(btnAdicionar_1, "8, 22, left, top");
+		add(btnVoltar, "4, 30");
+		add(btnCadastrarLista, "6, 30");
 
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
@@ -168,7 +217,7 @@ public class PainelCadastroListas extends JPanel {
 			}
 
 		});
-		add(btnLimpar, "8, 26");
+		add(btnLimpar, "8, 30");
 	}
 
 	private void limparCampos() {

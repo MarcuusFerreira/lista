@@ -1,12 +1,11 @@
 package view;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -14,12 +13,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.JTextComponent;
 import javax.swing.text.MaskFormatter;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
-import com.github.lgooddatepicker.components.DateTimePicker;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -29,9 +28,6 @@ import controller.ClienteController;
 import model.entity.Cliente;
 import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import com.github.lgooddatepicker.components.DatePicker;
 
 public class PainelCadastroCliente extends JPanel {
 	private JTextField textNome;
@@ -39,7 +35,6 @@ public class PainelCadastroCliente extends JPanel {
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCep;
 	private DatePickerSettings dateSettings;
-	private DateTimePicker dataTeste;
 	protected ClienteController controller;
 	private JButton btnVoltar;
 	private JButton btnLimpar;
@@ -85,7 +80,7 @@ public class PainelCadastroCliente extends JPanel {
 		add(lblCliente, "2, 2, 5, 1, fill, top");
 
 		JLabel lblNomeCompleto = new JLabel("Nome completo:");
-		add(lblNomeCompleto, "2, 4, right, center");
+		add(lblNomeCompleto, "1, 4, 2, 1, right, center");
 
 		textNome = new JTextField();
 		add(textNome, "4, 4, fill, top");
@@ -105,7 +100,7 @@ public class PainelCadastroCliente extends JPanel {
 		});
 
 		JLabel lblCpf = new JLabel("CPF:");
-		add(lblCpf, "2, 6, right, center");
+		add(lblCpf, "1, 6, 2, 1, right, center");
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -123,10 +118,10 @@ public class PainelCadastroCliente extends JPanel {
 
 			}
 		});
-		add(dtNascimento, "4, 8, fill, fill");
+		add(dtNascimento, "4, 8");
 
 		JLabel lblDataNascimento = new JLabel("Data de nascimento:");
-		add(lblDataNascimento, "2, 8, right, center");
+		add(lblDataNascimento, "1, 8, 2, 1, right, center");
 
 		// Configurações da parte de DATAS do componente
 		dateSettings = new DatePickerSettings();
@@ -139,14 +134,14 @@ public class PainelCadastroCliente extends JPanel {
 		}
 
 		JLabel lblUsuario = new JLabel("Usuário:");
-		add(lblUsuario, "2, 10, right, center");
+		add(lblUsuario, "1, 10, 2, 1, right, center");
 
 		textNomeUsuario = new JTextField();
 		textNomeUsuario.setColumns(10);
 		add(textNomeUsuario, "4, 10, fill, top");
 
 		JLabel lblSenha = new JLabel("Senha:");
-		add(lblSenha, "2, 12, right, center");
+		add(lblSenha, "1, 12, 2, 1, right, center");
 
 		textSenha = new JPasswordField();
 		add(textSenha, "4, 12, fill, top");
@@ -162,7 +157,7 @@ public class PainelCadastroCliente extends JPanel {
 					cpfSemMascara = (String) mascaraCpf.stringToValue(textCpf.getText());
 					cliente.setCpf(cpfSemMascara);
 				} catch (ParseException e1) {
-					e1.printStackTrace();
+//					e1.printStackTrace();
 				}
 				cliente.setDataNascimento(dtNascimento.getDate());
 				cliente.setDataCadastro(LocalDate.now());
