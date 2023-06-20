@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -160,7 +161,7 @@ public class PainelCadastroCliente extends JPanel {
 //					e1.printStackTrace();
 				}
 				cliente.setDataNascimento(dtNascimento.getDate());
-				cliente.setDataCadastro(LocalDate.now());
+				cliente.setDataCadastro(LocalDateTime.now());
 				cliente.setTipoUsuario(1);
 				cliente.setNomeUsuario(textNomeUsuario.getText());
 				cliente.setSenha(textSenha.getText());
