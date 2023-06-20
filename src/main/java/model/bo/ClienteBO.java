@@ -1,14 +1,13 @@
 package model.bo;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import model.dao.ClienteDAO;
 import model.entity.Cliente;
 import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
+import model.exception.ErroLoginException;
 import model.geradores.GeradorPlanilha;
 
 public class ClienteBO {
@@ -90,5 +89,11 @@ public class ClienteBO {
 	
 	public void exportarDadosBO(ArrayList<Cliente> clientes, String caminhoEscolhido) {
 		GeradorPlanilha geradorPlanilha = new GeradorPlanilha();
+	}
+
+	public Cliente verificarCredenciaisBO(Cliente cliente) throws ErroLoginException {
+		dao = new ClienteDAO();
+		System.out.println("passei aqui verificarCredenciaisBO");
+		return dao.verificarCredenciaisDAO(cliente);
 	}
 }

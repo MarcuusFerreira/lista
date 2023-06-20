@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
-import javax.swing.JOptionPane;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import model.entity.Cliente;
 import model.exception.ErroCadastroException;
@@ -74,35 +74,43 @@ public class ClienteDAO {
 		return cpfExiste;
 	}
 
-	public boolean verificarCredenciais(Cliente cliente) throws ErroLoginException {
-		boolean credencialExisteNoSistema = false;
+	public Cliente verificarCredenciaisDAO(Cliente cliente) throws ErroLoginException {
 		Connection connection = Banco.getConnection();
-		String sql = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, "
-				+ "TIPO_USUARIO, NOME_USUARIO, SENHA FROM CLIENTE WHERE NOME_USUARIO = ? AND SENHA = ?";
+		String sql = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, TIPO_USUARIO FROM CLIENTE WHERE NOME_USUARIO = ? AND SENHA = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		System.out.println("passei aqui no verificarCredenciaisDAO");
 		ResultSet resultado = null;
 		try {
 			pstmt.setString(1, cliente.getNomeUsuario());
 			pstmt.setString(2, cliente.getSenha());
 			resultado = pstmt.executeQuery();
+			System.out.println("vou entrar no if");
 			if (resultado.next()) {
+				System.out.println("entrei no if");
 				cliente.setIdCliente(resultado.getInt(1));
 				cliente.setNomeCliente(resultado.getString(2));
 				cliente.setCpf(resultado.getString(3));
-				cliente.setDataNascimento(LocalDate.parse(resultado.getString(4)));
-				cliente.setDataCadastro(LocalDate.parse(resultado.getString(5)));
+				cliente.setDataNascimento(LocalDate.parse(resultado.getString(4), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				cliente.setDataCadastro(LocalDateTime.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 				cliente.setTipoUsuario(resultado.getInt(6));
-				cliente.setNomeUsuario(resultado.getString(7));
-				cliente.setSenha(resultado.getString(8));
-				credencialExisteNoSistema = true;
+				System.out.println(cliente.getIdCliente() + "\n" +
+						cliente.getNomeCliente() + "\n" +
+						cliente.getCpf() + "\n" +
+						cliente.getDataNascimento() + "\n" +
+						cliente.getDataCadastro() + "\n" +
+						cliente.getTipoUsuario() + "\n" +
+						cliente.getNomeUsuario() + "\n" +
+						cliente.getSenha());
 			}
-		} catch (SQLException e) {
+		} catch (SQLException mensagem) {
+			System.out.println(mensagem);
 			throw new ErroLoginException("Erro ao verificar as credenciais, favor contate o administrador");
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closePreparedStatement(pstmt);
 			Banco.closeConnection(connection);
 		}
-		return credencialExisteNoSistema;
+		System.out.println("vou retornar o cliente");
+		return cliente;
 	}
 }

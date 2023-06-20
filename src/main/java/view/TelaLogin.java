@@ -5,9 +5,12 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -18,12 +21,23 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import controller.ClienteController;
+import model.entity.Cliente;
+import model.exception.ErroLoginException;
+
 public class TelaLogin extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField txtNomeUsuario;
+	private JPasswordField txtSenha;
 	private PainelCadastroCliente painelCadastroUsuario;
+	private AbstractButton btnEntrar;
+	
+	private ClienteController controller;
+	private AbstractButton btnCadastrar;
+	private JLabel lblSenha;
+	private JLabel lblUsuario;
+	private JComponent lblLogin;
 
 	/**
 	 * Launch the application.
@@ -65,32 +79,42 @@ public class TelaLogin extends JFrame {
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
 						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
 
-		JLabel lblLogin = new JLabel("Login");
+		lblLogin = new JLabel("Login");
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		contentPane.add(lblLogin, "1, 2, 8, 1, center, default");
 
-		JLabel lblUsuario = new JLabel("Usuário");
+		lblUsuario = new JLabel("Usuário");
 		contentPane.add(lblUsuario, "2, 6, right, default");
 
-		textField = new JTextField();
-		contentPane.add(textField, "4, 6, 3, 1");
-		textField.setColumns(10);
+		txtNomeUsuario = new JTextField();
+		contentPane.add(txtNomeUsuario, "4, 6, 3, 1");
+		txtNomeUsuario.setColumns(10);
 
-		JLabel lblSenha = new JLabel("Senha");
+		lblSenha = new JLabel("Senha");
 		contentPane.add(lblSenha, "2, 8, right, default");
 
-		passwordField = new JPasswordField();
-		contentPane.add(passwordField, "4, 8, 3, 1");
+		txtSenha = new JPasswordField();
+		contentPane.add(txtSenha, "4, 8, 3, 1");
 
-		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+				controller = new ClienteController();
+				Cliente cliente = new Cliente();
+				cliente.setNomeUsuario(txtNomeUsuario.getText());
+				System.out.println(cliente.getNomeUsuario());
+				cliente.setSenha(txtSenha.getText());
+				System.out.println(cliente.getSenha());
+				try {
+					controller.verificarCredenciaisController(cliente);
+				} catch (ErroLoginException mensagem) {
+					JOptionPane.showMessageDialog(null, mensagem);
+				}
 			}
 		});
 		contentPane.add(btnEntrar, "1, 12, 8, 1, center, default");
 
-		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PainelCadastroCliente painelCadastro = new PainelCadastroCliente();
@@ -102,5 +126,4 @@ public class TelaLogin extends JFrame {
 		});
 		contentPane.add(btnCadastrar, "1, 14, 8, 1, center, default");
 	}
-
 }

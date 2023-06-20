@@ -1,7 +1,7 @@
 package model.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Cliente {
 	
@@ -9,7 +9,7 @@ public class Cliente {
 	private String nomeCliente;
 	private String cpf;
 	private LocalDate dataNascimento;
-	private LocalDate dataCadastro;
+	private LocalDateTime dataCadastro;
 	private Integer tipoUsuario;
 	private String nomeUsuario;
 	private String senha;
@@ -50,11 +50,11 @@ public class Cliente {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public LocalDate getDataCadastro() {
+	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(LocalDate dataCadastro) {
+	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
