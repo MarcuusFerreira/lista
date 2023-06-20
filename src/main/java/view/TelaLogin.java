@@ -22,8 +22,8 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
-import model.entity.Cliente;
 import model.exception.ErroLoginException;
+import model.vo.Cliente;
 
 public class TelaLogin extends JFrame {
 

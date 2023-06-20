@@ -25,9 +25,9 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
-import model.entity.Cliente;
 import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
+import model.vo.Cliente;
 
 public class PainelCadastroCliente extends JPanel {
 	private JTextField textNome;

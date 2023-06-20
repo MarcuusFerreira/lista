@@ -7,17 +7,21 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
-import model.entity.Cliente;
+import com.mysql.cj.xdevapi.Result;
+
+import model.exception.ErroAtualizarException;
 import model.exception.ErroCadastroException;
+import model.exception.ErroConsultarException;
+import model.exception.ErroExcluirException;
 import model.exception.ErroLoginException;
+import model.vo.Cliente;
 
 public class ClienteDAO {
 
 	/*Oque falta nessa classe:
-	 * Atualizar cliente
-	 * Excluir cliente
-	 * Consultar cliente
 	 * Consultar todos clientes*/
 	
 	public Cliente cadastrarNovoClienteDAO(Cliente cliente) throws ErroCadastroException {
@@ -83,23 +87,13 @@ public class ClienteDAO {
 			pstmt.setString(1, cliente.getNomeUsuario());
 			pstmt.setString(2, cliente.getSenha());
 			resultado = pstmt.executeQuery();
-			System.out.println("vou entrar no if");
 			if (resultado.next()) {
-				System.out.println("entrei no if");
 				cliente.setIdCliente(resultado.getInt(1));
 				cliente.setNomeCliente(resultado.getString(2));
 				cliente.setCpf(resultado.getString(3));
 				cliente.setDataNascimento(LocalDate.parse(resultado.getString(4), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 				cliente.setDataCadastro(LocalDateTime.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 				cliente.setTipoUsuario(resultado.getInt(6));
-				System.out.println(cliente.getIdCliente() + "\n" +
-						cliente.getNomeCliente() + "\n" +
-						cliente.getCpf() + "\n" +
-						cliente.getDataNascimento() + "\n" +
-						cliente.getDataCadastro() + "\n" +
-						cliente.getTipoUsuario() + "\n" +
-						cliente.getNomeUsuario() + "\n" +
-						cliente.getSenha());
 			}
 		} catch (SQLException mensagem) {
 			System.out.println(mensagem);
@@ -109,6 +103,99 @@ public class ClienteDAO {
 			Banco.closePreparedStatement(pstmt);
 			Banco.closeConnection(connection);
 		}
+		return cliente;
+	}
+	
+	public boolean atualizarCliente (Cliente cliente) throws ErroAtualizarException {
+		boolean retorno = false;
+		Connection connection = Banco.getConnection();
+		String sql = "UPDATE CLIENTE SET NOME_CLIENTE = ?, CPF = ?, DATA_NASCIMENTO = ?, "
+				+ "NOME_USUARIO = ?, SENHA = ? WHERE ID_CLIENTE = ?";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		try {
+			pstmt.setString(1, cliente.getNomeCliente());
+			pstmt.setString(2, cliente.getCpf());
+			pstmt.setObject(3, cliente.getDataCadastro());
+			pstmt.setString(4, cliente.getNomeUsuario());
+			pstmt.setString(5, cliente.getSenha());
+			pstmt.setInt(6, cliente.getIdCliente());
+			if(pstmt.executeUpdate() == 1) {
+				retorno = true;
+			}
+		} catch (SQLException mensagem) {
+			throw new ErroAtualizarException("Erro metodo atualizarCliente, Não foi possivel atualizar o cliente");
+		}
+		finally {
+			Banco.closePreparedStatement(pstmt);
+			Banco.closeConnection(connection);
+		}
+		return retorno;
+	}
+	
+	public boolean excluirCliente(Cliente cliente) throws ErroExcluirException {
+		Connection connection = Banco.getConnection();
+		String sql = "DELETE FROM CLIENTE WHERE ID_CLIENTE = ?";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		int quantidadeLinhasAfetadas = 0;
+		
+		try {
+			pstmt.setInt(1, cliente.getIdCliente());
+			quantidadeLinhasAfetadas = pstmt.executeUpdate(sql);
+		} catch (SQLException mensagem) {
+			throw new ErroExcluirException("Erro no método excluirCliente, Erro ao Excluir o cliente");
+		} finally {
+			Banco.closeStatement(pstmt);
+			Banco.closeConnection(connection);
+		}
+		boolean excluiu = quantidadeLinhasAfetadas > 0;
+		return excluiu;
+	}
+	
+	public Cliente listarClientePorId (int idCliente) throws ErroConsultarException {
+		Cliente cliente = new Cliente();
+		Connection connection = Banco.getConnection();
+		String sql = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, "
+				+ "TIPO_USUARIO, NOME_USUARIO, SENHA FROM CLIENTE WHERE ID_CLIENTE = ?";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		try {
+			pstmt.setInt(1, idCliente);
+		} catch (SQLException e) {
+			throw new ErroConsultarException("Erro no método listarClientePorId, Erro ao consultar o cliente");
+		}
+		return cliente;
+	}
+	
+	public List<Cliente> listarTodosClientes () throws ErroConsultarException {
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		Connection connection = Banco.getConnection();
+		String sql = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, "
+				+ "TIPO_USUARIO, NOME_USUARIO, SENHA FROM CLIENTE";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		try {
+			ResultSet resultado = pstmt.executeQuery();
+			while(resultado.next()) {
+				Cliente clienteBuscado = montarCliente(resultado);
+				clientes.add(clienteBuscado);
+			}
+		} catch (SQLException e) {
+			throw new ErroConsultarException("Erro no método listarTodosClientes, Erro ao consultar os clientes");
+		} finally {
+			Banco.closePreparedStatement(pstmt);
+			Banco.closeConnection(connection);
+		}
+		return clientes;
+	}
+	
+	private Cliente montarCliente(ResultSet resultado) throws SQLException {
+		Cliente cliente = new Cliente();
+		cliente.setIdCliente(resultado.getInt(1));
+		cliente.setNomeCliente(resultado.getString(2));
+		cliente.setCpf(resultado.getString(3));
+		cliente.setDataNascimento(LocalDate.parse(resultado.getString(4), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		cliente.setDataCadastro(LocalDateTime.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		cliente.setTipoUsuario(resultado.getInt(6));
+		cliente.setNomeUsuario(resultado.getString(7));
+		cliente.setSenha(resultado.getString(8));
 		return cliente;
 	}
 }

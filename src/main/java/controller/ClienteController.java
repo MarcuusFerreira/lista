@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.bo.ClienteBO;
-import model.entity.Cliente;
 import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
 import model.exception.ErroLoginException;
+import model.vo.Cliente;
 
 public class ClienteController {
 	

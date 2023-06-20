@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.ClienteDAO;
-import model.entity.Cliente;
 import model.exception.CpfInvalidoException;
 import model.exception.ErroCadastroException;
 import model.exception.ErroLoginException;
 import model.geradores.GeradorPlanilha;
+import model.vo.Cliente;
 
 public class ClienteBO {
 	

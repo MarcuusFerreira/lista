@@ -11,7 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.mysql.cj.result.Row;
 
-import model.entity.Produto;
+import model.vo.Produto;
 
 public class GeradorPlanilha {
 

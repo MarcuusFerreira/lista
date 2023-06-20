@@ -28,7 +28,8 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
-import model.entity.Cliente;
+import model.vo.Cliente;
+
 import java.awt.Font;
 //import model.exception.ClienteComTelefoneException;
 //import model.seletor.ClienteSeletor;
