@@ -80,7 +80,7 @@ public class PainelCadastroCliente extends JPanel {
 		add(lblCliente, "2, 2, 5, 1, fill, top");
 
 		JLabel lblNomeCompleto = new JLabel("Nome completo:");
-		add(lblNomeCompleto, "2, 4, right, center");
+		add(lblNomeCompleto, "1, 4, 2, 1, right, center");
 
 		textNome = new JTextField();
 		add(textNome, "4, 4, fill, top");
@@ -100,7 +100,7 @@ public class PainelCadastroCliente extends JPanel {
 		});
 
 		JLabel lblCpf = new JLabel("CPF:");
-		add(lblCpf, "2, 6, right, center");
+		add(lblCpf, "1, 6, 2, 1, right, center");
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -118,10 +118,10 @@ public class PainelCadastroCliente extends JPanel {
 
 			}
 		});
-		add(dtNascimento, "4, 8, fill, fill");
+		add(dtNascimento, "4, 8");
 
 		JLabel lblDataNascimento = new JLabel("Data de nascimento:");
-		add(lblDataNascimento, "2, 8, right, center");
+		add(lblDataNascimento, "1, 8, 2, 1, right, center");
 
 		// Configurações da parte de DATAS do componente
 		dateSettings = new DatePickerSettings();
@@ -134,14 +134,14 @@ public class PainelCadastroCliente extends JPanel {
 		}
 
 		JLabel lblUsuario = new JLabel("Usuário:");
-		add(lblUsuario, "2, 10, right, center");
+		add(lblUsuario, "1, 10, 2, 1, right, center");
 
 		textNomeUsuario = new JTextField();
 		textNomeUsuario.setColumns(10);
 		add(textNomeUsuario, "4, 10, fill, top");
 
 		JLabel lblSenha = new JLabel("Senha:");
-		add(lblSenha, "2, 12, right, center");
+		add(lblSenha, "1, 12, 2, 1, right, center");
 
 		textSenha = new JPasswordField();
 		add(textSenha, "4, 12, fill, top");
