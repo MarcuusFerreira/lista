@@ -93,7 +93,6 @@ public class ClienteBO {
 
 	public Cliente verificarCredenciaisBO(Cliente cliente) throws ErroLoginException {
 		dao = new ClienteDAO();
-		System.out.println("passei aqui verificarCredenciaisBO");
 		return dao.verificarCredenciaisDAO(cliente);
 	}
 }

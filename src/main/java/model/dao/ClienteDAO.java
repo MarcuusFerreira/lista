@@ -78,7 +78,6 @@ public class ClienteDAO {
 		Connection connection = Banco.getConnection();
 		String sql = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, TIPO_USUARIO FROM CLIENTE WHERE NOME_USUARIO = ? AND SENHA = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
-		System.out.println("passei aqui no verificarCredenciaisDAO");
 		ResultSet resultado = null;
 		try {
 			pstmt.setString(1, cliente.getNomeUsuario());
@@ -110,7 +109,6 @@ public class ClienteDAO {
 			Banco.closePreparedStatement(pstmt);
 			Banco.closeConnection(connection);
 		}
-		System.out.println("vou retornar o cliente");
 		return cliente;
 	}
 }

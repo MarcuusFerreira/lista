@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.swing.JButton;
@@ -149,6 +148,7 @@ public class PainelCadastroCliente extends JPanel {
 
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				controller = new ClienteController();
 				Cliente cliente = new Cliente();
