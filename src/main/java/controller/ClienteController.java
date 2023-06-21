@@ -15,8 +15,15 @@ public class ClienteController {
 	
 	public Cliente cadastrarNovoClienteController (Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
 		bo = new ClienteBO();
-		if(validarCamposController(cliente)) {
+		if(validarCamposEmBranco(cliente)) {
 			throw new ErroCadastroException("Existem Campos em Branco");
+		} else {
+			if(!ValidadorSenha.validarSenha(cliente.getSenha())) {
+				throw new ErroCadastroException("Senha Inválida!");
+			}
+			if(!ValidadorNomeUsuario.validarNomeUsuario(cliente.getNomeUsuario())) {
+				throw new ErroCadastroException("Nome de Usuario invalido");
+			}
 		}
 		return bo.cadastrarNovoClienteBO(cliente);
 	}
@@ -24,10 +31,9 @@ public class ClienteController {
 	public void exportarDadosController(ArrayList<Cliente> clientes, String caminhoEscolhido) {
 		bo = new ClienteBO();
 		bo.exportarDadosBO(clientes, caminhoEscolhido);
-		
 	}
 
-	private boolean validarCamposController(Cliente cliente) {
+	private boolean validarCamposEmBranco(Cliente cliente) {
 		boolean retorno = false;
 		if (cliente.getNomeCliente().trim().isBlank() || cliente.getCpf().trim().isBlank()
 				|| dataNascimentoIsNull(cliente.getDataNascimento()) || cliente.getNomeUsuario().trim().isBlank()
