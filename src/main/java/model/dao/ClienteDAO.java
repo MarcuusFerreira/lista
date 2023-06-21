@@ -66,9 +66,7 @@ public class ClienteDAO {
 		try {
 			stmt.setString(1, cpf);
 			ResultSet resultado = stmt.executeQuery();
-			if (resultado.next()) {
-				cpfExiste = true;
-			}
+			cpfExiste = resultado.next();
 		} catch (SQLException e) {
 			throw new ErroCadastroException("Erro ao consultar o CPF no banco, favor consulte o administrador" + e);
 		} finally {
