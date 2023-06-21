@@ -1,6 +1,5 @@
 package controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.bo.ClienteBO;
@@ -34,21 +33,11 @@ public class ClienteController {
 	}
 
 	private boolean validarCamposEmBranco(Cliente cliente) {
-		boolean retorno = false;
-		if (cliente.getNomeCliente().trim().isBlank() || cliente.getCpf().trim().isBlank()
-				|| dataNascimentoIsNull(cliente.getDataNascimento()) || cliente.getNomeUsuario().trim().isBlank()
-				|| cliente.getSenha().trim().isBlank()) {
-			retorno = true;
-		}
-		return retorno;		
-	}
-	
-	private boolean dataNascimentoIsNull(LocalDate dataNascimento) {
-		boolean isNull = false;
-		if(dataNascimento == null) {
-			isNull = true;
-		}
-		return isNull;
+		return cliente.getNomeCliente().isBlank() 
+				|| cliente.getCpf().isBlank()
+				|| cliente.getDataNascimento() == null 
+				|| cliente.getNomeUsuario().isBlank()
+				|| cliente.getSenha().isBlank();		
 	}
 
 	public Cliente verificarCredenciaisController(Cliente cliente) throws ErroLoginException {
