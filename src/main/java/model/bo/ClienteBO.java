@@ -18,6 +18,7 @@ public class ClienteBO {
 
 	public Cliente cadastrarNovoClienteBO(Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
 		dao = new ClienteDAO();
+		cliente.setNomeCliente(cliente.getNomeCliente().toUpperCase());
 		if(dao.cpfJaExiste(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF já cadastrado!");
 		}
