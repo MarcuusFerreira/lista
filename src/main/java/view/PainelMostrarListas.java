@@ -38,7 +38,7 @@ import javax.swing.JComboBox;
 public class PainelMostrarListas extends JPanel {
 	private JTable tblClientes;
 	private ArrayList<Cliente> clientes;
-	private String[] nomesColunas = { "Unidade de Medida", "Nome do Produto" };
+	private String[] nomesColunas = { "Nome do Produto", "Unidade de Medida", "Data da Lista" };
 	private JComboBox cbNomeListas;
 	private MaskFormatter mascaraCpf;
 	private JButton btnEditar;

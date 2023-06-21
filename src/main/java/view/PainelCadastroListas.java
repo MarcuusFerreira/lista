@@ -160,13 +160,6 @@ public class PainelCadastroListas extends JPanel {
 				});
 				add(btnAdicionar_2, "8, 8, left, default");
 				
-				JLabel lblSetor = new JLabel("Setor:");
-				add(lblSetor, "4, 10, right, default");
-				
-				JComboBox cbProdutos_1 = new JComboBox();
-				cbProdutos_1.setSelectedIndex(-1);
-				add(cbProdutos_1, "6, 10, fill, default");
-				
 				JLabel lblProduto = new JLabel("Produto:");
 				add(lblProduto, "4, 12, right, default");
 		

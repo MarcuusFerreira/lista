@@ -30,6 +30,7 @@ import model.exception.ErroCadastroException;
 import model.vo.Cliente;
 
 public class PainelCadastroCliente extends JPanel {
+	protected static final Integer USUARIO = 1;
 	private JTextField textNome;
 	private JFormattedTextField textCpf;
 	private MaskFormatter mascaraCpf;
@@ -163,18 +164,16 @@ public class PainelCadastroCliente extends JPanel {
 				}
 				cliente.setDataNascimento(dtNascimento.getDate());
 				cliente.setDataCadastro(LocalDateTime.now());
-				cliente.setTipoUsuario(1);
+				cliente.setTipoUsuario(USUARIO);
 				cliente.setNomeUsuario(textNomeUsuario.getText());
 				cliente.setSenha(textSenha.getText());
 				try {
 					controller.cadastrarNovoClienteController(cliente);
-				} catch (ErroCadastroException mensagem) {
-					JOptionPane.showMessageDialog(null, mensagem);
-				} catch (CpfInvalidoException mensagem) {
-					JOptionPane.showMessageDialog(null, mensagem);
+					//TODO mostrar mensagem de sucesso e/ou limpar a tela
+				} catch (ErroCadastroException | CpfInvalidoException excecao) {
+					JOptionPane.showMessageDialog(null, excecao.getMessage());
 				}
 			}
-
 		});
 
 		btnVoltar = new JButton("Voltar");
