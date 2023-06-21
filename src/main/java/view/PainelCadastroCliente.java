@@ -138,6 +138,7 @@ public class PainelCadastroCliente extends JPanel {
 		add(lblUsuario, "1, 10, 2, 1, right, center");
 
 		textNomeUsuario = new JTextField();
+		textNomeUsuario.setToolTipText("O usuário deve ser composta por: Pelo menos um caractere especial, maiúsculo e minúsculo sendo seu tamanho mínimo de 8");
 		textNomeUsuario.setColumns(10);
 		add(textNomeUsuario, "4, 10, fill, top");
 
@@ -145,7 +146,7 @@ public class PainelCadastroCliente extends JPanel {
 		add(lblSenha, "1, 12, 2, 1, right, center");
 
 		textSenha = new JPasswordField();
-		textSenha.setToolTipText("A senha deve ser composta por: Pelo menos um caractere especial, maiúsculo, minúsculo, e seu tamanho total mínimo de 6");
+		textSenha.setToolTipText("A senha deve ser composta por: Pelo menos um caractere especial, maiúsculo, minúsculo e numérico sendo seu tamanho mínimo de 6");
 		add(textSenha, "4, 12, fill, top");
 
 		JButton btnCadastrar = new JButton("Cadastrar");
