@@ -15,7 +15,7 @@ public class ValidadorNomeUsuario {
 		if(nomeUsuario.length() < TAMANHO_NOME_USUARIO || nomeUsuario.contains(" ") ||
 			!caracterMaiusculo.matcher(nomeUsuario).find() ||
 			!caracterMinusculo.matcher(nomeUsuario).find() || 
-			!caracterEspecial.matcher(nomeUsuario).find() ||
+			caracterEspecial.matcher(nomeUsuario).find() ||
 			numero.matcher(nomeUsuario).find()) {
 			nomeValido = false;
 		}

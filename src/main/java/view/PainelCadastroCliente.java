@@ -144,6 +144,7 @@ public class PainelCadastroCliente extends JPanel {
 		add(lblSenha, "1, 12, 2, 1, right, center");
 
 		textSenha = new JPasswordField();
+		textSenha.setToolTipText("A senha deve ser composta por: Pelo menos um caractere especial, maiúsculo, minúsculo, e seu tamanho total mínimo de 6");
 		add(textSenha, "4, 12, fill, top");
 
 		JButton btnCadastrar = new JButton("Cadastrar");
