@@ -10,9 +10,9 @@ _Cada Produto possui Nome, Setor, Marca, Nome do Produto, sua Unidade de Medida 
 ### Camada Model
 ###### Modelagem E-R
 
-1. Tabela CLIENTE:
-2. Tabela LISTA:
-3. Tabela PRODUTO:
+1. Tabela DB_LISTA_MINIMO.CLIENTE:
+2. Tabela DB_LISTA_MINIMO.LISTA:
+3. Tabela DB_LISTA_MINIMO.LISTA_PRODUTO:
 
 ###### Entidades
 
@@ -60,11 +60,11 @@ _Cada Produto possui Nome, Setor, Marca, Nome do Produto, sua Unidade de Medida 
 * Classes Controller, Service ou Servlet (varia conforme a arquitetura)
 
 
-1. EnderecoBO: validar campos obrigatórios antes de inserir/atualizar (<span><strong>&#10003;</strong></span>)
+1. ClienteBO: validar campos obrigatórios antes de inserir/atualizar (<span><strong>&#10003;</strong></span>)
 
-2. ClienteBO: validar campos obrigatórios antes de inserir/atualizar (<span><strong>&#10003;</strong></span>)
-
-3. TelefoneBO: validar campos obrigatórios antes de inserir/atualizar
+2. ListaBO: validar campos obrigatórios antes de inserir/atualizar
+   
+3. ProdutoBO: validar campos obrigatórios antes de inserir/atualizar
 
 ### Camada View
 ##### Camada com as classes/componentes responsáveis pela apresentação dos dados para o usuário
