@@ -57,19 +57,19 @@ public class ClienteController {
 		return bo.verificarCredenciaisBO(cliente);
 	}
 	
-	private boolean validarSenha(String senha) {
-		return senha.length() < TAMANHO_SENHA || senha.contains(" ") ||
-				!CARACTER_ESPECIAL.matcher(senha).find() || 
-				!CARACTER_MAIUSCULO.matcher(senha).find() || 
-				!CARACTER_MINUSCULO.matcher(senha).find() ||
-				!NUMEROS.matcher(senha).find();
-	}
-	
 	private boolean validarNomeUsuario(String nomeUsuario) {
 		return nomeUsuario.length() < TAMANHO_NOME_USUARIO || nomeUsuario.contains(" ") ||
 				!CARACTER_MAIUSCULO.matcher(nomeUsuario).find() ||
 				!CARACTER_MINUSCULO.matcher(nomeUsuario).find() || 
 				CARACTER_ESPECIAL.matcher(nomeUsuario).find() ||
 				NUMEROS.matcher(nomeUsuario).find();
+	}
+	
+	private boolean validarSenha(String senha) {
+		return senha.length() < TAMANHO_SENHA || senha.contains(" ") ||
+				!CARACTER_ESPECIAL.matcher(senha).find() || 
+				!CARACTER_MAIUSCULO.matcher(senha).find() || 
+				!CARACTER_MINUSCULO.matcher(senha).find() ||
+				!NUMEROS.matcher(senha).find();
 	}
 }
