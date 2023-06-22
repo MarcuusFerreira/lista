@@ -138,7 +138,8 @@ public class PainelCadastroCliente extends JPanel {
 		add(lblUsuario, "1, 10, 2, 1, right, center");
 
 		textNomeUsuario = new JTextField();
-		textNomeUsuario.setToolTipText("O usuário deve ser composta por: Pelo menos um caractere especial, maiúsculo e minúsculo sendo seu tamanho mínimo de 8");
+		textNomeUsuario.setToolTipText("<html>O usuário deve ser composto por:<br/>Pelo menos um caractere especial,maiúsculo e minúsculo<br/>sendo seu tamanho mínimo de 8</html>");
+
 		textNomeUsuario.setColumns(10);
 		add(textNomeUsuario, "4, 10, fill, top");
 
@@ -146,7 +147,7 @@ public class PainelCadastroCliente extends JPanel {
 		add(lblSenha, "1, 12, 2, 1, right, center");
 
 		textSenha = new JPasswordField();
-		textSenha.setToolTipText("A senha deve ser composta por: Pelo menos um caractere especial, maiúsculo, minúsculo e numérico sendo seu tamanho mínimo de 6");
+		textSenha.setToolTipText("<html>A senha deve ser composta por:<br/>Pelo menos um caractere especial, maiúsculo, minúsculo e numérico<br/> sendo seu tamanho mínimo de 6");
 		add(textSenha, "4, 12, fill, top");
 
 		JButton btnCadastrar = new JButton("Cadastrar");
@@ -190,15 +191,18 @@ public class PainelCadastroCliente extends JPanel {
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textNome.setText("");
-				textCpf.setText("");
-				dtNascimento.setText("");
-				textNomeUsuario.setText("");
-				textSenha.setText("");
-				textNome.requestFocus();
-
+				limparCampos();
 			}
 		});
 		add(btnLimpar, "6, 14, fill, top");
+	}
+
+	private void limparCampos() {
+		textNome.setText("");
+		textCpf.setText("");
+		dtNascimento.setText("");
+		textNomeUsuario.setText("");
+		textSenha.setText("");
+		textNome.requestFocus();
 	}
 }
