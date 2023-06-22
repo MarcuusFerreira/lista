@@ -25,10 +25,10 @@ public class ClienteController {
 		if(validarCamposEmBranco(cliente)) {
 			throw new ErroCadastroException("Existem Campos em Branco");
 		} else {
-			if(!validarSenha(cliente.getSenha())) {
+			if(validarSenha(cliente.getSenha())) {
 				throw new ErroCadastroException("Senha Inválida!");
 			}
-			if(!validarNomeUsuario(cliente.getNomeUsuario())) {
+			if(validarNomeUsuario(cliente.getNomeUsuario())) {
 				throw new ErroCadastroException("Nome de Usuario invalido");
 			}
 		}
