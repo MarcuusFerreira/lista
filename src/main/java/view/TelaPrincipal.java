@@ -118,20 +118,6 @@ public class TelaPrincipal {
 
 		JMenuItem mntmMostrarClientes = new JMenuItem("Mostrar Clientes");
 		mnAdm.add(mntmMostrarClientes);
-
-		JMenuItem mntmCadastroProdutos = new JMenuItem("CRUD de produtos");
-		menuBar.add(mntmCadastroProdutos);
-		mntmCadastroProdutos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PainelCadastroProdutosAdministrador painelCadastroProdutosAdministrador = new PainelCadastroProdutosAdministrador();
-				frmTelaPrincipal.setContentPane(painelCadastroProdutosAdministrador);
-				frmTelaPrincipal.setTitle("CRUD de Produtos");
-				frmTelaPrincipal.setBounds(100, 100, 610, 650);
-				frmTelaPrincipal.setLocationRelativeTo(null);
-				frmTelaPrincipal.revalidate();
-
-			}
-		});
 		mntmMostrarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PainelMostrarClientes painelMostrarClientes = new PainelMostrarClientes();
