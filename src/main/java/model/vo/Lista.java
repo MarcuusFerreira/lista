@@ -7,7 +7,7 @@ public class Lista {
 	
 	private int idLista;
 	private int idCliente;
-	private List<Produto> produtos;
+	private List<ProdutosLista> produtosLista;
 	private LocalDate dataLista;
 	
 	public Lista() {
@@ -30,12 +30,12 @@ public class Lista {
 		this.idCliente = idCliente;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
+	public List<ProdutosLista> getProdutosListas() {
+		return produtosLista;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setProdutos(List<ProdutosLista> produtosListas) {
+		this.produtosLista = produtosListas;
 	}
 
 	public LocalDate getDataLista() {

@@ -42,6 +42,4 @@ public class ProdutosLista extends Produto{
 	public void setObs(String obs) {
 		this.obs = obs;
 	}
-	
-	
 }
