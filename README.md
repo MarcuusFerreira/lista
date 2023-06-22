@@ -72,7 +72,7 @@ _Cada Produto possui Nome, Setor, Marca, Nome do Produto, sua Unidade de Medida 
 ###### Tipos de telas mais comuns:
 
 1.Tela Login:.
-Com campos para inserir o Login e senha. E botões para Entrar ou se Cadastrar
+Com campos para inserir o Login e senha. E botões para Entrar ou se Cadastrar como Cliente.
 
 2.Tela Principal:.
 Com uma mensagem de Boas Vindas e contará com MenuBar para Navegação;
