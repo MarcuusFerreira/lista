@@ -1,9 +1,19 @@
 package model.bo;
 
+import java.util.List;
+
+import model.dao.ProdutoDAO;
+import model.exception.ErroConsultarException;
+import model.vo.Produto;
+
 public class ProdutoBO {
 
-	public ProdutoBO() {
-		// TODO Auto-generated constructor stub
+	private ProdutoDAO dao;
+	
+	public List<Produto> consultarProdutosBO() throws ErroConsultarException {
+		return  dao.consultarProdutosDAO();
 	}
+
+
 
 }

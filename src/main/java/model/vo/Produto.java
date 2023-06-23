@@ -7,9 +7,10 @@ public class Produto {
 	private Integer idProduto;
 	private String nome;
 	private LocalDate dataCadastro;
-	private String descricao;
+	private String setor;
 	private Integer tipoProduto;
 	private String marca;
+	
 	public Produto() {
 		
 	}
@@ -31,11 +32,11 @@ public class Produto {
 	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	public String getDescricao() {
-		return descricao;
+	public String getSetor() {
+		return setor;
 	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setSetor(String setor) {
+		this.setor = setor;
 	}
 	public Integer getTipoProduto() {
 		return tipoProduto;

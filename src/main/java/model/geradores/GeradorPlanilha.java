@@ -36,7 +36,7 @@ public class GeradorPlanilha {
 			((XSSFRow) novaLinha).createCell(1).setCellValue(prod.getMarca());
 			((XSSFRow) novaLinha).createCell(2).setCellValue(prod.getNome());
 			((XSSFRow) novaLinha).createCell(3).setCellValue(prod.getDataCadastro());
-			((XSSFRow) novaLinha).createCell(4).setCellValue(prod.getDescricao());
+			((XSSFRow) novaLinha).createCell(4).setCellValue(prod.getSetor());
 		}
 
 		for (int i = 0; i < colunasDaPlanilha.length; i++) {

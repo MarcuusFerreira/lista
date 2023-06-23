@@ -1,9 +1,17 @@
 package controller;
 
+import java.util.List;
+
+import model.bo.ProdutoBO;
+import model.exception.ErroConsultarException;
+import model.vo.Produto;
+
 public class ProdutoController {
 
-	public ProdutoController() {
-		// TODO Auto-generated constructor stub
+	private ProdutoBO bo;
+	
+	public List<Produto> consultarProdutos () throws ErroConsultarException {
+		return bo.consultarProdutosBO();
 	}
-
+	
 }
