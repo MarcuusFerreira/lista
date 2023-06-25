@@ -19,30 +19,16 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import model.vo.Cliente;
+
 public class TelaPrincipal {
 
 	private JFrame frmTelaPrincipal;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaPrincipal window = new TelaPrincipal();
-					window.frmTelaPrincipal.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public TelaPrincipal() {
+	public TelaPrincipal(Cliente cliente) {
 		initialize();
 	}
 

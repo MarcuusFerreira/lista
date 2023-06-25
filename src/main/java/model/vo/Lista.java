@@ -7,6 +7,7 @@ public class Lista {
 	
 	private int idLista;
 	private int idCliente;
+	private String nomeLista;
 	private List<ProdutosLista> produtosLista;
 	private LocalDate dataLista;
 	
@@ -44,5 +45,13 @@ public class Lista {
 
 	public void setDataLista(LocalDate dataLista) {
 		this.dataLista = dataLista;
+	}
+	
+	public String getNomeLista() {
+		return nomeLista;
+	}
+
+	public void setNomeLista(String nomeLista) {
+		this.nomeLista = nomeLista;
 	}
 }

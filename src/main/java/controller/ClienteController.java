@@ -48,7 +48,7 @@ public class ClienteController {
 				|| cliente.getSenha().isBlank();		
 	}
 
-	public Cliente verificarCredenciaisController(Cliente cliente) throws ErroLoginException {
+	public boolean verificarCredenciaisController(Cliente cliente) throws ErroLoginException {
 		if(cliente.getNomeUsuario().trim().isBlank() ||
 				cliente.getSenha().trim().isBlank()) {
 			throw new ErroLoginException("Usuário ou Senha inválidos");

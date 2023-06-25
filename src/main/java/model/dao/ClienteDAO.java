@@ -76,11 +76,12 @@ public class ClienteDAO {
 		return cpfExiste;
 	}
 
-	public Cliente verificarCredenciaisDAO(Cliente cliente) throws ErroLoginException {
+	public boolean verificarCredenciaisDAO(Cliente cliente) throws ErroLoginException {
 		Connection connection = Banco.getConnection();
 		String sql = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, TIPO_USUARIO FROM CLIENTE WHERE NOME_USUARIO = ? AND SENHA = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
 		ResultSet resultado = null;
+		boolean existe = false;
 		try {
 			pstmt.setString(1, cliente.getNomeUsuario());
 			pstmt.setString(2, cliente.getSenha());
@@ -92,6 +93,7 @@ public class ClienteDAO {
 				cliente.setDataNascimento(LocalDate.parse(resultado.getString(4), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 				cliente.setDataCadastro(LocalDateTime.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 				cliente.setTipoUsuario(resultado.getInt(6));
+				existe = true;
 			}
 		} catch (SQLException mensagem) {
 			System.out.println(mensagem);
@@ -101,7 +103,7 @@ public class ClienteDAO {
 			Banco.closePreparedStatement(pstmt);
 			Banco.closeConnection(connection);
 		}
-		return cliente;
+		return existe;
 	}
 	
 	public boolean atualizarCliente (Cliente cliente) throws ErroAtualizarException {

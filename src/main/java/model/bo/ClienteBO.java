@@ -32,7 +32,7 @@ public class ClienteBO {
 		GeradorPlanilha geradorPlanilha = new GeradorPlanilha();
 	}
 
-	public Cliente verificarCredenciaisBO(Cliente cliente) throws ErroLoginException {
+	public boolean verificarCredenciaisBO(Cliente cliente) throws ErroLoginException {
 		dao = new ClienteDAO();
 		return dao.verificarCredenciaisDAO(cliente);
 	}

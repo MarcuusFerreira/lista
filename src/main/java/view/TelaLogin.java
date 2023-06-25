@@ -32,6 +32,7 @@ public class TelaLogin extends JFrame {
 	private JPasswordField txtSenha;
 	private PainelCadastroCliente painelCadastroUsuario;
 	private AbstractButton btnEntrar;
+	private TelaPrincipal telaPrincipal;
 	
 	private ClienteController controller;
 	private AbstractButton btnCadastrar;
@@ -98,15 +99,28 @@ public class TelaLogin extends JFrame {
 
 		btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
+			
+
 			public void actionPerformed(ActionEvent e) {
 				controller = new ClienteController();
 				Cliente cliente = new Cliente();
 				cliente.setNomeUsuario(txtNomeUsuario.getText());
-				System.out.println(cliente.getNomeUsuario());
 				cliente.setSenha(txtSenha.getText());
-				System.out.println(cliente.getSenha());
 				try {
-					controller.verificarCredenciaisController(cliente);
+					if(controller.verificarCredenciaisController(cliente)) {
+						JOptionPane.showMessageDialog(null, "Login Realizado com sucesso!");
+						iniciarSistema(cliente);
+						
+						System.out.println(cliente.getIdCliente());
+						System.out.println(cliente.getNomeCliente());
+						System.out.println(cliente.getCpf());
+						System.out.println(cliente.getDataNascimento());
+						System.out.println(cliente.getDataCadastro());
+						System.out.println(cliente.getTipoUsuario());
+						System.out.println(cliente.getNomeUsuario());
+						System.out.println(cliente.getSenha());
+					}
+					
 				} catch (ErroLoginException mensagem) {
 					JOptionPane.showMessageDialog(null, mensagem);
 				}
@@ -117,13 +131,19 @@ public class TelaLogin extends JFrame {
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PainelCadastroCliente painelCadastro = new PainelCadastroCliente();
-				setContentPane(painelCadastro);
+				painelCadastroUsuario = new PainelCadastroCliente();
+				setContentPane(painelCadastroUsuario);
 				setBounds(100, 100, 610, 650);
 				setLocationRelativeTo(null);
 				revalidate();
 			}
 		});
 		contentPane.add(btnCadastrar, "1, 14, 8, 1, center, default");
+	}
+	
+	private void iniciarSistema(Cliente cliente) {
+		telaPrincipal= new TelaPrincipal(cliente);
+		setBounds(100, 100, 610, 650);
+		setLocationRelativeTo(null);
 	}
 }
