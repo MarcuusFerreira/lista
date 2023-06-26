@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.exception.ErroConsultarException;
+import model.util.FormatadorData;
 import model.vo.Produto;
 
 public class ProdutoDAO {
@@ -28,7 +29,7 @@ public class ProdutoDAO {
 				produto.setSetor(resultado.getString(2));
 				produto.setMarca(resultado.getString(3));
 				produto.setNome(resultado.getString(4));
-				produto.setDataCadastro(LocalDate.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				produto.setDataCadastro(FormatadorData.formatarDataMySQL(resultado.getString(5)));
 				listaProdutos.add(produto);
 			}
 		} catch (SQLException excecao) {

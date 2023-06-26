@@ -4,19 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mysql.cj.xdevapi.Result;
 
 import model.exception.ErroAtualizarException;
 import model.exception.ErroCadastroException;
 import model.exception.ErroConsultarException;
 import model.exception.ErroExcluirException;
 import model.exception.ErroLoginException;
+import model.util.FormatadorData;
 import model.vo.Cliente;
 
 public class ClienteDAO {
@@ -43,14 +39,7 @@ public class ClienteDAO {
 				cliente.setIdCliente(resultado.getInt(1));
 			}
 		} catch (SQLException mensagem) {
-			throw new ErroCadastroException("Erro Cadastro de Cliente, por favor contate o administrador" + mensagem
-					+ cliente.getNomeCliente() + "\n" 
-					+ cliente.getCpf() + "\n"
-					+ cliente.getDataNascimento() + "\n"
-					+ cliente.getDataCadastro() + "\n"
-					+ cliente.getTipoUsuario() + "\n"
-					+ cliente.getNomeUsuario() + "\n"
-					+ cliente.getSenha() + "\n");
+			throw new ErroCadastroException("Erro Cadastro de Cliente, por favor contate o administrador");
 		} finally {
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(connection);
@@ -87,13 +76,7 @@ public class ClienteDAO {
 			pstmt.setString(2, cliente.getSenha());
 			resultado = pstmt.executeQuery();
 			if (resultado.next()) {
-				cliente.setIdCliente(resultado.getInt(1));
-				cliente.setNomeCliente(resultado.getString(2));
-				cliente.setCpf(resultado.getString(3));
-				cliente.setDataNascimento(LocalDate.parse(resultado.getString(4), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-				cliente.setDataCadastro(LocalDateTime.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-				cliente.setTipoUsuario(resultado.getInt(6));
-				existe = true;
+				montarCliente(resultado);
 			}
 		} catch (SQLException mensagem) {
 			System.out.println(mensagem);
@@ -191,8 +174,8 @@ public class ClienteDAO {
 		cliente.setIdCliente(resultado.getInt(1));
 		cliente.setNomeCliente(resultado.getString(2));
 		cliente.setCpf(resultado.getString(3));
-		cliente.setDataNascimento(LocalDate.parse(resultado.getString(4), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-		cliente.setDataCadastro(LocalDateTime.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		cliente.setDataNascimento(FormatadorData.formatarDataMySQL(resultado.getString(4)));
+		cliente.setDataCadastro(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(5)));
 		cliente.setTipoUsuario(resultado.getInt(6));
 		cliente.setNomeUsuario(resultado.getString(7));
 		cliente.setSenha(resultado.getString(8));
