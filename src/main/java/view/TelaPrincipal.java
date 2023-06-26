@@ -28,6 +28,7 @@ public class TelaPrincipal {
 	/**
 	 * Create the application.
 	 */
+	
 	public TelaPrincipal(Cliente cliente) {
 		initialize();
 	}

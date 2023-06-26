@@ -85,7 +85,6 @@ public class ClienteDAO {
 			}
 			existe = true;
 		} catch (SQLException mensagem) {
-			mensagem.printStackTrace();
 			throw new ErroLoginException("erro no metodo verificarCredenciaisDAO, Erro ao verificar as credenciais, favor contate o administrador");
 		} finally {
 			Banco.closeResultSet(resultado);
