@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.exception.ErroCadastroException;
+import model.exception.ErroConsultarException;
+import model.util.FormatadorData;
 import model.vo.Lista;
 import model.vo.ProdutosLista;
 
@@ -43,5 +48,29 @@ public class ListaDAO {
 			Banco.closeConnection(connection);
 		}
 		return cadastrado;
+	}
+	
+	public List<Lista> consultarListas(int idCliente) throws ErroConsultarException {
+		ArrayList<Lista> listas = new ArrayList<Lista>();
+		Connection connection = Banco.getConnection();
+		String sql = "select id_lista, nome, data_lista from lista where id_cliente = ?";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		
+		try {
+			pstmt.setInt(1, idCliente);
+			ResultSet resultado = pstmt.executeQuery();
+			if (resultado.next()) {
+				Lista lista = new Lista();
+				lista.setIdLista(resultado.getInt(1));
+				lista.setNomeLista(resultado.getString(2));
+				lista.setDataLista(FormatadorData.formatarDataMySQL(resultado.getString(3)));
+			}
+		} catch (SQLException e) {
+			throw new ErroConsultarException("Erro no metodo consultarListas, Erro ao consultar as listas");
+		} finally {
+			Banco.closePreparedStatement(pstmt);
+			Banco.closeConnection(connection);
+		}
+		return listas;
 	}
 }
