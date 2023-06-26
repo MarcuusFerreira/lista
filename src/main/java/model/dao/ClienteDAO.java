@@ -76,11 +76,17 @@ public class ClienteDAO {
 			pstmt.setString(2, cliente.getSenha());
 			resultado = pstmt.executeQuery();
 			if (resultado.next()) {
-				montarCliente(resultado);
+				cliente.setIdCliente(resultado.getInt(1));
+				cliente.setNomeCliente(resultado.getString(2));
+				cliente.setCpf(resultado.getString(3));
+				cliente.setDataNascimento(FormatadorData.formatarDataMySQL(resultado.getString(4)));
+				cliente.setDataCadastro(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(5)));
+				cliente.setTipoUsuario(resultado.getInt(6));
 			}
+			existe = true;
 		} catch (SQLException mensagem) {
-			System.out.println(mensagem);
-			throw new ErroLoginException("Erro ao verificar as credenciais, favor contate o administrador");
+			mensagem.printStackTrace();
+			throw new ErroLoginException("erro no metodo verificarCredenciaisDAO, Erro ao verificar as credenciais, favor contate o administrador");
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closePreparedStatement(pstmt);
