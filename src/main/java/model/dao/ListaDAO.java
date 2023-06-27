@@ -14,6 +14,8 @@ import model.vo.Lista;
 
 public class ListaDAO {
 
+	private ArrayList<Lista> listas;
+
 	public boolean cadastrarLista(Lista lista) throws ErroCadastroException {
 		boolean cadastrado = false;
 		Connection connection = Banco.getConnection();
@@ -51,8 +53,8 @@ public class ListaDAO {
 		return cadastrado;
 	}
 	
-	public List<Lista> consultarListas(int idCliente) throws ErroConsultarException {
-		ArrayList<Lista> listas = new ArrayList<Lista>();
+	public List<Lista> consultarListasDAO(int idCliente) throws ErroConsultarException {
+		listas = new ArrayList<Lista>();
 		Connection connection = Banco.getConnection();
 		String sql = "select id_lista, nome, data_lista from lista where id_cliente = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
