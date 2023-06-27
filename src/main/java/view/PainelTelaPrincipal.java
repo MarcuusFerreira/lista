@@ -118,10 +118,10 @@ public class PainelTelaPrincipal extends JPanel {
 				dialogo = new DialogoSistema("Tem certeza que deseja sair do sistema?");
 				dialogo.setVisible(true);
 				dialogo.setLocationRelativeTo(null);
+				dialogo.setResizable(false);
 			}
 		});
 		
-
 		lblNewLabel = new JLabel("Bem vindo ao sistema, navegue usando o MenuBar acima");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel, BorderLayout.CENTER);
