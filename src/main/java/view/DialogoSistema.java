@@ -34,6 +34,9 @@ public class DialogoSistema extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		setModal(true);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		{
 			lblMensagem = new JLabel(mensagem);
 			lblMensagem.setBounds(10, 36, 560, 14);
@@ -58,10 +61,12 @@ public class DialogoSistema extends JDialog {
 				btnConfirmar = new JButton("Sim");
 				btnConfirmar.setActionCommand("OK");
 				buttonPane.add(btnConfirmar);
+				btnConfirmar.requestFocus();
 				getRootPane().setDefaultButton(btnConfirmar);
 				btnConfirmar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						System.exit(0);
+					
 					}
 				});
 			}

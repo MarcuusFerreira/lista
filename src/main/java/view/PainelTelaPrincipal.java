@@ -117,8 +117,6 @@ public class PainelTelaPrincipal extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				dialogo = new DialogoSistema("Tem certeza que deseja sair do sistema?");
 				dialogo.setVisible(true);
-				dialogo.setLocationRelativeTo(null);
-				dialogo.setResizable(false);
 			}
 		});
 		
