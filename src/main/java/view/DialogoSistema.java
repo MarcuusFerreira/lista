@@ -49,7 +49,6 @@ public class DialogoSistema extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnCancelar = new JButton("Não");
-				btnCancelar.setActionCommand("Cancel");
 				buttonPane.add(btnCancelar);
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -59,7 +58,6 @@ public class DialogoSistema extends JDialog {
 			}
 			{
 				btnConfirmar = new JButton("Sim");
-				btnConfirmar.setActionCommand("OK");
 				buttonPane.add(btnConfirmar);
 				btnConfirmar.requestFocus();
 				getRootPane().setDefaultButton(btnConfirmar);
