@@ -110,15 +110,8 @@ public class TelaLogin extends JFrame {
 					if(controller.verificarCredenciaisController(cliente)) {
 						JOptionPane.showMessageDialog(null, "Login Realizado com sucesso!");
 						iniciarSistema(cliente);
-						
-						System.out.println(cliente.getIdCliente());
-						System.out.println(cliente.getNomeCliente());
-						System.out.println(cliente.getCpf());
-						System.out.println(cliente.getDataNascimento());
-						System.out.println(cliente.getDataCadastro());
-						System.out.println(cliente.getTipoUsuario());
-						System.out.println(cliente.getNomeUsuario());
-						System.out.println(cliente.getSenha());
+					} else {
+						JOptionPane.showMessageDialog(null, "Erro ao realizar Login\n - Usuário ou Senha Invalidos");
 					}
 					
 				} catch (ErroLoginException mensagem) {
