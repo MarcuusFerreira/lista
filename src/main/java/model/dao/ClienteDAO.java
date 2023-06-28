@@ -82,8 +82,8 @@ public class ClienteDAO {
 				cliente.setDataNascimento(FormatadorData.formatarDataMySQL(resultado.getString(4)));
 				cliente.setDataCadastro(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(5)));
 				cliente.setTipoUsuario(resultado.getInt(6));
+				existe = true;
 			}
-			existe = true;
 		} catch (SQLException mensagem) {
 			throw new ErroLoginException("erro no metodo verificarCredenciaisDAO, Erro ao verificar as credenciais, favor contate o administrador");
 		} finally {

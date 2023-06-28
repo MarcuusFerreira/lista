@@ -118,3 +118,5 @@ select * from DB_LISTA_MINIMO.CLIENTE;
 select * from DB_LISTA_MINIMO.LISTA;
 select * from DB_LISTA_MINIMO.PRODUTO;
 select * from DB_LISTA_MINIMO.lista_produto;
+
+update lista set nome = ? where id_lista = ?
