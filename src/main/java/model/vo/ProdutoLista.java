@@ -1,13 +1,13 @@
 package model.vo;
 
-public class ProdutosLista extends Produto{
+public class ProdutoLista extends Produto{
 
 	private UnidadeMedida unidadeMedida;
 	private double valorMedida;
 	private int marcado;
 	private String obs;
 	
-	public ProdutosLista() {
+	public ProdutoLista() {
 		super();
 	}
 
