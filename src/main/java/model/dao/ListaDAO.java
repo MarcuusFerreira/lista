@@ -12,7 +12,6 @@ import model.exception.ErroCadastroException;
 import model.exception.ErroConsultarException;
 import model.util.FormatadorData;
 import model.vo.Lista;
-import model.vo.ProdutosLista;
 
 public class ListaDAO {
 
@@ -117,5 +116,26 @@ public class ListaDAO {
 			throw new ErroAtualizarException("Erro no método atualizarLista, Erro ao atualizar a lista");
 		}
 		return resultado;
+	}
+
+	public boolean cadastrouMesmoNome(int idCliente, String nome) {
+		boolean retorno = false;
+		Connection connection = Banco.getConnection();
+		String sql = "select id_lista from lista where id_cliente = ? and nome = ?";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		try {
+			pstmt.setInt(1, idCliente);
+			pstmt.setString(2, nome);
+			ResultSet resultado = pstmt.executeQuery();
+			if(resultado.next()) {
+				retorno = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Banco.closePreparedStatement(pstmt);
+			Banco.closeConnection(connection);
+		}
+		return retorno;
 	}
 }

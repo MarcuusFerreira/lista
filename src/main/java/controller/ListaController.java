@@ -14,4 +14,9 @@ public class ListaController {
 		bo = new ListaBO();
 		return bo.consultarListasBO(idCliente);
 	}
+	
+	public boolean cadastrarListasController(Lista lista) {
+		boolean cadastrou = false;
+		return cadastrou;
+	}
 }
