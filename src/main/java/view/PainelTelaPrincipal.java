@@ -11,7 +11,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
+import model.exception.ErroConsultarException;
 import model.vo.Cliente;
 
 public class PainelTelaPrincipal extends JPanel {
@@ -33,6 +35,7 @@ public class PainelTelaPrincipal extends JPanel {
 	private JMenu mnListas;
 	private JMenu mnSair;
 	private JMenuItem mntmSair;
+	private JMenuItem mntmIrsCompras;
 	
 	public PainelTelaPrincipal(Cliente cliente) {
 		initialize(cliente);
@@ -70,6 +73,21 @@ public class PainelTelaPrincipal extends JPanel {
 			}
 		});
 		mnListas.add(mntmMostrarListas);
+		
+		mntmIrsCompras = new JMenuItem("Ir às compras");
+		mntmIrsCompras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+		            TelaMobile telaMobile = new TelaMobile();
+		            telaMobile.setVisible(true);
+		            telaMobile.setAlwaysOnTop(true);
+		            SwingUtilities.getWindowAncestor(PainelTelaPrincipal.this).setVisible(false);
+		        } catch (ErroConsultarException ex) {
+		            ex.printStackTrace();
+		        }
+			}
+		});
+		mnListas.add(mntmIrsCompras);
 
 		mnSobre = new JMenu("Sobre");
 		menuBar.add(mnSobre);
@@ -91,7 +109,6 @@ public class PainelTelaPrincipal extends JPanel {
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastro = new PainelCadastroCliente();
-				setVisible(false);
 				painelCadastro.setVisible(true);
 				revalidate();
 			}

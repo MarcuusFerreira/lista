@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
@@ -33,7 +35,7 @@ public class TelaLogin extends JFrame {
 	private PainelCadastroCliente painelCadastroUsuario;
 	private AbstractButton btnEntrar;
 	private PainelTelaPrincipal painelSistema;
-	
+
 	private ClienteController controller;
 	private AbstractButton btnCadastrar;
 	private JLabel lblSenha;
@@ -95,25 +97,34 @@ public class TelaLogin extends JFrame {
 		contentPane.add(lblSenha, "2, 8, right, default");
 
 		txtSenha = new JPasswordField();
+		// Adicionar KeyListener ao campo de senha
+		txtSenha.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					// Ação do botão "Entrar" quando pressionar ENTER
+					btnEntrar.doClick();
+				}
+			}
+		});
 		contentPane.add(txtSenha, "4, 8, 3, 1");
 
 		btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
-			
 
 			public void actionPerformed(ActionEvent e) {
 				controller = new ClienteController();
 				Cliente cliente = new Cliente();
 				cliente.setNomeUsuario(txtNomeUsuario.getText());
-				cliente.setSenha(txtSenha.getText());
+				cliente.setSenha(new String(txtSenha.getPassword()));
 				try {
-					if(controller.verificarCredenciaisController(cliente)) {
+					if (controller.verificarCredenciaisController(cliente)) {
 						JOptionPane.showMessageDialog(null, "Login Realizado com sucesso!");
 						iniciarSistema(cliente);
 					} else {
-						JOptionPane.showMessageDialog(null, "Erro ao realizar Login\n - Usuário ou Senha Invalidos");
+						JOptionPane.showMessageDialog(null, "Erro ao realizar Login\n - Usuário ou Senha Inválidos");
 					}
-					
+
 				} catch (ErroLoginException mensagem) {
 					JOptionPane.showMessageDialog(null, mensagem);
 				}
@@ -133,9 +144,9 @@ public class TelaLogin extends JFrame {
 		});
 		contentPane.add(btnCadastrar, "1, 14, 8, 1, center, default");
 	}
-	
+
 	private void iniciarSistema(Cliente cliente) {
-		painelSistema= new PainelTelaPrincipal(cliente);
+		painelSistema = new PainelTelaPrincipal(cliente);
 		setBounds(100, 100, 610, 650);
 		setContentPane(painelSistema);
 		setBounds(100, 100, 610, 650);

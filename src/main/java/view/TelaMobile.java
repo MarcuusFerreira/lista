@@ -1,4 +1,4 @@
-package view.exemplos;
+package view;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -24,12 +24,12 @@ import javax.swing.table.TableColumnModel;
 import controller.ListaController;
 import model.exception.ErroConsultarException;
 
-public class TabelaExemplo extends JFrame {
+public class TelaMobile extends JFrame {
 	private JComboBox cbLista;
 	private int idCliente = 1;
 
-	public TabelaExemplo() throws ErroConsultarException {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(TabelaExemplo.class.getResource("/icon/android.png")));
+	public TelaMobile() throws ErroConsultarException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaMobile.class.getResource("/icon/android.png")));
 		// Configurações básicas da janela
 		setTitle("Galaxy S23 Ultra 5G ");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -119,9 +119,9 @@ public class TabelaExemplo extends JFrame {
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
-			TabelaExemplo exemplo;
+			TelaMobile exemplo;
 			try {
-				exemplo = new TabelaExemplo();
+				exemplo = new TelaMobile();
 				exemplo.setVisible(true);
 			} catch (ErroConsultarException e) {
 				// TODO Auto-generated catch block
