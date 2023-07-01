@@ -29,7 +29,7 @@ import model.exception.ErroConsultarException;
 
 public class TelaMobile extends JFrame {
 	private JComboBox cbLista;
-	private int idCliente = 1;
+	private int idCliente = 1; //.get idCliente
 
 	public TelaMobile() throws ErroConsultarException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaMobile.class.getResource("/icon/android.png")));
@@ -117,9 +117,19 @@ public class TelaMobile extends JFrame {
 		getContentPane().add(painel);
 
 		ListaController listaController = new ListaController();
-		ArrayList<String> categorias = listaController.consultarListasClientePorID(idCliente);
-		
 		cbLista = new JComboBox(listaController.consultarListasClientePorID(idCliente).toArray());
+		cbLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaController listaController = new ListaController();
+				String categoria = (String) cbLista.getSelectedItem();
+				Integer idCliente = null;
+				
+				idCliente = 1; // Integer.valueOf(txtIdUsuario.getText());
+				
+//				produtos = 
+				
+			}
+		});
 		painel.add(cbLista);
 
 		// Ajusta o tamanho da janela automaticamente
