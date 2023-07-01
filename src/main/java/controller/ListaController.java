@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.bo.ListaBO;
@@ -20,7 +21,7 @@ public class ListaController {
 		return cadastrou;
 	}
 
-	public List<Lista> consultarListasClientePorID(int idCliente) throws ErroConsultarException {
+	public ArrayList<String> consultarListasClientePorID(int idCliente) throws ErroConsultarException {
 		bo = new ListaBO();
 		return bo.consultarListasClientePorIDBO(idCliente);
 	}
