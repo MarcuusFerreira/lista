@@ -28,7 +28,6 @@ public class ListaDAO {
 			pstmtLista.execute();
 			ResultSet resultado = pstmtLista.getGeneratedKeys();
 			lista.setIdLista(resultado.getInt(1));
-			
 			for(ProdutoLista itemDaListaDeProdutos: lista.getProdutosListas()) {
 				inserirProdutoNaLista(itemDaListaDeProdutos, lista.getIdLista());
 			}
@@ -93,28 +92,6 @@ public class ListaDAO {
 		return listas;
 	}
 	
-	public Lista consultarPorId(int idLista) throws ErroConsultarException {
-		Lista lista = new Lista();
-		Connection connection = Banco.getConnection();
-		String sqlLista = "SELECT ID_LISTA, ID_CLIENTE, NOME, DATA_LISTA FROM LISTA WHERE ID_LISTA = ?";
-		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sqlLista);
-		try {
-			ResultSet resultado = pstmt.executeQuery();
-			if(resultado.next()) {
-				lista.setIdLista(resultado.getInt(1));
-				lista.setIdCliente(resultado.getInt(2));
-				lista.setNomeLista(resultado.getString(3));
-				lista.setDataLista(FormatadorData.formatarDataMySQL(resultado.getString(5)));
-			}
-		} catch (SQLException e) {
-			throw new ErroConsultarException("Erro no método, consultarPorId, Erro ao consultar as listas");
-		} finally {
-			Banco.closePreparedStatement(pstmt);
-			Banco.closeConnection(connection);
-		}
-		return lista;
-	}
-	
 	public boolean atualizarLista(Lista lista) throws ErroAtualizarException {
 		boolean resultado = false;
 		Connection connection = Banco.getConnection();
@@ -167,7 +144,6 @@ public class ListaDAO {
 				Lista nomesListasClienteID = new Lista();
 				nomesListasClienteID.setNomeLista(resultado.getString(1));
                 listasClienteID.add(nomesListasClienteID);
-
 			}
 		} catch (SQLException e) {
 			throw new ErroConsultarException(
@@ -178,5 +154,27 @@ public class ListaDAO {
 			Banco.closeConnection(connection);
 		}
 		return listasClienteID;
+	}
+	
+	public Lista consultarPorId(int idLista) throws ErroConsultarException {
+		Lista lista = new Lista();
+		Connection connection = Banco.getConnection();
+		String sqlLista = "SELECT ID_LISTA, ID_CLIENTE, NOME, DATA_LISTA FROM LISTA WHERE ID_LISTA = ?";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sqlLista);
+		try {
+			ResultSet resultado = pstmt.executeQuery();
+			if(resultado.next()) {
+				lista.setIdLista(resultado.getInt(1));
+				lista.setIdCliente(resultado.getInt(2));
+				lista.setNomeLista(resultado.getString(3));
+				lista.setDataLista(FormatadorData.formatarDataMySQL(resultado.getString(5)));
+			}
+		} catch (SQLException e) {
+			throw new ErroConsultarException("Erro no método, consultarPorId, Erro ao consultar as listas");
+		} finally {
+			Banco.closePreparedStatement(pstmt);
+			Banco.closeConnection(connection);
+		}
+		return lista;
 	}
 }

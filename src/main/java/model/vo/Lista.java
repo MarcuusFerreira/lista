@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Lista {
 	
-	private int idLista; //NULL -> 50
-	private int idCliente;//5
-	private String nomeLista; //A PARTIR DE xyz (2)
-	private List<ProdutoLista> produtosLista; //3 produtos
-	private LocalDate dataLista; //NEW DATE()
+	private int idLista;
+	private int idCliente;
+	private String nomeLista;
+	private List<ProdutoLista> produtosLista;
+	private LocalDate dataLista;
 	
 	public Lista() {
 		
