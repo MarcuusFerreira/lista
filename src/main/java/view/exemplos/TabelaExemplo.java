@@ -109,8 +109,6 @@ public class TabelaExemplo extends JFrame {
 		getContentPane().add(painel);
 
 		ListaController listaController = new ListaController();
-		
-		
 		cbLista = new JComboBox(listaController.consultarListasClientePorID(idCliente).toArray());
 		painel.add(cbLista);
 
