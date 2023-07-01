@@ -23,6 +23,8 @@ import javax.swing.table.TableColumnModel;
 
 import controller.ListaController;
 import model.exception.ErroConsultarException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaMobile extends JFrame {
 	private JComboBox cbLista;
@@ -103,6 +105,11 @@ public class TelaMobile extends JFrame {
 		painel.add(scrollPane);
 
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		painel.add(btnVoltar);
 
 		// Adiciona o painel à janela

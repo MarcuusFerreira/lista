@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -11,7 +12,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 import model.exception.ErroConsultarException;
 import model.vo.Cliente;
@@ -36,7 +36,7 @@ public class PainelTelaPrincipal extends JPanel {
 	private JMenu mnSair;
 	private JMenuItem mntmSair;
 	private JMenuItem mntmIrsCompras;
-	
+
 	public PainelTelaPrincipal(Cliente cliente) {
 		initialize(cliente);
 	}
@@ -54,7 +54,7 @@ public class PainelTelaPrincipal extends JPanel {
 		mntmCadastrarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroLista = new PainelCadastroListas();
-				setVisible(false);
+				add(painelCadastroLista);
 				painelCadastroLista.setVisible(true);
 				revalidate();
 			}
@@ -63,28 +63,28 @@ public class PainelTelaPrincipal extends JPanel {
 
 		mntmMostrarListas = new JMenuItem("Mostrar Listas");
 		mntmMostrarListas.addActionListener(new ActionListener() {
-			
 
 			public void actionPerformed(ActionEvent e) {
 				painelMostrarListas = new PainelMostrarListas();
-				setVisible(false);
+				add(painelMostrarListas);
 				painelMostrarListas.setVisible(true);
 				revalidate();
+				
 			}
 		});
 		mnListas.add(mntmMostrarListas);
-		
+
 		mntmIrsCompras = new JMenuItem("Ir às compras");
 		mntmIrsCompras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-		            TelaMobile telaMobile = new TelaMobile();
-		            telaMobile.setVisible(true);
-		            telaMobile.setAlwaysOnTop(true);
-		            SwingUtilities.getWindowAncestor(PainelTelaPrincipal.this).setVisible(false);
-		        } catch (ErroConsultarException ex) {
-		            ex.printStackTrace();
-		        }
+					TelaMobile telaMobile = new TelaMobile();
+					telaMobile.setVisible(true);
+					telaMobile.setAlwaysOnTop(true);
+//		            SwingUtilities.getWindowAncestor(PainelTelaPrincipal.this).setVisible(false);
+				} catch (ErroConsultarException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		mnListas.add(mntmIrsCompras);
@@ -108,9 +108,9 @@ public class PainelTelaPrincipal extends JPanel {
 		mnAdm.add(mntmCadastrarCliente);
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastro = new PainelCadastroCliente();
-				painelCadastro.setVisible(true);
-				revalidate();
+				PainelCadastroCliente painelCadastro = new PainelCadastroCliente();
+				painelCadastro.setSize(610, 650);
+			    
 			}
 		});
 
@@ -124,10 +124,10 @@ public class PainelTelaPrincipal extends JPanel {
 				revalidate();
 			}
 		});
-		
+
 		mnSair = new JMenu("Sair");
 		menuBar.add(mnSair);
-		
+
 		mntmSair = new JMenuItem("Sair");
 		mnSair.add(mntmSair);
 		mntmSair.addActionListener(new ActionListener() {
@@ -136,10 +136,10 @@ public class PainelTelaPrincipal extends JPanel {
 				dialogo.setVisible(true);
 			}
 		});
-		
+
 		lblNewLabel = new JLabel("Bem vindo ao sistema, navegue usando o MenuBar acima");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel, BorderLayout.CENTER);
 	}
-	
+
 }
