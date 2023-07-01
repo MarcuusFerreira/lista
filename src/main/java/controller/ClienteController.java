@@ -81,7 +81,7 @@ public class ClienteController {
 		return bo.listarClientePorId(idCliente);
 	}
 
-	public boolean atualizarCliente(Cliente cliente) throws ErroAtualizarException, ErroConsultarException {
+	public boolean atualizarCliente(Cliente cliente) throws ErroAtualizarException, ErroConsultarException, ErroClienteNaoCadastradoException {
 		bo = new ClienteBO();
 		return bo.atualizarCliente(cliente);
 	}
