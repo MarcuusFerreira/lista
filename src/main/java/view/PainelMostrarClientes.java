@@ -37,7 +37,7 @@ import java.awt.Font;
 public class PainelMostrarClientes extends JPanel {
 	private JTable tblClientes;
 	private ArrayList<Cliente> clientes;
-	private String[] nomesColunas = { "Nome", "CPF", "CEP", "Total de Listas", "Ativo?" };
+	private String[] nomesColunas = { "#IdCliente", "Nome Cliente", "CPF", "Data Nascimento", "Data Cadastro", "Tipo Usuario", "Nome Usuario", "Senha" };
 	private JTextField txtNome;
 	private MaskFormatter mascaraCpf;
 	private JFormattedTextField txtCPF;
@@ -70,25 +70,33 @@ public class PainelMostrarClientes extends JPanel {
 //	private ClienteSeletor seletor = new ClienteSeletor();
 
 	private void limparTabelaClientes() {
-		tblClientes.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
+		tblClientes.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+			}
+		));
 	}
 
-//	private void atualizarTabelaClientes() {
-//		this.limparTabelaClientes();
-//
-//		DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
-//
-//		for (Cliente c : clientes) {
-//			Object[] novaLinhaDaTabela = new Object[5];
-//			novaLinhaDaTabela[0] = c.getNome();
-//			novaLinhaDaTabela[1] = c.getCpf();
-//			novaLinhaDaTabela[2] = c.getEndereco().getEnderecoResumido();
-//			novaLinhaDaTabela[3] = c.getTelefones().size();
-//			novaLinhaDaTabela[4] = c.isAtivo() ? "Sim" : "Não";
-//
-//			model.addRow(novaLinhaDaTabela);
-//		}
-//	}
+	private void atualizarTabelaClientes() {
+		this.limparTabelaClientes();
+
+		DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+
+		for (Cliente c : clientes) {
+			Object[] novaLinhaDaTabela = new Object[5];
+			novaLinhaDaTabela[0] = c.getIdCliente();
+			novaLinhaDaTabela[1] = c.getNomeCliente();
+			novaLinhaDaTabela[2] = c.getCpf();
+			novaLinhaDaTabela[3] = c.getDataNascimento();
+			novaLinhaDaTabela[4] = c.getDataCadastro();
+			novaLinhaDaTabela[5] = c.getTipoUsuario();
+			novaLinhaDaTabela[6] = c.getNomeUsuario();
+			novaLinhaDaTabela[7] = c.getSenha();
+			
+			model.addRow(novaLinhaDaTabela);
+		}
+	}
 
 	public PainelMostrarClientes() {
 		setBounds(100, 100, 610, 650);
@@ -137,8 +145,13 @@ public class PainelMostrarClientes extends JPanel {
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				buscarClientesComFiltros();
-//				atualizarTabelaClientes();
+				ClienteController controller = new ClienteController();
+				Integer idCliente= null;
+				clientes = controller.listarTodosClientes(idCliente);
+				
+				atualizarTabelaClientes();
+				
+				
 			}
 		});
 		this.add(btnBuscar, "5, 12, fill, default");

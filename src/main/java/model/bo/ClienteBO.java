@@ -1,6 +1,7 @@
 package model.bo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.dao.ClienteDAO;
 import model.exception.CpfInvalidoException;
@@ -35,5 +36,13 @@ public class ClienteBO {
 	public boolean verificarCredenciaisBO(Cliente cliente) throws ErroLoginException {
 		dao = new ClienteDAO();
 		return dao.verificarCredenciaisDAO(cliente);
+	}
+	
+	public ArrayList<Cliente> listarTodosClientes (Integer IdCliente) {
+		 dao = new ClienteDAO();
+		ArrayList<Cliente> clientes = new ArrayList<>();
+		return clientes;
+		
+		
 	}
 }

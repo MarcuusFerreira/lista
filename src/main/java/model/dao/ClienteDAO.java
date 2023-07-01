@@ -156,11 +156,11 @@ public class ClienteDAO {
 		return cliente;
 	}
 	
-	public List<Cliente> listarTodosClientes () {
+	public ArrayList<Cliente> listarTodosClientes () throws ErroConsultarException {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
-		List<Cliente> clientes = new ArrayList<Cliente>();
+		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 		
 		String query  = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, "
 				+ "TIPO_USUARIO, NOME_USUARIO, SENHA FROM CLIENTE";

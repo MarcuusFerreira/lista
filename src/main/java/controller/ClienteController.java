@@ -72,4 +72,8 @@ public class ClienteController {
 				!CARACTER_MINUSCULO.matcher(senha).find() ||
 				!NUMEROS.matcher(senha).find();
 	}
+	
+	public ArrayList<Cliente> listarTodosClientes(Integer idCliente){
+		return bo.listarTodosClientes(idCliente);
+	}
 }

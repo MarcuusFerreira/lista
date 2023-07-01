@@ -18,6 +18,8 @@ public class ListaBO {
 		if(dao.cadastrouMesmoNome(lista.getIdCliente(), lista.getNomeLista()))
 			
 		return dao.cadastrarLista(lista);
+		return false;
+		
 	}
 	
 	public List<Lista> consultarListasBO(int idCliente) throws ErroConsultarException {
