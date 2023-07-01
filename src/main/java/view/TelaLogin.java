@@ -32,9 +32,9 @@ public class TelaLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtNomeUsuario;
 	private JPasswordField txtSenha;
-	private PainelCadastroCliente painelCadastroUsuario;
+	private JPanel painelCadastroUsuario;
 	private AbstractButton btnEntrar;
-	private PainelTelaPrincipal painelSistema;
+	private JPanel painelSistema;
 
 	private ClienteController controller;
 	private AbstractButton btnCadastrar;
@@ -42,9 +42,6 @@ public class TelaLogin extends JFrame {
 	private JLabel lblUsuario;
 	private JComponent lblLogin;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,14 +55,11 @@ public class TelaLogin extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TelaLogin() {
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 260);
-		setLocationRelativeTo(null); // Centralizar na tela
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -97,12 +91,10 @@ public class TelaLogin extends JFrame {
 		contentPane.add(lblSenha, "2, 8, right, default");
 
 		txtSenha = new JPasswordField();
-		// Adicionar KeyListener ao campo de senha
 		txtSenha.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					// Ação do botão "Entrar" quando pressionar ENTER
 					btnEntrar.doClick();
 				}
 			}
@@ -147,7 +139,6 @@ public class TelaLogin extends JFrame {
 
 	private void iniciarSistema(Cliente cliente) {
 		painelSistema = new PainelTelaPrincipal(cliente);
-		setBounds(100, 100, 610, 650);
 		setContentPane(painelSistema);
 		setBounds(100, 100, 610, 650);
 		setLocationRelativeTo(null);

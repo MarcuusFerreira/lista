@@ -1,11 +1,10 @@
 package view;
 
-
-
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -24,11 +23,21 @@ import model.vo.Cliente;
 public class TelaPrincipal {
 
 	private JFrame frmTelaPrincipal;
+	private JMenuItem mntmCadastrarLista;
+	private JMenuItem mntmMostrarListas;
+	private JMenu mnSobre;
+	private AbstractButton mntmSobreNos;
+	private JMenu mnAdm;
+	private JMenuItem mntmCadastrarCliente;
+	private JMenuItem mntmMostrarClientes;
+	private JLabel lblNewLabel;
+	private JMenuBar menuBar;
+	private JMenu mnListas;
 
 	/**
 	 * Create the application.
 	 */
-	
+
 	public TelaPrincipal(Cliente cliente) {
 		initialize();
 	}
@@ -43,13 +52,13 @@ public class TelaPrincipal {
 		frmTelaPrincipal.setLocationRelativeTo(null); // Centralizar na tela
 		frmTelaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		frmTelaPrincipal.setJMenuBar(menuBar);
 
-		JMenu mnListas = new JMenu("Listas");
+		mnListas = new JMenu("Listas");
 		menuBar.add(mnListas);
 
-		JMenuItem mntmCadastrarLista = new JMenuItem("Cadastrar Listas");
+		mntmCadastrarLista = new JMenuItem("Cadastrar Listas");
 		mntmCadastrarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PainelCadastroListas painelCadastroLista = new PainelCadastroListas();
@@ -62,7 +71,7 @@ public class TelaPrincipal {
 		});
 		mnListas.add(mntmCadastrarLista);
 
-		JMenuItem mntmMostrarListas = new JMenuItem("Mostrar Listas");
+		mntmMostrarListas = new JMenuItem("Mostrar Listas");
 		mntmMostrarListas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PainelMostrarListas painelMostrarListas = new PainelMostrarListas();
@@ -75,10 +84,10 @@ public class TelaPrincipal {
 		});
 		mnListas.add(mntmMostrarListas);
 
-		JMenu mnSobre = new JMenu("Sobre");
+		mnSobre = new JMenu("Sobre");
 		menuBar.add(mnSobre);
 
-		JMenuItem mntmSobreNos = new JMenuItem("Sobre Nós");
+		mntmSobreNos = new JMenuItem("Sobre Nós");
 		mntmSobreNos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = "Software pensado e devenvolvido por:\n - Guilherme Caon \n- Marcus Ferreira\n- Vinicius Alves\n";
@@ -87,10 +96,10 @@ public class TelaPrincipal {
 		});
 		mnSobre.add(mntmSobreNos);
 
-		JMenu mnAdm = new JMenu("Adm");
+		mnAdm = new JMenu("Adm");
 		menuBar.add(mnAdm);
 
-		JMenuItem mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
+		mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
 		mnAdm.add(mntmCadastrarCliente);
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,7 +112,7 @@ public class TelaPrincipal {
 			}
 		});
 
-		JMenuItem mntmMostrarClientes = new JMenuItem("Mostrar Clientes");
+		mntmMostrarClientes = new JMenuItem("Mostrar Clientes");
 		mnAdm.add(mntmMostrarClientes);
 		mntmMostrarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,14 +132,9 @@ public class TelaPrincipal {
 						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
 
-		JLabel lblNewLabel = new JLabel("Bem vindo ao sistema, navegue usando o MenuBar acima");
+		lblNewLabel = new JLabel("Bem vindo ao sistema, navegue usando o MenuBar acima");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		frmTelaPrincipal.getContentPane().add(lblNewLabel, "4, 8, center, center");
-	}
-
-	public Object getContentPane() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
