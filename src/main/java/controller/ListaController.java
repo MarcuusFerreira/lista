@@ -19,4 +19,9 @@ public class ListaController {
 		boolean cadastrou = false;
 		return cadastrou;
 	}
+
+	public List<Lista> consultarListasClientePorID(int idCliente) throws ErroConsultarException {
+		bo = new ListaBO();
+		return bo.consultarListasClientePorIDBO(idCliente);
+	}
 }
