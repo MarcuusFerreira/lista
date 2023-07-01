@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,23 +156,37 @@ public class ClienteDAO {
 		return cliente;
 	}
 	
-	public List<Cliente> listarTodosClientes () throws ErroConsultarException {
+	public List<Cliente> listarTodosClientes () {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
 		List<Cliente> clientes = new ArrayList<Cliente>();
-		Connection connection = Banco.getConnection();
-		String sql = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, "
+		
+		String query  = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, "
 				+ "TIPO_USUARIO, NOME_USUARIO, SENHA FROM CLIENTE";
-		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		
+		PreparedStatement pstmt = Banco.getPreparedStatement(conn, query);
 		try {
-			ResultSet resultado = pstmt.executeQuery();
+			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
 				Cliente clienteBuscado = montarCliente(resultado);
+				clienteBuscado.setIdCliente(Integer.parseInt(resultado.getString(1)));
+				clienteBuscado.setNomeCliente(resultado.getString(2));
+				clienteBuscado.setCpf(resultado.getString(3));
+				clienteBuscado.setDataNascimento(LocalDate.parse(resultado.getString(4)));
+				clienteBuscado.setDataCadastro(LocalDateTime.parse(resultado.getString(5)));
+				clienteBuscado.setTipoUsuario(Integer.parseInt(resultado.getString(6)));
+				clienteBuscado.setNomeUsuario(resultado.getString(7));
+				clienteBuscado.setSenha(resultado.getString(8));
+				
 				clientes.add(clienteBuscado);
 			}
 		} catch (SQLException e) {
-			throw new ErroConsultarException("Erro no método listarTodosClientes, Erro ao consultar os clientes");
+			
 		} finally {
-			Banco.closePreparedStatement(pstmt);
-			Banco.closeConnection(connection);
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
 		}
 		return clientes;
 	}
