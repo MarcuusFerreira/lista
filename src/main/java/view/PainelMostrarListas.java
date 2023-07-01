@@ -28,6 +28,8 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
+import controller.ListaController;
+import model.exception.ErroConsultarException;
 import model.vo.Cliente;
 
 import java.awt.Font;
@@ -38,19 +40,18 @@ import javax.swing.JComboBox;
 public class PainelMostrarListas extends JPanel {
 	private JTable tblClientes;
 	private ArrayList<Cliente> clientes;
-	private String[] nomesColunas = { "Nome do Produto", "Unidade de Medida", "Data da Lista" };
+	private String[] nomesColunas = { "Nome da Lista", "Setor", "Marca", "Nome do Produto", "Unidade de Medida", "Data da Lista" };
 	private JComboBox cbNomeListas;
 	private MaskFormatter mascaraCpf;
 	private JButton btnEditar;
 	private JButton btnGerarPlanilha;
 	private JButton btnExcluir;
 	private JLabel lblNome;
-	private JLabel lblPaginacao;
-	
+
 	private ClienteController controller = new ClienteController();
 	private Cliente clienteSelecionado;
-	
-	//Atributos para a PAGINAÇÃO
+
+	// Atributos para a PAGINAÇÃO
 	private final int TAMANHO_PAGINA = 5;
 	private int paginaAtual = 1;
 	private int totalPaginas = 0;
@@ -60,7 +61,9 @@ public class PainelMostrarListas extends JPanel {
 	private JButton btnAvancarPagina_1;
 	private JLabel lblProdutos;
 //	private ClienteSeletor seletor = new ClienteSeletor();
-	
+	private int idCliente = 1;
+	private JButton btnGerarPlanilhaDeTodasAsListas;
+
 	private void limparTabelaClientes() {
 		tblClientes.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
 	}
@@ -81,14 +84,15 @@ public class PainelMostrarListas extends JPanel {
 //			model.addRow(novaLinhaDaTabela);
 //		}
 //	}
-	
+
 	public PainelMostrarListas() {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("61px"),
 				ColumnSpec.decode("94px"),
+				ColumnSpec.decode("94px"),
+				ColumnSpec.decode("center:101px"),
 				ColumnSpec.decode("center:101px"),
 				ColumnSpec.decode("94px"),
 				ColumnSpec.decode("default:grow"),
@@ -103,10 +107,17 @@ public class PainelMostrarListas extends JPanel {
 				FormSpecs.LINE_GAP_ROWSPEC,
 				RowSpec.decode("35px"),
 				FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC,
-				RowSpec.decode("133px"),
-				RowSpec.decode("22px"),
-				RowSpec.decode("23px"),
-				RowSpec.decode("33px"),}));
+				RowSpec.decode("133px:grow"),
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("33px"),
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,}));
 
 		tblClientes = new JTable();
 		this.limparTabelaClientes(); // Adicionei essa linha
@@ -126,27 +137,30 @@ public class PainelMostrarListas extends JPanel {
 				}
 			}
 		});
-						
-						lblNewLabel = new JLabel("Mostrar Lista");
-						lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-						lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						add(lblNewLabel, "2, 2, 5, 1");
-		
+
+		lblNewLabel = new JLabel("Mostrar Lista");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblNewLabel, "1, 2, 7, 1");
+
 		lblProdutos = new JLabel("Produtos");
 		lblProdutos.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblProdutos.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblProdutos, "3, 8, 3, 1");
-		this.add(tblClientes, "2, 10, 5, 1, fill, fill");
+		add(lblProdutos, "1, 8, 8, 1");
+		this.add(tblClientes, "2, 10, 6, 1, fill, fill");
 
 		lblNome = new JLabel("Selecione a Lista:");
 		this.add(lblNome, "2, 4, 2, 1, fill, center");
 
-		cbNomeListas = new JComboBox();
+		ListaController listaController = new ListaController();
+		try {
+			cbNomeListas = new JComboBox(listaController.consultarListasClientePorID(idCliente).toArray());
+		} catch (ErroConsultarException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		cbNomeListas.setSelectedIndex(-1);
-		cbNomeListas.addItem("Lista do Mercado 1");
-		cbNomeListas.addItem("Lista do Mercado 2");
-		cbNomeListas.addItem("Lista do Mercado 3");
-		this.add(cbNomeListas, "4, 4, 3, 1, fill, default");
+		this.add(cbNomeListas, "4, 4, 4, 1, fill, default");
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -154,6 +168,13 @@ public class PainelMostrarListas extends JPanel {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
+				
+						btnAvancarPagina_1 = new JButton("Voltar");
+						btnAvancarPagina_1.setEnabled(false);
+						add(btnAvancarPagina_1, "3, 13, fill, default");
+
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.setEnabled(false);
 		
 				btnGerarPlanilha = new JButton("Gerar Planilha");
 				btnGerarPlanilha.setEnabled(false);
@@ -165,76 +186,69 @@ public class PainelMostrarListas extends JPanel {
 						int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
 						if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
 							String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
-							//TODO decomentar na aula 11
-							//controller.gerarRelatorio(clientes, caminhoEscolhido);
+							// TODO decomentar na aula 11
+							// controller.gerarRelatorio(clientes, caminhoEscolhido);
 						}
 					}
 				});
-				
-				btnAvancarPagina_1 = new JButton("Voltar");
-				btnAvancarPagina_1.setEnabled(false);
-				add(btnAvancarPagina_1, "3, 12");
-				this.add(btnGerarPlanilha, "2, 13, 2, 1");
-		
-		btnExcluir = new JButton("Excluir");
-		btnExcluir.setEnabled(false);
-//		btnExcluir.addActionListener(new ActionListener() {
-			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente selecionado?");
-//				
-//				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
-//					try {
-//						controller.excluir(clienteSelecionado.getId());
-//						JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
-//						clientes = (ArrayList<Cliente>) controller.consultarTodos();
-//						atualizarTabelaClientes();
-//					} catch (ClienteComTelefoneException e1) {
-//						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
-//					}
-//				}
-//			}
-//		});
-//		this.add(btnExcluir, "15, 14, fill, fill");
-//		
-//		btnVoltarPagina = new JButton("<< Voltar");
-//		btnVoltarPagina.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				paginaAtual--;
-////				buscarClientesComFiltros();
-//				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-//				btnVoltarPagina.setEnabled(paginaAtual > 1);
-//				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
-//			}
-//		});
-//		btnVoltarPagina.setEnabled(false);
-//		add(btnVoltarPagina, "6, 12, 5, 1, fill, top");
-		
-		btnAvancarPagina = new JButton("Avançar");
-		btnAvancarPagina.setEnabled(false);
-		btnAvancarPagina.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				paginaAtual++;
+						//		btnExcluir.addActionListener(new ActionListener() {
+						
+						//			@Override
+						//			public void actionPerformed(ActionEvent e) {
+						//				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente selecionado?");
+						//				
+						//				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
+						//					try {
+						//						controller.excluir(clienteSelecionado.getId());
+						//						JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
+						//						clientes = (ArrayList<Cliente>) controller.consultarTodos();
+						//						atualizarTabelaClientes();
+						//					} catch (ClienteComTelefoneException e1) {
+						//						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+						//					}
+						//				}
+						//			}
+						//		});
+						//		this.add(btnExcluir, "15, 14, fill, fill");
+						//		
+						//		btnVoltarPagina = new JButton("<< Voltar");
+						//		btnVoltarPagina.addActionListener(new ActionListener() {
+						//			public void actionPerformed(ActionEvent e) {
+						//				paginaAtual--;
+						////				buscarClientesComFiltros();
+						//				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+						//				btnVoltarPagina.setEnabled(paginaAtual > 1);
+						//				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
+						//			}
+						//		});
+						//		btnVoltarPagina.setEnabled(false);
+						//		add(btnVoltarPagina, "6, 12, 5, 1, fill, top");
+						
+								btnAvancarPagina = new JButton("Avançar");
+								btnAvancarPagina.setEnabled(false);
+								btnAvancarPagina.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent arg0) {
+										paginaAtual++;
 //				buscarClientesComFiltros();
-				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-				btnVoltarPagina.setEnabled(paginaAtual > 1);
-				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
-			}
-		});
-		add(btnAvancarPagina, "5, 12");
-		
-		lblPaginacao = new JLabel("0 / 0");
-		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblPaginacao, "4, 12, fill, center");
+//						lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+										btnVoltarPagina.setEnabled(paginaAtual > 1);
+										btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
+									}
+								});
+								add(btnAvancarPagina, "6, 13, fill, default");
+				this.add(btnGerarPlanilha, "4, 15, 2, 1");
 		
 				btnEditar = new JButton("Editar");
 				btnEditar.setEnabled(false);
-				this.add(btnEditar, "5, 13, fill, default");
+				this.add(btnEditar, "4, 16, 2, 1");
 		
+		btnGerarPlanilhaDeTodasAsListas = new JButton("Gerar Planilha de Todas as Listas");
+		btnGerarPlanilhaDeTodasAsListas.setEnabled(false);
+		add(btnGerarPlanilhaDeTodasAsListas, "3, 20, 4, 1, fill, default");
+
 //		atualizarQuantidadePaginas();
 	}
-	
+
 //	private void atualizarQuantidadePaginas() {
 //		//Cálculo do total de páginas (poderia ser feito no backend)
 ////		int totalRegistros = controller.contarTotalRegistrosComFiltros(seletor);
@@ -273,7 +287,7 @@ public class PainelMostrarListas extends JPanel {
 //		atualizarQuantidadePaginas();
 //	}
 
-	//Torna o btnEditar acessível externamente à essa classe
+	// Torna o btnEditar acessível externamente à essa classe
 	public JButton getBtnEditar() {
 		return this.btnEditar;
 	}

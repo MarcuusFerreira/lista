@@ -34,7 +34,7 @@ public class TelaMobile extends JFrame {
 	public TelaMobile() throws ErroConsultarException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaMobile.class.getResource("/icon/android.png")));
 		// Configurações básicas da janela
-		setTitle("Galaxy S23 Ultra 5G ");
+		setTitle("\"Galaxy S23\"");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(480, 550));
 		setResizable(false);
@@ -44,7 +44,7 @@ public class TelaMobile extends JFrame {
 		// Cria um modelo de tabela com três colunas
 		DefaultTableModel model = new DefaultTableModel(
 				new Object[][] { { "1", "Lasanha", true }, { "2", "Macarrão", true }, { "4", "Arroz", true }, },
-				new String[] { "Quantidade", "Item", "Selecionado" });
+				new String[] { "Quantidade", "Item", "Já Pegou?" });
 
 		// Cria uma tabela com o modelo de tabela
 		JTable table = new JTable(model) {
