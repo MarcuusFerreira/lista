@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import model.bo.ClienteBO;
-import model.exception.CpfInvalidoException;
-import model.exception.ErroCadastroException;
-import model.exception.ErroLoginException;
+import model.exception.*;
 import model.vo.Cliente;
 
 public class ClienteController {
@@ -73,7 +71,18 @@ public class ClienteController {
 				!NUMEROS.matcher(senha).find();
 	}
 	
-	public ArrayList<Cliente> listarTodosClientes(Integer idCliente){
-		return bo.listarTodosClientes(idCliente);
+	public ArrayList<Cliente> listarTodosClientes() throws ErroConsultarException {
+		bo = new ClienteBO();
+		return bo.listarTodosClientes();
+	}
+
+	public Cliente listarPorId(int idCliente) throws ErroConsultarException{
+		bo = new ClienteBO();
+		return bo.listarClientePorId(idCliente);
+	}
+
+	public boolean atualizarCliente(Cliente cliente) throws ErroAtualizarException, ErroConsultarException {
+		bo = new ClienteBO();
+		return bo.atualizarCliente(cliente);
 	}
 }

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.ClienteDAO;
-import model.exception.CpfInvalidoException;
-import model.exception.ErroCadastroException;
-import model.exception.ErroLoginException;
+import model.exception.*;
 import model.geradores.GeradorPlanilha;
 import model.util.ValidadorCpf;
 import model.vo.Cliente;
 
 public class ClienteBO {
+
 
 	private ClienteDAO dao;
 	public Object exportarDadosBO;
@@ -19,7 +18,7 @@ public class ClienteBO {
 
 	public Cliente cadastrarNovoClienteBO(Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
 		dao = new ClienteDAO();
-		cliente.setNomeCliente(cliente.getNomeCliente().toUpperCase());
+		cliente.setNomeCliente(cliente.getNomeCliente().toUpperCase().trim());
 		if(dao.cpfJaExiste(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF já cadastrado!");
 		}
@@ -38,11 +37,21 @@ public class ClienteBO {
 		return dao.verificarCredenciaisDAO(cliente);
 	}
 	
-	public ArrayList<Cliente> listarTodosClientes (Integer IdCliente) {
+	public ArrayList<Cliente> listarTodosClientes () throws ErroConsultarException {
 		 dao = new ClienteDAO();
-		ArrayList<Cliente> clientes = new ArrayList<>();
-		return clientes;
-		
-		
+		return dao.listarTodosClientes();
+	}
+
+	public Cliente listarClientePorId (int idCliente) throws ErroConsultarException {
+		dao = new ClienteDAO();
+		return dao.listarClientePorId(idCliente);
+	}
+
+	public boolean atualizarCliente(Cliente cliente) throws ErroAtualizarException, ErroConsultarException, ErroClienteNaoCadastradoException {
+		dao = new ClienteDAO();
+		if(dao.clienteExiste(cliente.getIdCliente())) {
+			throw new ErroClienteNaoCadastradoException("Cliente não cadastrado");
+		}
+		return dao.atualizarCliente(cliente);
 	}
 }

@@ -1,10 +1,9 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.bo.ListaBO;
-import model.exception.ErroConsultarException;
+import model.exception.*;
 import model.vo.Lista;
 
 public class ListaController {
@@ -16,13 +15,25 @@ public class ListaController {
 		return bo.consultarListasBO(idCliente);
 	}
 	
-	public boolean cadastrarListasController(Lista lista) {
-		boolean cadastrou = false;
-		return cadastrou;
+	public boolean cadastrarListasController(Lista lista) throws ErroCadastroException, ErroListaCadastradaException {
+		bo = new ListaBO();
+		lista.setNomeLista(lista.getNomeLista().trim());
+		return bo.cadastrarListasBO(lista);
 	}
 
-	public ArrayList<String> consultarListasClientePorID(int idCliente) throws ErroConsultarException {
+	public Lista consultarListaPorId(int idCliente) throws ErroConsultarException {
 		bo = new ListaBO();
-		return bo.consultarListasClientePorIDBO(idCliente);
+		return bo.consultarPorId(idCliente);
+	}
+
+	public boolean atualizarListaController(Lista lista) throws ErroAtualizarException {
+		bo = new ListaBO();
+		lista.setNomeLista(lista.getNomeLista().trim());
+		return bo.atualizarLista(lista);
+	}
+
+	public boolean excluirListaController(int idLista) throws ErroExcluirException {
+		bo = new ListaBO();
+		return bo.excluirLista(idLista);
 	}
 }

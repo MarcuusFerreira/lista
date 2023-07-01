@@ -19,9 +19,6 @@ import model.util.FormatadorData;
 import model.vo.Cliente;
 
 public class ClienteDAO {
-
-	/*Oque falta nessa classe:
-	 * Consultar todos clientes*/
 	
 	public Cliente cadastrarNovoClienteDAO(Cliente cliente) throws ErroCadastroException {
 		Connection connection = Banco.getConnection();
@@ -123,23 +120,23 @@ public class ClienteDAO {
 		return retorno;
 	}
 	
-	public boolean excluirCliente(Cliente cliente) throws ErroExcluirException {
+	public boolean excluirCliente(Cliente cliente) throws ErroExcluirException, ErroConsultarException {
+		ListaDAO listaDAO = new ListaDAO();
+		listaDAO.excluirTodasListasCliente(cliente.getIdCliente());
 		Connection connection = Banco.getConnection();
 		String sql = "DELETE FROM CLIENTE WHERE ID_CLIENTE = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
 		int quantidadeLinhasAfetadas = 0;
-		
 		try {
 			pstmt.setInt(1, cliente.getIdCliente());
-			quantidadeLinhasAfetadas = pstmt.executeUpdate(sql);
+			quantidadeLinhasAfetadas = pstmt.executeUpdate();
 		} catch (SQLException mensagem) {
 			throw new ErroExcluirException("Erro no método excluirCliente, Erro ao Excluir o cliente");
 		} finally {
 			Banco.closeStatement(pstmt);
 			Banco.closeConnection(connection);
 		}
-		boolean excluiu = quantidadeLinhasAfetadas > 0;
-		return excluiu;
+		return quantidadeLinhasAfetadas > 0;
 	}
 	
 	public Cliente listarClientePorId (int idCliente) throws ErroConsultarException {
@@ -159,7 +156,6 @@ public class ClienteDAO {
 	public ArrayList<Cliente> listarTodosClientes () throws ErroConsultarException {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
-		ResultSet resultado = null;
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 		
 		String query  = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, "
@@ -167,7 +163,7 @@ public class ClienteDAO {
 		
 		PreparedStatement pstmt = Banco.getPreparedStatement(conn, query);
 		try {
-			resultado = stmt.executeQuery(query);
+			ResultSet resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
 				Cliente clienteBuscado = montarCliente(resultado);
 				clienteBuscado.setIdCliente(Integer.parseInt(resultado.getString(1)));
@@ -182,9 +178,8 @@ public class ClienteDAO {
 				clientes.add(clienteBuscado);
 			}
 		} catch (SQLException e) {
-			
+			throw new ErroConsultarException("Erro no método listarTodosClientes\n" + e.getCause());
 		} finally {
-			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
@@ -202,5 +197,25 @@ public class ClienteDAO {
 		cliente.setNomeUsuario(resultado.getString(7));
 		cliente.setSenha(resultado.getString(8));
 		return cliente;
+	}
+
+	public boolean clienteExiste(int idCliente) throws ErroConsultarException {
+		boolean clienteCadastrado = false;
+		Connection connection = Banco.getConnection();
+		String sql = "SELECT * FROM CLIENTE WHERE ID_CLIENTE = ?";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		try {
+			pstmt.setInt(1, idCliente);
+			ResultSet resultado = pstmt.executeQuery();
+			if(resultado.next()) {
+				clienteCadastrado = true;
+			}
+		} catch (SQLException e) {
+			throw new ErroConsultarException("Erro no metodo clienteExiste\n" + e.getCause());
+		} finally {
+			Banco.closePreparedStatement(pstmt);
+			Banco.closeConnection(connection);
+		}
+		return clienteCadastrado;
 	}
 }

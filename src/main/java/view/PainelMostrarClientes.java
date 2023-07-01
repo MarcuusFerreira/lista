@@ -28,6 +28,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
+import model.exception.ErroConsultarException;
 import model.vo.Cliente;
 
 import java.awt.Font;
@@ -147,8 +148,12 @@ public class PainelMostrarClientes extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				ClienteController controller = new ClienteController();
 				Integer idCliente= null;
-				clientes = controller.listarTodosClientes(idCliente);
-				
+				try {
+					clientes = controller.listarTodosClientes();
+				} catch (ErroConsultarException ex) {
+					JOptionPane.showMessageDialog(null, ex);
+				}
+
 				atualizarTabelaClientes();
 				
 				
