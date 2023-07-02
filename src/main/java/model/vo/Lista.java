@@ -1,6 +1,6 @@
 package model.vo;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Lista {
@@ -9,7 +9,7 @@ public class Lista {
 	private int idCliente;
 	private String nomeLista;
 	private List<ProdutoLista> produtosLista;
-	private LocalDate dataLista;
+	private LocalDateTime dataLista;
 	
 	public Lista() {
 		
@@ -39,11 +39,11 @@ public class Lista {
 		this.produtosLista = produtosListas;
 	}
 
-	public LocalDate getDataLista() {
+	public LocalDateTime getDataLista() {
 		return dataLista;
 	}
 
-	public void setDataLista(LocalDate dataLista) {
+	public void setDataLista(LocalDateTime dataLista) {
 		this.dataLista = dataLista;
 	}
 	

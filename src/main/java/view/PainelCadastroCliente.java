@@ -26,6 +26,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
 import model.exception.CpfInvalidoException;
+import model.exception.DataNascimentoInvalidaException;
 import model.exception.ErroCadastroException;
 import model.vo.Cliente;
 
@@ -170,10 +171,14 @@ public class PainelCadastroCliente extends JPanel {
 				cliente.setNomeUsuario(textNomeUsuario.getText());
 				cliente.setSenha(textSenha.getText());
 				try {
-					controller.cadastrarNovoClienteController(cliente);
+					if(controller.cadastrarNovoClienteController(cliente)) {
+						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+					}
 					//TODO mostrar mensagem de sucesso e/ou limpar a tela
-				} catch (ErroCadastroException | CpfInvalidoException excecao) {
+				} catch (ErroCadastroException | CpfInvalidoException | DataNascimentoInvalidaException excecao) {
 					JOptionPane.showMessageDialog(null, excecao.getMessage());
+				} finally {
+					limparCampos();
 				}
 			}
 		});

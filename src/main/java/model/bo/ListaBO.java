@@ -5,6 +5,7 @@ import java.util.List;
 import model.dao.ListaDAO;
 import model.exception.*;
 import model.vo.Lista;
+import model.vo.ProdutoLista;
 
 public class ListaBO {
 
@@ -31,11 +32,17 @@ public class ListaBO {
 
 	public boolean atualizarLista(Lista lista) throws ErroAtualizarException {
 		dao = new ListaDAO();
+		lista.setNomeLista(lista.getNomeLista().toUpperCase());
 		return dao.atualizarLista(lista);
 	}
 
 	public boolean excluirLista(int idLista) throws ErroExcluirException {
 		dao = new ListaDAO();
 		return dao.excluirLista(idLista);
+	}
+
+	public boolean atualizarItensDaLista(List<ProdutoLista> lista, int idLista) throws ErroAtualizarException {
+		dao = new ListaDAO();
+		return dao.atualizarItensDaLista(lista, idLista);
 	}
 }

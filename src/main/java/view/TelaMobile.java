@@ -117,7 +117,7 @@ public class TelaMobile extends JFrame {
 		getContentPane().add(painel);
 
 		ListaController listaController = new ListaController();
-		cbLista = new JComboBox(listaController.consultarListasClientePorID(idCliente).toArray());
+		cbLista = new JComboBox(listaController.consultarListaController(idCliente).toArray());
 		cbLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaController listaController = new ListaController();

@@ -154,7 +154,7 @@ public class PainelMostrarListas extends JPanel {
 
 		ListaController listaController = new ListaController();
 		try {
-			cbNomeListas = new JComboBox(listaController.consultarListasClientePorID(idCliente).toArray());
+			cbNomeListas = new JComboBox(listaController.consultarListaController(idCliente).toArray());
 		} catch (ErroConsultarException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

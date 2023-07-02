@@ -29,7 +29,7 @@ public class ProdutoDAO {
 				produto.setSetor(resultado.getString(2));
 				produto.setMarca(resultado.getString(3));
 				produto.setNome(resultado.getString(4));
-				produto.setDataCadastro(FormatadorData.formatarDataMySQL(resultado.getString(5)));
+				produto.setDataCadastro(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(5)));
 				listaProdutos.add(produto);
 			}
 		} catch (SQLException excecao) {

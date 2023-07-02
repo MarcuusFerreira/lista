@@ -14,6 +14,7 @@ import model.exception.ErroExcluirException;
 import model.util.FormatadorData;
 import model.vo.Lista;
 import model.vo.ProdutoLista;
+import model.vo.UnidadeMedida;
 
 public class ListaDAO {
 
@@ -29,7 +30,7 @@ public class ListaDAO {
 			pstmtLista.execute();
 			ResultSet resultado = pstmtLista.getGeneratedKeys();
 			lista.setIdLista(resultado.getInt(1));
-			for(ProdutoLista itemDaListaDeProdutos: lista.getProdutosListas()) {
+			for (ProdutoLista itemDaListaDeProdutos : lista.getProdutosListas()) {
 				inserirProdutoNaLista(itemDaListaDeProdutos, lista.getIdLista());
 			}
 			cadastrado = true;
@@ -46,10 +47,10 @@ public class ListaDAO {
 	private boolean inserirProdutoNaLista(ProdutoLista produto, int idLista) throws ErroCadastroException {
 		boolean cadastrado = false;
 		Connection connection = Banco.getConnection();
-		String insertListaProdutos =  " INSERT INTO LISTA_PRODUTO "
-								    + " ID_LISTA, ID_PRODUTO, MARCADO, "
-									+ " UNIDADE_MEDIDA, VALOR_MEDIDA, OBS "
-									+ " VALUES (?, ?, ?, ?, ?, ?) ";
+		String insertListaProdutos = " INSERT INTO LISTA_PRODUTO "
+				+ " ID_LISTA, ID_PRODUTO, MARCADO, "
+				+ " UNIDADE_MEDIDA, VALOR_MEDIDA, OBS "
+				+ " VALUES (?, ?, ?, ?, ?, ?) ";
 		PreparedStatement pstmtListaProduto = Banco.getPreparedStatement(connection, insertListaProdutos);
 
 		try {
@@ -81,11 +82,44 @@ public class ListaDAO {
 				Lista lista = new Lista();
 				lista.setIdLista(resultado.getInt(1));
 				lista.setNomeLista(resultado.getString(2));
-				lista.setDataLista(FormatadorData.formatarDataMySQL(resultado.getString(3)));
+				lista.setDataLista(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(3)));
 				listas.add(lista);
+			}
+			for (Lista lista : listas) {
+				lista.setProdutos(buscarProdutosDaLista(lista.getIdLista()));
 			}
 		} catch (SQLException e) {
 			throw new ErroConsultarException("Erro no metodo consultarListas, Erro ao consultar as listas");
+		} finally {
+			Banco.closePreparedStatement(pstmt);
+			Banco.closeConnection(connection);
+		}
+		return listas;
+	}
+
+	private List<ProdutoLista> buscarProdutosDaLista(int idLista) throws ErroConsultarException {
+		List<ProdutoLista> listas = new ArrayList<ProdutoLista>();
+		Connection connection = Banco.getConnection();
+		String sql = "SELECT P.ID_PRODUTO, P.NOME, P.SETOR, P.MARCA, P.DATA_CADASTRO, LP.MARCADO, LP.UNIDADE_MEDIDA, LP.VALOR_UNIDADE " +
+				" FROM PRODUTO P INNER JOIN LISTA_PRODUTO LP ON P.ID_PRODUTO = LP.ID_PRODUTO WHERE LP.ID_LISTA = ?";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		try {
+			pstmt.setInt(1, idLista);
+			ResultSet resultado = pstmt.executeQuery();
+			while (resultado.next()) {
+				ProdutoLista produtoLista = new ProdutoLista();
+				produtoLista.setIdProduto(resultado.getInt(1));
+				produtoLista.setNome(resultado.getString(2));
+				produtoLista.setSetor(resultado.getString(3));
+				produtoLista.setMarca(resultado.getString(4));
+				produtoLista.setDataCadastro(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(5)));
+				produtoLista.setMarcado(resultado.getInt(6));
+				produtoLista.setUnidadeMedida(UnidadeMedida.valueOf(resultado.getString(7)));
+				produtoLista.setValorMedida(resultado.getDouble(8));
+				listas.add(produtoLista);
+			}
+		} catch (SQLException e) {
+			throw new ErroConsultarException("Erro np método buscarProdutosDaLista\n" + e.getCause());
 		} finally {
 			Banco.closePreparedStatement(pstmt);
 			Banco.closeConnection(connection);
@@ -98,11 +132,10 @@ public class ListaDAO {
 		Connection connection = Banco.getConnection();
 		String sql = "update lista set nome = ? where id_lista = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
-
 		try {
 			pstmt.setString(1, lista.getNomeLista());
 			pstmt.setInt(2, lista.getIdLista());
-			if(pstmt.executeUpdate() == 1) {
+			if (pstmt.executeUpdate() == 1) {
 				resultado = true;
 			}
 		} catch (SQLException e) {
@@ -120,7 +153,7 @@ public class ListaDAO {
 			pstmt.setInt(1, idCliente);
 			pstmt.setString(2, nome);
 			ResultSet resultado = pstmt.executeQuery();
-			if(resultado.next()) {
+			if (resultado.next()) {
 				retorno = true;
 			}
 		} catch (SQLException e) {
@@ -140,11 +173,11 @@ public class ListaDAO {
 		try {
 			pstmt.setInt(1, idLista);
 			ResultSet resultado = pstmt.executeQuery();
-			if(resultado.next()) {
+			if (resultado.next()) {
 				lista.setIdLista(resultado.getInt(1));
 				lista.setIdCliente(resultado.getInt(2));
 				lista.setNomeLista(resultado.getString(3));
-				lista.setDataLista(FormatadorData.formatarDataMySQL(resultado.getString(5)));
+				lista.setDataLista(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(5)));
 			}
 		} catch (SQLException e) {
 			throw new ErroConsultarException("Erro no método, consultarPorId, Erro ao consultar as listas");
@@ -191,9 +224,32 @@ public class ListaDAO {
 
 	public void excluirTodasListasCliente(int idCliente) throws ErroConsultarException, ErroExcluirException {
 		List<Lista> listas = consultarListasDAO(idCliente);
-		for(Lista cadaLista : listas) {
+		for (Lista cadaLista : listas) {
 			excluirProdutosDaLista(cadaLista.getIdLista());
 			excluirLista(cadaLista.getIdLista());
 		}
+	}
+
+	public boolean atualizarItensDaLista(List<ProdutoLista> itens, int idLista) throws ErroAtualizarException {
+		boolean itensAtualizados = false;
+		Connection connection = Banco.getConnection();
+		String sql = "UPDATE LISTA_PRODUTO SET MARCADO = ? WHERE ID_LISTA = ? AND ID_PRODUTO = ?";
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		for (ProdutoLista itensDalista : itens) {
+			try {
+				pstmt.setInt(1, itensDalista.getMarcado());
+				pstmt.setInt(2, idLista);
+				pstmt.setInt(3, itensDalista.getIdProduto());
+				if (pstmt.executeUpdate() > 0) {
+					itensAtualizados = true;
+				}
+			} catch (SQLException e) {
+				throw new ErroAtualizarException("Erro ao atualizar a lista");
+			} finally {
+				Banco.closePreparedStatement(pstmt);
+				Banco.closeConnection(connection);
+			}
+		}
+		return itensAtualizados;
 	}
 }

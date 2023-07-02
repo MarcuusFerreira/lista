@@ -1,12 +1,12 @@
 package model.vo;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Produto {
 	
 	private Integer idProduto;
 	private String nome;
-	private LocalDate dataCadastro;
+	private LocalDateTime dataCadastro;
 	private String setor;
 	private Integer tipoProduto;
 	private String marca;
@@ -26,10 +26,10 @@ public class Produto {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public LocalDate getDataCadastro() {
+	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
-	public void setDataCadastro(LocalDate dataCadastro) {
+	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 	public String getSetor() {

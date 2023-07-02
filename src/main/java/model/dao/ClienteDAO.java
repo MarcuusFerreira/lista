@@ -20,7 +20,8 @@ import model.vo.Cliente;
 
 public class ClienteDAO {
 	
-	public Cliente cadastrarNovoClienteDAO(Cliente cliente) throws ErroCadastroException {
+	public boolean cadastrarNovoClienteDAO(Cliente cliente) throws ErroCadastroException {
+		boolean cadastrou = false;
 		Connection connection = Banco.getConnection();
 		String sql = "INSERT INTO CLIENTE (NOME_CLIENTE, CPF, DATA_NASCIMENTO, DATA_CADASTRO, TIPO_USUARIO, NOME_USUARIO, SENHA) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(connection, sql);
@@ -33,18 +34,18 @@ public class ClienteDAO {
 			stmt.setString(6, cliente.getNomeUsuario());
 			stmt.setString(7, cliente.getSenha());
 			stmt.execute();
-
 			ResultSet resultado = stmt.getGeneratedKeys();
 			if (resultado.next()) {
 				cliente.setIdCliente(resultado.getInt(1));
 			}
+			cadastrou = true;
 		} catch (SQLException mensagem) {
 			throw new ErroCadastroException("Erro Cadastro de Cliente, por favor contate o administrador");
 		} finally {
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(connection);
 		}
-		return cliente;
+		return cadastrou;
 	}
 
 	public boolean cpfJaExiste(String cpf) throws ErroCadastroException {

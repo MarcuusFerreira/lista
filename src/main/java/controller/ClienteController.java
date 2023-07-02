@@ -1,5 +1,7 @@
 package controller;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -19,11 +21,14 @@ public class ClienteController {
 	private static final Pattern NUMEROS = Pattern.compile("\\d");
 	private static final Pattern CARACTER_ESPECIAL = Pattern.compile("[!@#$%^&*()_+=\\\\-\\\\[\\\\]{};':\\\"\\\\\\\\|,.<>\\\\/?]");
 	
-	public Cliente cadastrarNovoClienteController (Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
+	public boolean cadastrarNovoClienteController (Cliente cliente) throws ErroCadastroException, CpfInvalidoException, DataNascimentoInvalidaException {
 		bo = new ClienteBO();
 		if(validarCamposEmBranco(cliente)) {
 			throw new ErroCadastroException("Existem Campos em Branco");
 		} else {
+			if(!validarDataNascimento(cliente.getDataNascimento())) {
+				throw new DataNascimentoInvalidaException("Data de nascimento invalida");
+			}
 			if(validarNomeUsuario(cliente.getNomeUsuario())) {
 				throw new ErroCadastroException("Nome de Usuario invalido");
 			}
@@ -34,6 +39,8 @@ public class ClienteController {
 		cliente.setNomeCliente(cliente.getNomeCliente().trim());
 		return bo.cadastrarNovoClienteBO(cliente);
 	}
+
+
 
 	public void exportarDadosController(ArrayList<Cliente> clientes, String caminhoEscolhido) {
 		bo = new ClienteBO();
@@ -56,7 +63,13 @@ public class ClienteController {
 		bo = new ClienteBO();
 		return bo.verificarCredenciaisBO(cliente);
 	}
-	
+
+	private boolean validarDataNascimento(LocalDate dataNascimento) {
+		Period periodo = Period.between(dataNascimento, LocalDate.now());
+		int idade = periodo.getYears();
+		return idade > 12;
+	}
+
 	private boolean validarNomeUsuario(String nomeUsuario) {
 		return nomeUsuario.length() < TAMANHO_NOME_USUARIO || nomeUsuario.contains(" ") ||
 				!CARACTER_MAIUSCULO.matcher(nomeUsuario).find() ||

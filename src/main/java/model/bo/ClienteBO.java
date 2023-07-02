@@ -15,7 +15,7 @@ public class ClienteBO {
 	private ClienteDAO dao;
 	public Object exportarDadosBO;
 
-	public Cliente cadastrarNovoClienteBO(Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
+	public boolean cadastrarNovoClienteBO(Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
 		dao = new ClienteDAO();
 		if(dao.cpfJaExiste(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF já cadastrado!");
