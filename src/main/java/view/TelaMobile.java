@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -26,6 +27,7 @@ import javax.swing.table.TableColumnModel;
 
 import controller.ListaController;
 import model.exception.ErroConsultarException;
+import model.vo.Lista;
 
 public class TelaMobile extends JFrame {
 	private JComboBox cbLista;
@@ -116,8 +118,8 @@ public class TelaMobile extends JFrame {
 		// Adiciona o painel à janela
 		getContentPane().add(painel);
 
-		ListaController listaController = new ListaController();
-		cbLista = new JComboBox(listaController.consultarListaController(idCliente).toArray());
+		List<Lista> lista = new ListaController().consultarListaController(idCliente);
+		cbLista = new JComboBox<>(lista.stream().map(Lista::getNomeLista).toArray(String[]::new));
 		cbLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaController listaController = new ListaController();
