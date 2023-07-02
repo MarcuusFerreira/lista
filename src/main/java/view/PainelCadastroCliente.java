@@ -173,12 +173,11 @@ public class PainelCadastroCliente extends JPanel {
 				try {
 					if(controller.cadastrarNovoClienteController(cliente)) {
 						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+						limparCampos();
 					}
 					//TODO mostrar mensagem de sucesso e/ou limpar a tela
 				} catch (ErroCadastroException | CpfInvalidoException | DataNascimentoInvalidaException excecao) {
 					JOptionPane.showMessageDialog(null, excecao.getMessage());
-				} finally {
-					limparCampos();
 				}
 			}
 		});
