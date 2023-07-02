@@ -31,8 +31,10 @@ import controller.ClienteController;
 import controller.ListaController;
 import model.exception.ErroConsultarException;
 import model.vo.Cliente;
+import model.vo.Lista;
 
 import java.awt.Font;
+import java.util.List;
 import javax.swing.JComboBox;
 //import model.exception.ClienteComTelefoneException;
 //import model.seletor.ClienteSeletor;
@@ -120,7 +122,7 @@ public class PainelMostrarListas extends JPanel {
 				FormSpecs.DEFAULT_ROWSPEC,}));
 
 		tblClientes = new JTable();
-		this.limparTabelaClientes(); // Adicionei essa linha
+		this.limparTabelaClientes();
 
 		tblClientes.addMouseListener(new MouseAdapter() {
 			@Override
@@ -152,11 +154,10 @@ public class PainelMostrarListas extends JPanel {
 		lblNome = new JLabel("Selecione a Lista:");
 		this.add(lblNome, "2, 4, 2, 1, fill, center");
 
-		ListaController listaController = new ListaController();
 		try {
-			cbNomeListas = new JComboBox(listaController.consultarListaController(idCliente).toArray());
+			List<Lista> lista = new ListaController().consultarListaController(idCliente);
+			cbNomeListas = new JComboBox<>(lista.stream().map(Lista::getNomeLista).toArray(String[]::new));
 		} catch (ErroConsultarException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		cbNomeListas.setSelectedIndex(-1);
@@ -168,7 +169,6 @@ public class PainelMostrarListas extends JPanel {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-				
 						btnAvancarPagina_1 = new JButton("Voltar");
 						btnAvancarPagina_1.setEnabled(false);
 						add(btnAvancarPagina_1, "3, 13, fill, default");
