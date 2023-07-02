@@ -36,6 +36,7 @@ public class PainelTelaPrincipal extends JPanel {
 	private JMenu mnSair;
 	private JMenuItem mntmSair;
 	private JMenuItem mntmIrsCompras;
+	private TelaMobile telaMobile;
 
 	public PainelTelaPrincipal(Cliente cliente) {
 		initialize(cliente);
@@ -56,7 +57,7 @@ public class PainelTelaPrincipal extends JPanel {
 				painelCadastroLista = new PainelCadastroListas();
 				add(painelCadastroLista);
 				painelCadastroLista.setVisible(true);
-				revalidate();
+				painelCadastroLista.revalidate();
 			}
 		});
 		mnListas.add(mntmCadastrarLista);
@@ -68,8 +69,8 @@ public class PainelTelaPrincipal extends JPanel {
 				painelMostrarListas = new PainelMostrarListas();
 				add(painelMostrarListas);
 				painelMostrarListas.setVisible(true);
-				revalidate();
-				
+				painelMostrarListas.revalidate();
+
 			}
 		});
 		mnListas.add(mntmMostrarListas);
@@ -78,9 +79,10 @@ public class PainelTelaPrincipal extends JPanel {
 		mntmIrsCompras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					TelaMobile telaMobile = new TelaMobile();
+					telaMobile = new TelaMobile();
 					telaMobile.setVisible(true);
 					telaMobile.setAlwaysOnTop(true);
+					telaMobile.revalidate();
 //		            SwingUtilities.getWindowAncestor(PainelTelaPrincipal.this).setVisible(false);
 				} catch (ErroConsultarException ex) {
 					ex.printStackTrace();
@@ -105,23 +107,22 @@ public class PainelTelaPrincipal extends JPanel {
 		menuBar.add(mnAdm);
 
 		mntmCadastrarCliente = new JMenuItem("Cadastrar Cliente");
-		mnAdm.add(mntmCadastrarCliente);
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PainelCadastroCliente painelCadastro = new PainelCadastroCliente();
-				painelCadastro.setSize(610, 650);
-			    
+				painelCadastro = new PainelCadastroCliente();
+				painelCadastro.setVisible(true);
+				painelCadastro.revalidate();
 			}
 		});
+		mnAdm.add(mntmCadastrarCliente);
 
 		mntmMostrarClientes = new JMenuItem("Mostrar Clientes");
 		mnAdm.add(mntmMostrarClientes);
 		mntmMostrarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelMostrarClientes = new PainelMostrarClientes();
-				setVisible(false);
 				painelMostrarClientes.setVisible(true);
-				revalidate();
+				painelMostrarClientes.revalidate();
 			}
 		});
 
@@ -141,5 +142,4 @@ public class PainelTelaPrincipal extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel, BorderLayout.CENTER);
 	}
-
 }

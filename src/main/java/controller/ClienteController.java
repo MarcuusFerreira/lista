@@ -11,7 +11,8 @@ import model.util.ValidadorCpf;
 import model.vo.Cliente;
 
 public class ClienteController {
-	
+
+	private static final int IDADE_MINIMA = 12;
 	private ClienteBO bo;
 	
 	private static final int TAMANHO_NOME_USUARIO = 8;
@@ -67,7 +68,7 @@ public class ClienteController {
 	private boolean validarDataNascimento(LocalDate dataNascimento) {
 		Period periodo = Period.between(dataNascimento, LocalDate.now());
 		int idade = periodo.getYears();
-		return idade > 12;
+		return idade > IDADE_MINIMA;
 	}
 
 	private boolean validarNomeUsuario(String nomeUsuario) {

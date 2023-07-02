@@ -56,7 +56,7 @@ public class TelaLogin extends JFrame {
 	}
 
 	public TelaLogin() {
-		setTitle("Login");
+		setTitle("Sistema de Lista de Mercado");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 260);
 		setLocationRelativeTo(null);
