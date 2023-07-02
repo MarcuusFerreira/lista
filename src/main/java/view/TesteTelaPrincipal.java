@@ -17,6 +17,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
 import model.exception.ErroConsultarException;
 import model.vo.Cliente;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -79,9 +80,8 @@ public class TesteTelaPrincipal extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroLista = new PainelCadastroListas();
-				getContentPane().add(painelCadastroLista);
-				painelCadastroLista.setVisible(true);
-				painelCadastroLista.revalidate();
+				setContentPane(painelCadastroLista);
+				revalidate();
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
@@ -90,9 +90,8 @@ public class TesteTelaPrincipal extends JFrame {
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelMostrarListas = new PainelMostrarListas();
-				getContentPane().add(painelMostrarListas);
-				painelMostrarListas.setVisible(true);
-				painelMostrarListas.revalidate();
+				setContentPane(painelMostrarListas);
+				revalidate();
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem_1);
@@ -132,8 +131,8 @@ public class TesteTelaPrincipal extends JFrame {
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastro = new PainelCadastroCliente();
-				painelCadastro.setVisible(true);
-				painelCadastro.revalidate();
+				setContentPane(painelCadastro);
+				revalidate();
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_4);
@@ -142,8 +141,8 @@ public class TesteTelaPrincipal extends JFrame {
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelMostrarClientes = new PainelMostrarClientes();
-				painelMostrarClientes.setVisible(true);
-				painelMostrarClientes.revalidate();
+				setContentPane(painelMostrarClientes);
+				revalidate();
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
