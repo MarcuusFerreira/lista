@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import model.bo.ClienteBO;
 import model.exception.*;
+import model.util.ValidadorCpf;
 import model.vo.Cliente;
 
 public class ClienteController {
@@ -23,13 +24,14 @@ public class ClienteController {
 		if(validarCamposEmBranco(cliente)) {
 			throw new ErroCadastroException("Existem Campos em Branco");
 		} else {
-			if(validarSenha(cliente.getSenha())) {
-				throw new ErroCadastroException("Senha Inválida!");
-			}
 			if(validarNomeUsuario(cliente.getNomeUsuario())) {
 				throw new ErroCadastroException("Nome de Usuario invalido");
 			}
+			if(validarSenha(cliente.getSenha())) {
+				throw new ErroCadastroException("Senha Inválida!");
+			}
 		}
+		cliente.setNomeCliente(cliente.getNomeCliente().trim());
 		return bo.cadastrarNovoClienteBO(cliente);
 	}
 
@@ -39,7 +41,7 @@ public class ClienteController {
 	}
 
 	private boolean validarCamposEmBranco(Cliente cliente) {
-		return cliente.getNomeCliente().isBlank() 
+		return cliente.getNomeCliente().isBlank()
 				|| cliente.getCpf().isBlank()
 				|| cliente.getDataNascimento() == null 
 				|| cliente.getNomeUsuario().isBlank()
@@ -47,8 +49,8 @@ public class ClienteController {
 	}
 
 	public boolean verificarCredenciaisController(Cliente cliente) throws ErroLoginException {
-		if(cliente.getNomeUsuario().trim().isBlank() ||
-				cliente.getSenha().trim().isBlank()) {
+		if(cliente.getNomeUsuario().isBlank() ||
+				cliente.getSenha().isBlank()) {
 			throw new ErroLoginException("Usuário ou Senha inválidos");
 		}
 		bo = new ClienteBO();
@@ -81,8 +83,24 @@ public class ClienteController {
 		return bo.listarClientePorId(idCliente);
 	}
 
-	public boolean atualizarCliente(Cliente cliente) throws ErroAtualizarException, ErroConsultarException, ErroClienteNaoCadastradoException {
+	public boolean atualizarCliente(Cliente cliente) throws ErroAtualizarException, ErroConsultarException, ErroClienteNaoCadastradoException, ErroCadastroException, CpfInvalidoException {
 		bo = new ClienteBO();
+		if(validarCamposEmBranco(cliente)) {
+			throw new ErroCadastroException("Existem Campos em Branco");
+		} else {
+			if(validarNomeUsuario(cliente.getNomeUsuario())) {
+				throw new ErroCadastroException("Nome de Usuario invalido");
+			}
+			if(validarSenha(cliente.getSenha())) {
+				throw new ErroCadastroException("Senha Inválida!");
+			}
+		}
+		cliente.setNomeCliente(cliente.getNomeCliente().trim());
 		return bo.atualizarCliente(cliente);
+	}
+
+	public boolean excluirCliente(Cliente cliente) throws ErroExcluirException, ErroConsultarException {
+		bo = new ClienteBO();
+		return bo.excluirCliente(cliente);
 	}
 }

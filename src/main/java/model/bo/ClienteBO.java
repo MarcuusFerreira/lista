@@ -15,16 +15,15 @@ public class ClienteBO {
 	private ClienteDAO dao;
 	public Object exportarDadosBO;
 
-
 	public Cliente cadastrarNovoClienteBO(Cliente cliente) throws ErroCadastroException, CpfInvalidoException {
 		dao = new ClienteDAO();
-		cliente.setNomeCliente(cliente.getNomeCliente().toUpperCase().trim());
 		if(dao.cpfJaExiste(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF já cadastrado!");
 		}
 		if (ValidadorCpf.validarCpf(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF é Inválido!");
 		}
+		cliente.setNomeCliente(cliente.getNomeCliente().toUpperCase());
 		return dao.cadastrarNovoClienteDAO(cliente);
 	}
 
@@ -47,11 +46,20 @@ public class ClienteBO {
 		return dao.listarClientePorId(idCliente);
 	}
 
-	public boolean atualizarCliente(Cliente cliente) throws ErroAtualizarException, ErroConsultarException, ErroClienteNaoCadastradoException {
+	public boolean atualizarCliente(Cliente cliente) throws ErroAtualizarException, ErroConsultarException, ErroClienteNaoCadastradoException, CpfInvalidoException {
 		dao = new ClienteDAO();
-		if(dao.clienteExiste(cliente.getIdCliente())) {
+		if (ValidadorCpf.validarCpf(cliente.getCpf())) {
+			throw new CpfInvalidoException("CPF é Inválido!");
+		}
+		if(!dao.clienteExiste(cliente.getIdCliente())) {
 			throw new ErroClienteNaoCadastradoException("Cliente não cadastrado");
 		}
+		cliente.setNomeCliente(cliente.getNomeCliente().toUpperCase());
 		return dao.atualizarCliente(cliente);
+	}
+
+	public boolean excluirCliente(Cliente cliente) throws ErroExcluirException, ErroConsultarException {
+		dao = new ClienteDAO();
+		return dao.excluirCliente(cliente);
 	}
 }
