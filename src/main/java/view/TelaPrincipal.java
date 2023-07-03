@@ -101,7 +101,7 @@ public class TelaPrincipal extends JFrame {
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					telaMobile = new TelaMobile();
+					telaMobile = new TelaMobile(cliente);
 					telaMobile.setVisible(true);
 					telaMobile.setAlwaysOnTop(true);
 					telaMobile.revalidate();

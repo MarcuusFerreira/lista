@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -27,13 +26,14 @@ import javax.swing.table.TableColumnModel;
 
 import controller.ListaController;
 import model.exception.ErroConsultarException;
+import model.vo.Cliente;
 import model.vo.Lista;
 
 public class TelaMobile extends JFrame {
 	private JComboBox cbLista;
-	private int idCliente = 1; //.get idCliente
+	private int idCliente;
 
-	public TelaMobile() throws ErroConsultarException {
+	public TelaMobile(Cliente cliente) throws ErroConsultarException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaMobile.class.getResource("/icon/android.png")));
 		// Configurações básicas da janela
 		setTitle("\"Galaxy S23\"");
@@ -118,7 +118,7 @@ public class TelaMobile extends JFrame {
 		// Adiciona o painel à janela
 		getContentPane().add(painel);
 
-		List<Lista> lista = new ListaController().consultarListaController(idCliente);
+		List<Lista> lista = new ListaController().consultarListaController(cliente.getIdCliente());
 		cbLista = new JComboBox<>(lista.stream().map(Lista::getNomeLista).toArray(String[]::new));
 		cbLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,18 +138,4 @@ public class TelaMobile extends JFrame {
 		pack();
 		setLocationRelativeTo(null); // Centraliza a janela
 	}
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			TelaMobile exemplo;
-			try {
-				exemplo = new TelaMobile();
-				exemplo.setVisible(true);
-			} catch (ErroConsultarException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		});
 	}
-}
