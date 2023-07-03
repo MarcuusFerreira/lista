@@ -38,7 +38,7 @@ import java.awt.Font;
 public class PainelMostrarClientes extends JPanel {
 	private JTable tblClientes;
 	private ArrayList<Cliente> clientes;
-	private String[] nomesColunas = { "#IdCliente", "Nome Cliente", "CPF", "Data Nascimento", "Data Cadastro", "Tipo Usuario", "Nome Usuario", "Senha" };
+	private String[] nomesColunas = {"#IdCliente", "Nome Cliente", "CPF", "Data Nascimento", "Data Cadastro", "Tipo Usuario", "Nome Usuario", "Senha" };
 	private JTextField txtNome;
 	private MaskFormatter mascaraCpf;
 	private JFormattedTextField txtCPF;
@@ -71,21 +71,15 @@ public class PainelMostrarClientes extends JPanel {
 //	private ClienteSeletor seletor = new ClienteSeletor();
 
 	private void limparTabelaClientes() {
-		tblClientes.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-			}
-		));
+		tblClientes.setModel(new DefaultTableModel(new Object[][] {nomesColunas,}, nomesColunas));
 	}
 
 	private void atualizarTabelaClientes() {
 		this.limparTabelaClientes();
-
 		DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
 
 		for (Cliente c : clientes) {
-			Object[] novaLinhaDaTabela = new Object[5];
+			Object[] novaLinhaDaTabela = new Object[8];
 			novaLinhaDaTabela[0] = c.getIdCliente();
 			novaLinhaDaTabela[1] = c.getNomeCliente();
 			novaLinhaDaTabela[2] = c.getCpf();
@@ -96,6 +90,7 @@ public class PainelMostrarClientes extends JPanel {
 			novaLinhaDaTabela[7] = c.getSenha();
 			
 			model.addRow(novaLinhaDaTabela);
+			
 		}
 	}
 
@@ -114,6 +109,7 @@ public class PainelMostrarClientes extends JPanel {
 						RowSpec.decode("22px"), RowSpec.decode("23px"), RowSpec.decode("33px"), }));
 
 		tblClientes = new JTable();
+		tblClientes.setFillsViewportHeight(true);
 		this.limparTabelaClientes(); // Adicionei essa linha
 
 		tblClientes.addMouseListener(new MouseAdapter() {
