@@ -50,7 +50,7 @@ public class TelaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaPrincipal frame = new TelaPrincipal();
+					TelaPrincipal frame = new TelaPrincipal(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -162,11 +162,7 @@ public class TelaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Bem vindo ao sistema, navegue usando o MenuBar acima");
-		lblNewLabel.setBounds(195, 185, 274, 14);
+		lblNewLabel.setBounds(149, 181, 367, 14);
 		contentPane.add(lblNewLabel);
 	}
-
-	public TelaPrincipal() {
-	}
-
 }
