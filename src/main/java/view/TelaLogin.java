@@ -34,7 +34,7 @@ public class TelaLogin extends JFrame {
 	private JPasswordField txtSenha;
 	private JPanel painelCadastroUsuario;
 	private AbstractButton btnEntrar;
-	private JPanel painelSistema;
+	private TelaPrincipal painelSistema;
 
 	private ClienteController controller;
 	private AbstractButton btnCadastrar;
@@ -138,10 +138,11 @@ public class TelaLogin extends JFrame {
 	}
 
 	private void iniciarSistema(Cliente cliente) {
-		painelSistema = new PainelTelaPrincipal(cliente);
-		setContentPane(painelSistema);
-		setBounds(100, 100, 610, 650);
+		painelSistema = new TelaPrincipal(cliente);
+		painelSistema.setVisible(true);
+		// setBounds(100, 100, 610, 650);
 		setLocationRelativeTo(null);
 		revalidate();
+		this.dispose();
 	}
 }
