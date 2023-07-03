@@ -140,8 +140,6 @@ public class TelaLogin extends JFrame {
 	private void iniciarSistema(Cliente cliente) {
 		painelSistema = new TelaPrincipal(cliente);
 		painelSistema.setVisible(true);
-		// setBounds(100, 100, 610, 650);
-		setLocationRelativeTo(null);
 		revalidate();
 		this.dispose();
 	}
