@@ -170,8 +170,8 @@ public class ClienteDAO {
 				clienteBuscado.setIdCliente(Integer.parseInt(resultado.getString(1)));
 				clienteBuscado.setNomeCliente(resultado.getString(2));
 				clienteBuscado.setCpf(resultado.getString(3));
-				clienteBuscado.setDataNascimento(LocalDate.parse(resultado.getString(4)));
-				clienteBuscado.setDataCadastro(LocalDateTime.parse(resultado.getString(5)));
+				clienteBuscado.setDataNascimento(FormatadorData.formatarDataMySQL(resultado.getString(4)));
+				clienteBuscado.setDataCadastro(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(5)));
 				clienteBuscado.setTipoUsuario(Integer.parseInt(resultado.getString(6)));
 				clienteBuscado.setNomeUsuario(resultado.getString(7));
 				clienteBuscado.setSenha(resultado.getString(8));
