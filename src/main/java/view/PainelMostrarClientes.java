@@ -36,9 +36,10 @@ import java.awt.Font;
 //import model.seletor.ClienteSeletor;
 
 public class PainelMostrarClientes extends JPanel {
+	private static final Integer USUARIO = 1;
 	private JTable tblClientes;
 	private ArrayList<Cliente> clientes;
-	private String[] nomesColunas = {"#IdCliente", "Nome Cliente", "CPF", "Data Nascimento", "Data Cadastro", "Tipo Usuario", "Nome Usuario", "Senha" };
+	private String[] nomesColunas = {"#IdCliente", "Nome Cliente", "CPF", "Data Nascimento", "Data Cadastro", "Tipo Usuario", "Nome Usuario" };
 	private JTextField txtNome;
 	private MaskFormatter mascaraCpf;
 	private JFormattedTextField txtCPF;
@@ -79,15 +80,19 @@ public class PainelMostrarClientes extends JPanel {
 		DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
 
 		for (Cliente c : clientes) {
-			Object[] novaLinhaDaTabela = new Object[8];
+			Object[] novaLinhaDaTabela = new Object[7];
 			novaLinhaDaTabela[0] = c.getIdCliente();
 			novaLinhaDaTabela[1] = c.getNomeCliente();
 			novaLinhaDaTabela[2] = c.getCpf();
 			novaLinhaDaTabela[3] = c.getDataNascimento();
 			novaLinhaDaTabela[4] = c.getDataCadastro();
-			novaLinhaDaTabela[5] = c.getTipoUsuario();
+			if(c.getTipoUsuario() == USUARIO) {
+				novaLinhaDaTabela[5] = "USUARIO";
+			} else {
+				novaLinhaDaTabela[5] = "ADM";
+			}
+			
 			novaLinhaDaTabela[6] = c.getNomeUsuario();
-			novaLinhaDaTabela[7] = c.getSenha();
 			
 			model.addRow(novaLinhaDaTabela);
 			
