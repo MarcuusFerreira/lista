@@ -1,22 +1,23 @@
 package view;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
@@ -25,17 +26,14 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
-import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JRadioButton;
-
-import java.awt.Component;
-import java.awt.Font;
-import javax.swing.JCheckBox;
+import controller.ListaController;
+import controller.ProdutoController;
+import model.exception.ErroConsultarException;
+import model.vo.Cliente;
+import model.vo.Lista;
+import model.vo.Produto;
+import model.vo.ProdutoLista;
 
 public class PainelCadastroListas extends JPanel {
 	private JComboBox cbNomeListas;
@@ -44,19 +42,23 @@ public class PainelCadastroListas extends JPanel {
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
 	private JTable tableProdutos;
-	private String[] nomesColunas = { "Nome da Lista", "Nome do Setor","Nome do Produto", "Unidade de medida", "Quantidade/Peso" };
+	private String[] nomesColunas = {"Nome do Produto", "Nome do Setor", "Unidade de medida", "Quantidade/Peso" };
 	public JFrame frmTelaPrincipal;
 	private JFormattedTextField textKgOuUnidade;
 	private JComboBox cbProdutos;
 	private JRadioButton rdbtnQuantidade;
 	private JRadioButton rdbtnKilogramas;
 	private JTextField tFListaNova;
+	private Lista listaNova;
+	private List<Lista> listas;
+	private List<Produto> produtos;
+	private List<ProdutoLista> itemLista;
 	/**
 	 * Create the panel.
 	 * 
 	 * @throws ParseException
 	 */
-	public PainelCadastroListas() {
+	public PainelCadastroListas(Cliente cliente) {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -110,11 +112,13 @@ public class PainelCadastroListas extends JPanel {
 		JLabel lblNomeLista = new JLabel("Nome da Lista:");
 		add(lblNomeLista, "4, 6, right, default");
 
-		cbNomeListas = new JComboBox();
+		try {
+			listas = new ListaController().consultarListaController(cliente.getIdCliente());
+			cbNomeListas = new JComboBox<>(listas.stream().map(Lista::getNomeLista).toArray(String[]::new));;
+		} catch (ErroConsultarException e) {
+			e.printStackTrace();
+		}
 		cbNomeListas.setSelectedIndex(-1);
-		cbNomeListas.addItem("Lista do Mercado 1");
-		cbNomeListas.addItem("Lista do Mercado 2");
-		cbNomeListas.addItem("Lista do Mercado 3");
 		add(cbNomeListas, "6, 6, fill, default");
 
 		try {
@@ -127,12 +131,6 @@ public class PainelCadastroListas extends JPanel {
 		// Configurações da parte de DATAS do componente
 		dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
-
-		try {
-			mascaraCep = new MaskFormatter("##.###-##");
-			mascaraCep.setValueContainsLiteralCharacters(false);
-		} catch (ParseException e1) {
-		}
 
 		JButton btnCadastrarLista = new JButton("Salvar Lista");
 		btnCadastrarLista.addActionListener(new ActionListener() {
@@ -156,6 +154,9 @@ public class PainelCadastroListas extends JPanel {
 				JButton btnAdicionar_2 = new JButton("+");
 				btnAdicionar_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						listaNova = new Lista();
+						listaNova.setNomeLista(tFListaNova.getText());
+						cbNomeListas.addItem(listaNova);
 					}
 				});
 				add(btnAdicionar_2, "8, 8, left, default");
@@ -163,12 +164,16 @@ public class PainelCadastroListas extends JPanel {
 				JLabel lblProduto = new JLabel("Produto:");
 				add(lblProduto, "4, 12, right, default");
 		
-				cbProdutos = new JComboBox();
+				try {
+					produtos = new ProdutoController().consultarProdutos();
+					cbProdutos = new JComboBox(produtos.stream().map(Produto::getNome).toArray(String[]::new));
+				} catch (ErroConsultarException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				add(cbProdutos, "6, 12, fill, default");
 				cbProdutos.setSelectedIndex(-1);
-				cbProdutos.addItem("Óleo de cozinha");
-				cbProdutos.addItem("Arroz");
-				cbProdutos.addItem("Leite");
 
 		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
 		add(lblNewLabel, "4, 14, left, default");
@@ -189,6 +194,12 @@ public class PainelCadastroListas extends JPanel {
 
 		JButton btnAdicionar = new JButton("+");
 		add(btnAdicionar, "8, 18, left, default");
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbProdutos.getSelectedIndex();
+				ProdutoLista itemLista = new ProdutoLista();
+			}
+		});
 
 		JLabel lblProdutoSelecionados = new JLabel("Produtos Selecionados");
 		lblProdutoSelecionados.setHorizontalAlignment(SwingConstants.CENTER);
@@ -232,5 +243,17 @@ public class PainelCadastroListas extends JPanel {
 
 	private void limparTabelaProdutos() {
 		tableProdutos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
+	}
+	
+	private void AtualizarTabela() {
+		this.limparTabelaProdutos();
+		
+		for(ProdutoLista produto : itemLista) {
+			Object[] novaLinha = new Object[4];
+			novaLinha[0] = produto.getNome();
+			novaLinha[1] = produto.getSetor();
+			novaLinha[2] = produto.getUnidadeMedida();
+			novaLinha[3] = produto.getValorMedida();
+		}
 	}
 }

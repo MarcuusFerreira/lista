@@ -11,6 +11,7 @@ public class ProdutoController {
 	private ProdutoBO bo;
 	
 	public List<Produto> consultarProdutos () throws ErroConsultarException {
+		bo = new ProdutoBO();
 		return bo.consultarProdutosBO();
 	}
 	

@@ -11,6 +11,7 @@ public class ProdutoBO {
 	private ProdutoDAO dao;
 	
 	public List<Produto> consultarProdutosBO() throws ErroConsultarException {
+		dao = new ProdutoDAO();
 		return  dao.consultarProdutosDAO();
 	}
 
