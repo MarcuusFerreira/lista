@@ -250,5 +250,33 @@ public class ListaDAO {
 		}
 		return itensAtualizados;
 	}
+	public ArrayList<String> consultarListasClientePorIDDAO(int idCliente) throws ErroConsultarException {
+	    Connection connection = null;
+	    PreparedStatement stmt = null;
+	    ResultSet resultado = null;
+	    ArrayList<String> listasClienteID = new ArrayList<>();
+
+	    try {
+	        connection = Banco.getConnection();
+	        String sql = "SELECT NOME FROM LISTA WHERE ID_CLIENTE = ?";
+	        stmt = connection.prepareStatement(sql);
+	        stmt.setInt(1, idCliente);
+	        resultado = stmt.executeQuery();
+
+	        while (resultado.next()) {
+	            String nomeLista = resultado.getString("NOME");
+	            listasClienteID.add(nomeLista);
+	        }
+	    } catch (SQLException e) {
+	        throw new ErroConsultarException(
+	                "Erro no método consultarListasClientePorIDDAO Cliente com ID: " + idCliente);
+	    } finally {
+	        Banco.closeResultSet(resultado);
+	        Banco.closeStatement(stmt);
+	        Banco.closeConnection(connection);
+	    }
+
+	    return listasClienteID;
+	}
 
 }

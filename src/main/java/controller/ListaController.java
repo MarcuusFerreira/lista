@@ -38,4 +38,9 @@ public class ListaController {
 		return bo.excluirLista(idLista);
 	}
 
+	public ArrayList<String> consultarListasClientePorID(int idCliente) throws ErroConsultarException {
+		bo = new ListaBO();
+		return bo.consultarListasClientePorIDBO(idCliente);
+	}
+
 }

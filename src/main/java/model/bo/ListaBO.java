@@ -46,4 +46,9 @@ public class ListaBO {
 		dao = new ListaDAO();
 		return dao.atualizarItensDaLista(lista, idLista);
 	}
+
+	public ArrayList<String> consultarListasClientePorIDBO(int idCliente) throws ErroConsultarException {
+		dao = new ListaDAO();
+		return dao.consultarListasClientePorIDDAO(idCliente);
+	}
 }

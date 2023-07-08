@@ -29,7 +29,7 @@ import model.vo.Cliente;
 
 public class TelaMobile extends JFrame {
 	private JComboBox cbLista;
-	private int idCliente;
+	private int idCliente = 1;
 
 	public TelaMobile(Cliente cliente) throws ErroConsultarException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaMobile.class.getResource("/icon/android.png")));
@@ -117,22 +117,22 @@ public class TelaMobile extends JFrame {
 		getContentPane().add(painel);
 
 		ListaController listaController = new ListaController();
-//		ArrayList<String> listas = listaController.consultarListaPorIdMobile(cliente.getIdCliente());
-//		cbLista = new JComboBox(listas.toArray());
+		cbLista = new JComboBox<>(listaController.consultarListasClientePorID(idCliente).toArray());
 		cbLista.setSelectedIndex(-1);
+		painel.add(cbLista);
+
 		cbLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaController listaController = new ListaController();
-				String categoria = (String) cbLista.getSelectedItem();
-				Integer idCliente = null;
-
-				idCliente = 1; // Integer.valueOf(txtIdUsuario.getText());
-
-//				produtos = 
+//				ListaController listaController = new ListaController();
+//				String categoria = (String) cbLista.getSelectedItem();
+//				Integer idCliente = null;
+//
+//				idCliente = 1; // Integer.valueOf(txtIdUsuario.getText());
+//
+////				produtos = 
 
 			}
 		});
-		painel.add(cbLista);
 
 		// Ajusta o tamanho da janela automaticamente
 		pack();
