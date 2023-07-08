@@ -28,7 +28,7 @@ public class ClienteController {
 			throw new ErroCadastroException("Existem Campos em Branco");
 		} else {
 			if(!validarDataNascimento(cliente.getDataNascimento())) {
-				throw new DataNascimentoInvalidaException("Data de nascimento invalida");
+				throw new DataNascimentoInvalidaException("Você deve ter pelo menos 12 anos de idade para utilizar este software.");
 			}
 			if(validarNomeUsuario(cliente.getNomeUsuario())) {
 				throw new ErroCadastroException("Nome de Usuario invalido");
