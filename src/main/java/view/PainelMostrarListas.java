@@ -155,8 +155,11 @@ public class PainelMostrarListas extends JPanel {
 		this.add(lblNome, "2, 4, 2, 1, fill, center");
 
 		try {
-			List<Lista> lista = new ListaController().consultarListaController(idCliente);
-			cbNomeListas = new JComboBox<>(lista.stream().map(Lista::getNomeLista).toArray(String[]::new));
+			ListaController listaController = new ListaController();
+			cbNomeListas = new JComboBox<>(listaController.consultarListasClientePorID(idCliente).toArray());
+			cbNomeListas.setSelectedIndex(-1);
+//			List<Lista> lista = new ListaController().consultarListaController(idCliente);
+//			cbNomeListas = new JComboBox<>(lista.stream().map(Lista::getNomeLista).toArray(String[]::new));
 		} catch (ErroConsultarException e1) {
 			e1.printStackTrace();
 		}

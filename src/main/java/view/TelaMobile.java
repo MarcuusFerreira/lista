@@ -123,13 +123,13 @@ public class TelaMobile extends JFrame {
 
 		cbLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				ListaController listaController = new ListaController();
-//				String categoria = (String) cbLista.getSelectedItem();
-//				Integer idCliente = null;
-//
-//				idCliente = 1; // Integer.valueOf(txtIdUsuario.getText());
-//
-////				produtos = 
+				// ListaController listaController = new ListaController();
+				// String categoria = (String) cbLista.getSelectedItem();
+				// Integer idCliente = null;
+				//
+				// idCliente = 1; // Integer.valueOf(txtIdUsuario.getText());
+				//
+				//// produtos =
 
 			}
 		});
