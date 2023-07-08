@@ -35,8 +35,8 @@ public class ListaDAO {
 			}
 			cadastrado = true;
 		} catch (SQLException e) {
-			throw new ErroCadastroException("Erro método cadastrarLista, Erro ao cadastrar a lista. "
-					+ "\n Causa: " + e.getCause());
+			throw new ErroCadastroException(
+					"Erro método cadastrarLista, Erro ao cadastrar a lista. " + "\n Causa: " + e.getCause());
 		} finally {
 			Banco.closePreparedStatement(pstmtLista);
 			Banco.closeConnection(connection);
@@ -47,10 +47,8 @@ public class ListaDAO {
 	private boolean inserirProdutoNaLista(ProdutoLista produto, int idLista) throws ErroCadastroException {
 		boolean cadastrado = false;
 		Connection connection = Banco.getConnection();
-		String insertListaProdutos = " INSERT INTO LISTA_PRODUTO "
-				+ " ID_LISTA, ID_PRODUTO, MARCADO, "
-				+ " UNIDADE_MEDIDA, VALOR_MEDIDA, OBS "
-				+ " VALUES (?, ?, ?, ?, ?, ?) ";
+		String insertListaProdutos = " INSERT INTO LISTA_PRODUTO " + " ID_LISTA, ID_PRODUTO, MARCADO, "
+				+ " UNIDADE_MEDIDA, VALOR_MEDIDA, OBS " + " VALUES (?, ?, ?, ?, ?, ?) ";
 		PreparedStatement pstmtListaProduto = Banco.getPreparedStatement(connection, insertListaProdutos);
 
 		try {
@@ -100,8 +98,8 @@ public class ListaDAO {
 	private List<ProdutoLista> buscarProdutosDaLista(int idLista) throws ErroConsultarException {
 		List<ProdutoLista> listas = new ArrayList<ProdutoLista>();
 		Connection connection = Banco.getConnection();
-		String sql = "SELECT P.ID_PRODUTO, P.NOME, P.SETOR, P.MARCA, P.DATA_CADASTRO, LP.MARCADO, LP.UNIDADE_MEDIDA, LP.VALOR_UNIDADE " +
-				" FROM PRODUTO P INNER JOIN LISTA_PRODUTO LP ON P.ID_PRODUTO = LP.ID_PRODUTO WHERE LP.ID_LISTA = ?";
+		String sql = "SELECT P.ID_PRODUTO, P.NOME, P.SETOR, P.MARCA, P.DATA_CADASTRO, LP.MARCADO, LP.UNIDADE_MEDIDA, LP.VALOR_UNIDADE "
+				+ " FROM PRODUTO P INNER JOIN LISTA_PRODUTO LP ON P.ID_PRODUTO = LP.ID_PRODUTO WHERE LP.ID_LISTA = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
 		try {
 			pstmt.setInt(1, idLista);
@@ -252,4 +250,5 @@ public class ListaDAO {
 		}
 		return itensAtualizados;
 	}
+
 }

@@ -7,7 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -27,7 +26,6 @@ import javax.swing.table.TableColumnModel;
 import controller.ListaController;
 import model.exception.ErroConsultarException;
 import model.vo.Cliente;
-import model.vo.Lista;
 
 public class TelaMobile extends JFrame {
 	private JComboBox cbLista;
@@ -118,18 +116,20 @@ public class TelaMobile extends JFrame {
 		// Adiciona o painel à janela
 		getContentPane().add(painel);
 
-		List<Lista> lista = new ListaController().consultarListaController(cliente.getIdCliente());
-		cbLista = new JComboBox<>(lista.stream().map(Lista::getNomeLista).toArray(String[]::new));
+		ListaController listaController = new ListaController();
+//		ArrayList<String> categorias = listaController.consultarListaPorIdMobile(cliente.getIdCliente());
+//		cbLista = new JComboBox(categorias.toArray());
+		cbLista.setSelectedIndex(-1);
 		cbLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaController listaController = new ListaController();
 				String categoria = (String) cbLista.getSelectedItem();
 				Integer idCliente = null;
-				
+
 				idCliente = 1; // Integer.valueOf(txtIdUsuario.getText());
-				
+
 //				produtos = 
-				
+
 			}
 		});
 		painel.add(cbLista);
@@ -138,4 +138,4 @@ public class TelaMobile extends JFrame {
 		pack();
 		setLocationRelativeTo(null); // Centraliza a janela
 	}
-	}
+}
