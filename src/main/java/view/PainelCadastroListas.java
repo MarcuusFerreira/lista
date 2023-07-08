@@ -114,7 +114,7 @@ public class PainelCadastroListas extends JPanel {
 
 		try {
 			listas = new ListaController().consultarListaController(cliente.getIdCliente());
-			cbNomeListas = new JComboBox<>(listas.stream().map(Lista::getNomeLista).toArray(String[]::new));;
+				
 		} catch (ErroConsultarException e) {
 			e.printStackTrace();
 		}
@@ -179,9 +179,19 @@ public class PainelCadastroListas extends JPanel {
 		add(lblNewLabel, "4, 14, left, default");
 
 		rdbtnQuantidade = new JRadioButton("Quantidade");
+		rdbtnQuantidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnKilogramas.setSelected(false);
+			}
+		});
 		add(rdbtnQuantidade, "6, 14");
 
 		rdbtnKilogramas = new JRadioButton("Kilogramas");
+		rdbtnKilogramas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnQuantidade.setSelected(false);
+			}
+		});
 		add(rdbtnKilogramas, "6, 16");
 
 		JLabel lblQuantidadekg = new JLabel("Quantidade/Peso:");
