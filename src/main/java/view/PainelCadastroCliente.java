@@ -35,7 +35,6 @@ public class PainelCadastroCliente extends JPanel {
 	private JTextField textNome;
 	private JFormattedTextField textCpf;
 	private MaskFormatter mascaraCpf;
-	private MaskFormatter mascaraCep;
 	private DatePickerSettings dateSettings;
 	protected ClienteController controller;
 	private JButton btnVoltar;
@@ -50,7 +49,7 @@ public class PainelCadastroCliente extends JPanel {
 	 * 
 	 * @throws ParseException
 	 */
-	public PainelCadastroCliente() {
+	public PainelCadastroCliente(Cliente cliente) {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -83,8 +82,11 @@ public class PainelCadastroCliente extends JPanel {
 
 		JLabel lblNomeCompleto = new JLabel("Nome completo:");
 		add(lblNomeCompleto, "1, 4, 2, 1, right, center");
-
+		if(cliente == null) {
 		textNome = new JTextField();
+		} else {
+			textNome = new JTextField(cliente.getNomeCliente());
+		}
 		add(textNome, "4, 4, fill, top");
 		textNome.setColumns(10);
 		// Adiciona um listener para definir o foco no campo textNome quando o painel
@@ -113,7 +115,10 @@ public class PainelCadastroCliente extends JPanel {
 
 		textCpf = new JFormattedTextField(mascaraCpf);
 		add(textCpf, "4, 6, fill, top");
-
+		if(cliente != null) {
+			textCpf.setText(cliente.getCpf());
+		}
+		
 		dtNascimento = new DatePicker();
 		dtNascimento.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,29 +134,31 @@ public class PainelCadastroCliente extends JPanel {
 		dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
 
-		try {
-			mascaraCep = new MaskFormatter("##.###-##");
-			mascaraCep.setValueContainsLiteralCharacters(false);
-		} catch (ParseException e1) {
-		}
-
 		JLabel lblUsuario = new JLabel("Usuário:");
 		add(lblUsuario, "1, 10, 2, 1, right, center");
-
+		if(cliente == null) {
 		textNomeUsuario = new JTextField();
 		textNomeUsuario.setToolTipText("<html>O usuário deve ser composto por:<br/>Pelo menos um caractere maiúsculo e minúsculo<br/>sendo seu tamanho mínimo de 8<br/>\r\nEx: Giovanne</html>");
-
+		} else {
+			textNomeUsuario = new JTextField(cliente.getNomeUsuario());
+			textNomeUsuario.setToolTipText("<html>O usuário deve ser composto por:<br/>Pelo menos um caractere maiúsculo e minúsculo<br/>sendo seu tamanho mínimo de 8<br/>\r\nEx: Giovanne</html>");
+		}
 		textNomeUsuario.setColumns(10);
 		add(textNomeUsuario, "4, 10, fill, top");
 
 		JLabel lblSenha = new JLabel("Senha:");
 		add(lblSenha, "1, 12, 2, 1, right, center");
-
-		textSenha = new JPasswordField();
+		
+		if(cliente == null) {
+			textSenha = new JPasswordField();
+		} else {
+			textSenha = new JPasswordField(cliente.getSenha());
+		}
+		
 		textSenha.setToolTipText("<html>A senha deve ser composta por:<br/>Pelo menos um caractere maiúsculo, minúsculo, numérico e especial<br/> sendo seu tamanho mínimo de 6<br/>\r\nEx: Giovanne1!</html>");
 		add(textSenha, "4, 12, fill, top");
 
-		JButton btnCadastrar = new JButton("Cadastrar");
+		JButton btnCadastrar = new JButton("Salvar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -175,7 +182,6 @@ public class PainelCadastroCliente extends JPanel {
 						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 						limparCampos();
 					}
-					//TODO mostrar mensagem de sucesso e/ou limpar a tela
 				} catch (ErroCadastroException | CpfInvalidoException | DataNascimentoInvalidaException excecao) {
 					JOptionPane.showMessageDialog(null, excecao.getMessage());
 				}

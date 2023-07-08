@@ -127,7 +127,7 @@ public class TelaLogin extends JFrame {
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroUsuario = new PainelCadastroCliente();
+				painelCadastroUsuario = new PainelCadastroCliente(null);
 				setContentPane(painelCadastroUsuario);
 				setBounds(100, 100, 610, 650);
 				setLocationRelativeTo(null);

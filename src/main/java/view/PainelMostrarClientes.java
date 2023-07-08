@@ -57,6 +57,7 @@ public class PainelMostrarClientes extends JPanel {
 	private JLabel lblDataNascimentoDe;
 	private JLabel lblAte;
 	private JLabel lblPaginacao;
+	private PainelCadastroCliente painelEditar;
 
 	private ClienteController clienteController = new ClienteController();
 	private Cliente clienteSelecionado;
@@ -132,7 +133,7 @@ public class PainelMostrarClientes extends JPanel {
 				}
 			}
 		});
-
+		
 		lblMostrarClientes = new JLabel("Mostrar de Clientes");
 		lblMostrarClientes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblMostrarClientes.setHorizontalAlignment(SwingConstants.CENTER);

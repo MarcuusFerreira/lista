@@ -118,6 +118,8 @@ public class PainelCadastroListas extends JPanel {
 		} catch (ErroConsultarException e) {
 			e.printStackTrace();
 		}
+		cbNomeListas = new JComboBox();
+		add(cbNomeListas, "6, 6, fill, default");
 		cbNomeListas.setSelectedIndex(-1);
 		add(cbNomeListas, "6, 6, fill, default");
 
@@ -143,6 +145,8 @@ public class PainelCadastroListas extends JPanel {
 
 			}
 		});
+				
+				
 				
 				JLabel lblOuCrieUma = new JLabel("Ou Crie uma nova:");
 				add(lblOuCrieUma, "4, 8, right, default");
