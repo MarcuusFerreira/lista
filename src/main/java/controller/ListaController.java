@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.bo.ListaBO;
@@ -7,14 +8,14 @@ import model.exception.*;
 import model.vo.Lista;
 
 public class ListaController {
-	
+
 	private ListaBO bo;
 
 	public List<Lista> consultarListaController(int idCliente) throws ErroConsultarException {
 		bo = new ListaBO();
 		return bo.consultarListasBO(idCliente);
 	}
-	
+
 	public boolean cadastrarListasController(Lista lista) throws ErroCadastroException, ErroListaCadastradaException {
 		bo = new ListaBO();
 		lista.setNomeLista(lista.getNomeLista().trim());
@@ -36,4 +37,5 @@ public class ListaController {
 		bo = new ListaBO();
 		return bo.excluirLista(idLista);
 	}
+
 }
