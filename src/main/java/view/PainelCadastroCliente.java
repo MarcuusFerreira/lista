@@ -163,7 +163,7 @@ public class PainelCadastroCliente extends JPanel {
 					cpfSemMascara = (String) mascaraCpf.stringToValue(textCpf.getText());
 					cliente.setCpf(cpfSemMascara);
 				} catch (ParseException mensagem) {
-					JOptionPane.showMessageDialog(null, "Erro de conversão!");
+//					JOptionPane.showMessageDialog(null, "Erro de conversão!");
 				}
 				cliente.setDataNascimento(dtNascimento.getDate());
 				cliente.setDataCadastro(LocalDateTime.now());
