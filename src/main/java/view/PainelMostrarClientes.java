@@ -291,8 +291,8 @@ public class PainelMostrarClientes extends JPanel {
 			
 
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroCliente = new PainelCadastroCliente(cliente);
-				painelCadastroCliente.preencherCampos(cliente);
+				painelCadastroCliente = new PainelCadastroCliente(clienteSelecionado);
+				painelCadastroCliente.preencherCampos(clienteSelecionado);
 				painelCadastroCliente.setVisible(true);
 			}});
 			
