@@ -288,13 +288,14 @@ public class PainelMostrarClientes extends JPanel {
 
 		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
-			
+		    public void actionPerformed(ActionEvent e) {
+		        painelCadastroCliente = new PainelCadastroCliente(clienteSelecionado);
+		        painelCadastroCliente.preencherCampos(clienteSelecionado);
+		        
+		        JOptionPane.showMessageDialog(null, painelCadastroCliente, "Editar Cliente", JOptionPane.PLAIN_MESSAGE);
+		    }
+		});
 
-			public void actionPerformed(ActionEvent e) {
-				painelCadastroCliente = new PainelCadastroCliente(clienteSelecionado);
-				painelCadastroCliente.preencherCampos(clienteSelecionado);
-				painelCadastroCliente.setVisible(true);
-			}});
 			
 		
 		btnEditar.setEnabled(false);
