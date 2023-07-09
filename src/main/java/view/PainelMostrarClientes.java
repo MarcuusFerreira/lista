@@ -33,7 +33,6 @@ import model.seletor.ClienteSeletor;
 import model.util.FormatadorData;
 import model.vo.Cliente;
 
-
 public class PainelMostrarClientes extends JPanel {
 	private static final Integer USUARIO = 1;
 	private JTable tblClientes;
@@ -86,7 +85,7 @@ public class PainelMostrarClientes extends JPanel {
 			novaLinhaDaTabela[1] = c.getNomeCliente();
 			novaLinhaDaTabela[2] = c.getCpf();
 			novaLinhaDaTabela[3] = FormatadorData.formatarDataParaTela(c.getDataNascimento());
-			novaLinhaDaTabela[4] = FormatadorData.formataLocalDateTimeParaTela(c.getDataCadastro());	
+			novaLinhaDaTabela[4] = FormatadorData.formataLocalDateTimeParaTela(c.getDataCadastro());
 			if (c.getTipoUsuario() == USUARIO) {
 				novaLinhaDaTabela[5] = "USUARIO";
 			} else {
@@ -204,33 +203,42 @@ public class PainelMostrarClientes extends JPanel {
 			}
 		});
 
-		btnAvancarPagina_1 = new JButton("Voltar");
-		btnAvancarPagina_1.setEnabled(false);
-		add(btnAvancarPagina_1, "3, 16");
-		this.add(btnGerarPlanilha, "2, 17, 2, 1");
-
 		btnExcluir = new JButton("Excluir");
 		btnExcluir.setEnabled(false);
-//		btnExcluir.addActionListener(new ActionListener() {
 
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente selecionado?");
-//				
-//				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
-//					try {
-//						controller.excluir(clienteSelecionado.getId());
-//						JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
-//						clientes = (ArrayList<Cliente>) controller.consultarTodos();
-//						atualizarTabelaClientes();
-//					} catch (ClienteComTelefoneException e1) {
-//						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
-//					}
-//				}
-//			}
-//		});
-//		this.add(btnExcluir, "15, 14, fill, fill");
-//		
+		btnAvancarPagina = new JButton("Avançar>>");
+		btnAvancarPagina.setEnabled(false);
+		btnAvancarPagina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				paginaAtual++;
+				buscarClientesComFiltros();
+				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+				btnVoltarPagina.setEnabled(paginaAtual > 1);
+				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
+			}
+		});
+		// btnExcluir.addActionListener(new ActionListener() {
+
+		// @Override
+		// public void actionPerformed(ActionEvent e) {
+		// int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a
+		// exclusão do cliente selecionado?");
+		//
+		// if(opcaoSelecionada == JOptionPane.YES_OPTION) {
+		// try {
+		// controller.excluir(clienteSelecionado.getId());
+		// JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
+		// clientes = (ArrayList<Cliente>) controller.consultarTodos();
+		// atualizarTabelaClientes();
+		// } catch (ClienteComTelefoneException e1) {
+		// JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção",
+		// JOptionPane.WARNING_MESSAGE);
+		// }
+		// }
+		// }
+		// });
+		// this.add(btnExcluir, "15, 14, fill, fill");
+		//
 		btnVoltarPagina = new JButton("<< Voltar");
 		btnVoltarPagina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -242,19 +250,7 @@ public class PainelMostrarClientes extends JPanel {
 			}
 		});
 		btnVoltarPagina.setEnabled(false);
-//		add(btnVoltarPagina, "6, 12, 5, 1, fill, top");
-
-		btnAvancarPagina = new JButton("Avançar");
-		btnAvancarPagina.setEnabled(false);
-		btnAvancarPagina.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				paginaAtual++;
-				buscarClientesComFiltros();
-				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-				btnVoltarPagina.setEnabled(paginaAtual > 1);
-				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
-			}
-		});
+		add(btnVoltarPagina, "3, 16, fill, top");
 		add(btnAvancarPagina, "5, 16");
 
 		lblPaginacao = new JLabel("0 / 0");
@@ -269,17 +265,17 @@ public class PainelMostrarClientes extends JPanel {
 	}
 
 	private void atualizarQuantidadePaginas() {
-		//Cálculo do total de páginas (poderia ser feito no backend)
+		// Cálculo do total de páginas (poderia ser feito no backend)
 		int totalRegistros = clienteController.contarTotalRegistrosComFiltros(seletor);
-		
-		//QUOCIENTE da divisão inteira
+
+		// QUOCIENTE da divisão inteira
 		totalPaginas = totalRegistros / TAMANHO_PAGINA;
-		
-		//RESTO da divisão inteira
-		if(totalRegistros % TAMANHO_PAGINA > 0) { 
+
+		// RESTO da divisão inteira
+		if (totalRegistros % TAMANHO_PAGINA > 0) {
 			totalPaginas++;
 		}
-		
+
 		lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
 	}
 
@@ -297,7 +293,7 @@ public class PainelMostrarClientes extends JPanel {
 			// TODO Auto-generated catch block
 			// e1.printStackTrace();
 		}
-//		
+		//		
 		seletor.setDataNascimentoInicial(dtNascimentoInicial.getDate());
 		seletor.setDataNascimentoFinal(dtNascimentoFinal.getDate());
 		clientes = (ArrayList<Cliente>) clienteController.consultarComFiltros(seletor);
