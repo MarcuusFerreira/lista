@@ -32,8 +32,7 @@ import model.exception.ErroConsultarException;
 import model.seletor.ClienteSeletor;
 import model.util.FormatadorData;
 import model.vo.Cliente;
-//import model.exception.ClienteComTelefoneException;
-//import model.seletor.ClienteSeletor;
+
 
 public class PainelMostrarClientes extends JPanel {
 	private static final Integer USUARIO = 1;
@@ -232,17 +231,17 @@ public class PainelMostrarClientes extends JPanel {
 //		});
 //		this.add(btnExcluir, "15, 14, fill, fill");
 //		
-//		btnVoltarPagina = new JButton("<< Voltar");
-//		btnVoltarPagina.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				paginaAtual--;
-////				buscarClientesComFiltros();
-//				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-//				btnVoltarPagina.setEnabled(paginaAtual > 1);
-//				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
-//			}
-//		});
-//		btnVoltarPagina.setEnabled(false);
+		btnVoltarPagina = new JButton("<< Voltar");
+		btnVoltarPagina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				paginaAtual--;
+				buscarClientesComFiltros();
+				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+				btnVoltarPagina.setEnabled(paginaAtual > 1);
+				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
+			}
+		});
+		btnVoltarPagina.setEnabled(false);
 //		add(btnVoltarPagina, "6, 12, 5, 1, fill, top");
 
 		btnAvancarPagina = new JButton("Avançar");
@@ -250,7 +249,7 @@ public class PainelMostrarClientes extends JPanel {
 		btnAvancarPagina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				paginaAtual++;
-//				buscarClientesComFiltros();
+				buscarClientesComFiltros();
 				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
 				btnVoltarPagina.setEnabled(paginaAtual > 1);
 				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
