@@ -58,9 +58,11 @@ public class PainelMostrarClientes extends JPanel {
 	private JLabel lblAte;
 	private JLabel lblPaginacao;
 	private PainelCadastroCliente painelEditar;
+	private PainelCadastroCliente painelCadastroCliente;
 
 	private ClienteController clienteController = new ClienteController();
 	private Cliente clienteSelecionado;
+	private Cliente cliente;
 
 	// Atributos para a PAGINAÇÃO
 	private final int TAMANHO_PAGINA = 5;
@@ -269,6 +271,16 @@ public class PainelMostrarClientes extends JPanel {
 		this.add(btnExcluir, "3, 17");
 
 		btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			
+
+			public void actionPerformed(ActionEvent e) {
+				painelCadastroCliente = new PainelCadastroCliente(cliente);
+				painelCadastroCliente.preencherCampos(cliente);
+				painelCadastroCliente.setVisible(true);
+			}});
+			
+		
 		btnEditar.setEnabled(false);
 		this.add(btnEditar, "5, 17, fill, default");
 
