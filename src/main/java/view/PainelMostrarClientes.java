@@ -29,6 +29,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
 import model.exception.ErroConsultarException;
+import model.seletor.ClienteSeletor;
 import model.vo.Cliente;
 
 import java.awt.Font;
@@ -39,7 +40,8 @@ public class PainelMostrarClientes extends JPanel {
 	private static final Integer USUARIO = 1;
 	private JTable tblClientes;
 	private ArrayList<Cliente> clientes;
-	private String[] nomesColunas = {"#IdCliente", "Nome Cliente", "CPF", "Data Nascimento", "Data Cadastro", "Tipo Usuario", "Nome Usuario" };
+	private String[] nomesColunas = { "#IdCliente", "Nome Cliente", "CPF", "Data Nascimento", "Data Cadastro",
+			"Tipo Usuario", "Nome Usuario" };
 	private JTextField txtNome;
 	private MaskFormatter mascaraCpf;
 	private JFormattedTextField txtCPF;
@@ -70,10 +72,10 @@ public class PainelMostrarClientes extends JPanel {
 	private JButton btnAvancarPagina;
 	private JLabel lblMostrarClientes;
 	private JButton btnAvancarPagina_1;
-//	private ClienteSeletor seletor = new ClienteSeletor();
+	private ClienteSeletor seletor = new ClienteSeletor();
 
 	private void limparTabelaClientes() {
-		tblClientes.setModel(new DefaultTableModel(new Object[][] {nomesColunas,}, nomesColunas));
+		tblClientes.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
 	}
 
 	private void atualizarTabelaClientes() {
@@ -87,16 +89,16 @@ public class PainelMostrarClientes extends JPanel {
 			novaLinhaDaTabela[2] = c.getCpf();
 			novaLinhaDaTabela[3] = c.getDataNascimento();
 			novaLinhaDaTabela[4] = c.getDataCadastro();
-			if(c.getTipoUsuario() == USUARIO) {
+			if (c.getTipoUsuario() == USUARIO) {
 				novaLinhaDaTabela[5] = "USUARIO";
 			} else {
 				novaLinhaDaTabela[5] = "ADM";
 			}
-			
+
 			novaLinhaDaTabela[6] = c.getNomeUsuario();
-			
+
 			model.addRow(novaLinhaDaTabela);
-			
+
 		}
 	}
 
@@ -133,7 +135,7 @@ public class PainelMostrarClientes extends JPanel {
 				}
 			}
 		});
-		
+
 		lblMostrarClientes = new JLabel("Mostrar de Clientes");
 		lblMostrarClientes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblMostrarClientes.setHorizontalAlignment(SwingConstants.CENTER);
@@ -149,7 +151,7 @@ public class PainelMostrarClientes extends JPanel {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClienteController controller = new ClienteController();
-				Integer idCliente= null;
+				Integer idCliente = null;
 				try {
 					clientes = controller.listarTodosClientes();
 				} catch (ErroConsultarException ex) {
@@ -157,8 +159,7 @@ public class PainelMostrarClientes extends JPanel {
 				}
 
 				atualizarTabelaClientes();
-				
-				
+
 			}
 		});
 		this.add(btnBuscar, "5, 12, fill, default");
@@ -266,46 +267,45 @@ public class PainelMostrarClientes extends JPanel {
 		btnEditar.setEnabled(false);
 		this.add(btnEditar, "5, 17, fill, default");
 
-//		atualizarQuantidadePaginas();
+		atualizarQuantidadePaginas();
 	}
 
-//	private void atualizarQuantidadePaginas() {
-//		//Cálculo do total de páginas (poderia ser feito no backend)
-////		int totalRegistros = controller.contarTotalRegistrosComFiltros(seletor);
-//		
-//		//QUOCIENTE da divisão inteira
-////		totalPaginas = totalRegistros / TAMANHO_PAGINA;
-//		
-//		//RESTO da divisão inteira
-////		if(totalRegistros % TAMANHO_PAGINA > 0) { 
-//			totalPaginas++;
-//		}
-//		
-////		lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-//	}
+	private void atualizarQuantidadePaginas() {
+		//Cálculo do total de páginas (poderia ser feito no backend)
+		int totalRegistros = clienteController.contarTotalRegistrosComFiltros(seletor);
+		
+		//QUOCIENTE da divisão inteira
+		totalPaginas = totalRegistros / TAMANHO_PAGINA;
+		
+		//RESTO da divisão inteira
+		if(totalRegistros % TAMANHO_PAGINA > 0) { 
+			totalPaginas++;
+		}
+		
+		lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+	}
 
-//	protected void buscarClientesComFiltros() {
-//		seletor = new ClienteSeletor();
-//		seletor.setLimite(TAMANHO_PAGINA);
-//		seletor.setPagina(paginaAtual);
-//		seletor.setNome(txtNome.getText());
+	protected void buscarClientesComFiltros() {
+		seletor = new ClienteSeletor();
+		seletor.setLimite(TAMANHO_PAGINA);
+		seletor.setPagina(paginaAtual);
+		seletor.setNome(txtNome.getText());
+
+		String cpfSemMascara;
+		try {
+			cpfSemMascara = (String) mascaraCpf.stringToValue(txtCPF.getText());
+			seletor.setCpf(cpfSemMascara);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			// e1.printStackTrace();
+		}
 //		
-//		String cpfSemMascara;
-//		try {
-//			cpfSemMascara = (String) mascaraCpf.stringToValue(
-//					txtCPF.getText());
-//			seletor.setCpf(cpfSemMascara);
-//		} catch (ParseException e1) {
-//			// TODO Auto-generated catch block
-//			//e1.printStackTrace();
-//		}
-//		
-//		seletor.setDataNascimentoInicial(dtNascimentoInicial.getDate());
-//		seletor.setDataNascimentoFinal(dtNascimentoFinal.getDate());
-//		clientes = (ArrayList<Cliente>) controller.consultarComFiltros(seletor);
-//		atualizarTabelaClientes();
-//		atualizarQuantidadePaginas();
-//	}
+		seletor.setDataNascimentoInicial(dtNascimentoInicial.getDate());
+		seletor.setDataNascimentoFinal(dtNascimentoFinal.getDate());
+		clientes = (ArrayList<Cliente>) clienteController.consultarComFiltros(seletor);
+		atualizarTabelaClientes();
+		atualizarQuantidadePaginas();
+	}
 
 	// Torna o btnEditar acessível externamente à essa classe
 	public JButton getBtnEditar() {

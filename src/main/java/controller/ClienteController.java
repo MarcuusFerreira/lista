@@ -3,6 +3,7 @@ package controller;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import model.bo.ClienteBO;
@@ -15,6 +16,7 @@ import model.exception.ErroConsultarException;
 import model.exception.ErroExcluirException;
 import model.exception.ErroLoginException;
 import model.geradores.GeradorPlanilha;
+import model.seletor.ClienteSeletor;
 import model.vo.Cliente;
 
 public class ClienteController {
@@ -125,5 +127,17 @@ public class ClienteController {
 	public boolean excluirCliente(Cliente cliente) throws ErroExcluirException, ErroConsultarException {
 		bo = new ClienteBO();
 		return bo.excluirCliente(cliente);
+	}
+
+
+	public int contarTotalRegistrosComFiltros(ClienteSeletor seletor) {
+		bo = new ClienteBO();
+		return bo.contarTotalRegistrosComFiltros(seletor);
+	}
+
+
+
+	public List<Cliente> consultarComFiltros(ClienteSeletor seletor) {
+		return bo.consultarComFiltros(seletor);
 	}
 }

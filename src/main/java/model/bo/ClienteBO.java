@@ -6,6 +6,7 @@ import java.util.List;
 import model.dao.ClienteDAO;
 import model.exception.*;
 import model.geradores.GeradorPlanilha;
+import model.seletor.ClienteSeletor;
 import model.util.ValidadorCpf;
 import model.vo.Cliente;
 
@@ -62,4 +63,16 @@ public class ClienteBO {
 		dao = new ClienteDAO();
 		return dao.excluirCliente(cliente);
 	}
+
+	public int contarTotalRegistrosComFiltros(ClienteSeletor seletor) {
+		dao = new ClienteDAO();
+		return dao.contarTotalRegistrosComFiltros(seletor);
+	}
+
+	public List<Cliente> consultarComFiltros(ClienteSeletor seletor) {
+		//TODO validar CPF e as datas informadas
+		
+		return dao.consultarComFiltros(seletor);
+	}
+	
 }

@@ -15,6 +15,7 @@ import model.exception.ErroCadastroException;
 import model.exception.ErroConsultarException;
 import model.exception.ErroExcluirException;
 import model.exception.ErroLoginException;
+import model.seletor.ClienteSeletor;
 import model.util.FormatadorData;
 import model.vo.Cliente;
 
@@ -218,5 +219,136 @@ public class ClienteDAO {
 			Banco.closeConnection(connection);
 		}
 		return clienteCadastrado;
+	}
+
+	public int contarTotalRegistrosComFiltros(ClienteSeletor seletor) {
+		int total = 0;
+		Connection conexao = Banco.getConnection();
+		String sql = " select count(*) from DB_LISTA_MINIMO.CLIENTE ";
+		
+		if(seletor.temFiltro()) {
+			sql = preencherFiltros(sql, seletor);
+		}
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.next()) {
+				total = resultado.getInt(1);
+			}
+		}catch (Exception e) {
+			System.out.println("Erro contar o total de clientes" 
+					+ "\n Causa:" + e.getMessage());
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return total;
+	}
+
+	private String preencherFiltros(String sql, ClienteSeletor seletor) {
+		
+		boolean primeiro = true;
+		if(seletor.getNome() != null && !seletor.getNome().trim().isEmpty()) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			
+			sql += " nome LIKE '%" + seletor.getNome() + "%'";
+			primeiro = false;
+		}
+		
+		if(seletor.getCpf() != null && !seletor.getCpf().trim().isEmpty()) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			sql += " cpf LIKE '%" + seletor.getCpf() + "%'";
+			primeiro = false;
+		}
+		
+		if(seletor.getDataNascimentoInicial() != null
+			&& seletor.getDataNascimentoFinal() != null) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			sql += " DT_NASCIMENTO BETWEEN '" 
+				+ seletor.getDataNascimentoInicial() + "' " 
+				+ " AND '" + seletor.getDataNascimentoFinal() + "' ";
+			primeiro = false;
+		} else {
+			if (seletor.getDataNascimentoInicial() != null) {
+				if(primeiro) {
+					sql += " WHERE ";
+				} else {
+					sql += " AND ";
+				}
+				//CLIENTES QUE NASCERAM 'A PARTIR' DA DATA INICIAL
+				sql += " DT_NASCIMENTO >= '" + seletor.getDataNascimentoInicial() + "' "; 
+				primeiro = false;
+			}
+			
+			if (seletor.getDataNascimentoFinal() != null) {
+				if(primeiro) {
+					sql += " WHERE ";
+				} else {
+					sql += " AND ";
+				}
+				//CLIENTES QUE NASCERAM 'ATÉ' A DATA FINAL
+				sql += " DT_NASCIMENTO <= '" + seletor.getDataNascimentoFinal() + "' "; 
+				primeiro = false;
+			}
+		}
+		
+		return sql;
+	}
+
+	public List<Cliente> consultarComFiltros(ClienteSeletor seletor) {
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		Connection conexao = Banco.getConnection();
+		String sql = " select * from cliente ";
+		
+		if(seletor.temFiltro()) {
+			sql = preencherFiltros(sql, seletor);
+		}
+		
+		if(seletor.temPaginacao()) {
+			sql += " LIMIT "  + seletor.getLimite()
+				 + " OFFSET " + seletor.getOffset();  
+		}
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = query.executeQuery();
+			
+			while(resultado.next()) {
+				Cliente clienteBuscado = montarClienteComResultadoDoBanco(resultado);
+				clientes.add(clienteBuscado);
+			}
+			
+		}catch (Exception e) {
+			System.out.println("Erro ao buscar todos os clientes. \n Causa:" + e.getMessage());
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return clientes;
+	}
+
+	private Cliente montarClienteComResultadoDoBanco(ResultSet resultado) throws SQLException {
+		Cliente clienteBuscado = new Cliente();
+		clienteBuscado.setIdCliente(resultado.getInt("id"));
+		clienteBuscado.setNomeCliente(resultado.getString("nome"));
+		clienteBuscado.setCpf(resultado.getString("cpf"));
+		clienteBuscado.setDataNascimento(resultado.getDate("dt_nascimento").toLocalDate());
+		return clienteBuscado;
 	}
 }
