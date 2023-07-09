@@ -43,7 +43,8 @@ public class PainelCadastroCliente extends JPanel {
 	private JPasswordField textSenha;
 	private JLabel lblCliente;
 	private DatePicker dtNascimento;
-
+	private Cliente clienteSelecionado;
+	
 	/**
 	 * Create the panel.
 	 * 
@@ -215,4 +216,14 @@ public class PainelCadastroCliente extends JPanel {
 		textSenha.setText("");
 		textNome.requestFocus();
 	}
+
+	public void preencherCampos(Cliente cliente) {
+		textNome.setText(cliente.getNomeCliente());
+		textCpf.setText(cliente.getCpf());
+		dtNascimento.setText(cliente.getDataNascimento().format(null));
+		textNomeUsuario.setText(cliente.getNomeUsuario());
+		textSenha.setText(cliente.getSenha());
+	}
+	
+	
 }
