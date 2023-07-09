@@ -29,6 +29,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
 import model.exception.ErroConsultarException;
+import model.exception.ErroExcluirException;
 import model.seletor.ClienteSeletor;
 import model.util.FormatadorData;
 import model.vo.Cliente;
@@ -235,26 +236,35 @@ public class PainelMostrarClientes extends JPanel {
 		
 				btnExcluir = new JButton("Excluir");
 				btnExcluir.setEnabled(false);
-				// btnExcluir.addActionListener(new ActionListener() {
+				btnExcluir.addActionListener(new ActionListener() {
 
-				// @Override
-				// public void actionPerformed(ActionEvent e) {
-				// int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a
-				// exclusão do cliente selecionado?");
-				//
-				// if(opcaoSelecionada == JOptionPane.YES_OPTION) {
-				// try {
-				// controller.excluir(clienteSelecionado.getId());
-				// JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
-				// clientes = (ArrayList<Cliente>) controller.consultarTodos();
-				// atualizarTabelaClientes();
-				// } catch (ClienteComTelefoneException e1) {
-				// JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção",
-				// JOptionPane.WARNING_MESSAGE);
-				// }
-				// }
-				// }
-				// });
+				 @Override
+				 public void actionPerformed(ActionEvent e) {
+				 int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente selecionado?");
+				
+				 if(opcaoSelecionada == JOptionPane.YES_OPTION) {
+				 
+				 try {
+					clienteController.excluirCliente(clienteSelecionado);
+				} catch (ErroExcluirException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ErroConsultarException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}//.excluir(clienteSelecionado.getId());
+				 JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
+				 try {
+					clientes = (ArrayList<Cliente>) clienteController.listarTodosClientes();
+				} catch (ErroConsultarException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}//.consultarTodos();
+				 atualizarTabelaClientes();
+				 
+				 }
+				 }
+				 });
 				 this.add(btnExcluir, "3, 17");
 
 		btnEditar = new JButton("Editar");
