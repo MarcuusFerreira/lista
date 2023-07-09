@@ -194,7 +194,7 @@ public class ListaDAO {
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
 		try {
 			pstmt.setInt(1, idLista);
-			ResultSet resultado = pstmt.executeQuery();
+			pstmt.execute();
 			excluiu = true;
 		} catch (SQLException e) {
 			throw new ErroExcluirException("Erro no método excluirLista\n" + e.getCause());
@@ -211,7 +211,7 @@ public class ListaDAO {
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
 		try {
 			pstmt.setInt(1, idLista);
-			ResultSet resultado = pstmt.executeQuery();
+			pstmt.execute();
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 			throw new ErroExcluirException("Erro no método excluirProdutosDaLista\n" + exception.getCause());
