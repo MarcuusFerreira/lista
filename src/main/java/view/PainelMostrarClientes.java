@@ -198,9 +198,9 @@ public class PainelMostrarClientes extends JPanel {
 
 				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
 				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
-					String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
+					String destinoArquivo = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
 					clienteController = new ClienteController();
-					clienteController.exportarDadosController(clientes, caminhoEscolhido);
+					clienteController.exportarDadosController(clientes, destinoArquivo);
 				}
 			}
 		});

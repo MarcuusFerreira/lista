@@ -6,8 +6,15 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import model.bo.ClienteBO;
-import model.exception.*;
-import model.util.ValidadorCpf;
+import model.exception.CpfInvalidoException;
+import model.exception.DataNascimentoInvalidaException;
+import model.exception.ErroAtualizarException;
+import model.exception.ErroCadastroException;
+import model.exception.ErroClienteNaoCadastradoException;
+import model.exception.ErroConsultarException;
+import model.exception.ErroExcluirException;
+import model.exception.ErroLoginException;
+import model.geradores.GeradorPlanilha;
 import model.vo.Cliente;
 
 public class ClienteController {
@@ -43,9 +50,11 @@ public class ClienteController {
 
 
 
-	public void exportarDadosController(ArrayList<Cliente> clientes, String caminhoEscolhido) {
+	public String exportarDadosController(ArrayList<Cliente> clientes, String destinoArquivo) {
 		bo = new ClienteBO();
-		bo.exportarDadosBO(clientes, caminhoEscolhido);
+		bo.exportarDadosBO(clientes, destinoArquivo);
+		GeradorPlanilha gerador = new GeradorPlanilha();
+		return gerador.gerarPlanilhaClientes(clientes, destinoArquivo);
 	}
 
 	private boolean validarCamposEmBranco(Cliente cliente) {
