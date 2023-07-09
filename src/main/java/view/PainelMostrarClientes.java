@@ -215,7 +215,7 @@ public class PainelMostrarClientes extends JPanel {
 				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
 			}
 		});
-		
+
 		btnVoltarPagina = new JButton("<< Voltar");
 		btnVoltarPagina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -233,39 +233,40 @@ public class PainelMostrarClientes extends JPanel {
 		lblPaginacao = new JLabel("0 / 0");
 		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblPaginacao, "4, 16, fill, center");
-		
-				btnExcluir = new JButton("Excluir");
-				btnExcluir.setEnabled(false);
-				btnExcluir.addActionListener(new ActionListener() {
 
-				 @Override
-				 public void actionPerformed(ActionEvent e) {
-				 int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente selecionado?");
-				
-				 if(opcaoSelecionada == JOptionPane.YES_OPTION) {
-				 
-				 try {
-					clienteController.excluirCliente(clienteSelecionado);
-				} catch (ErroExcluirException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ErroConsultarException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}//.excluir(clienteSelecionado.getId());
-				 JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
-				 try {
-					clientes = (ArrayList<Cliente>) clienteController.listarTodosClientes();
-				} catch (ErroConsultarException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}//.consultarTodos();
-				 atualizarTabelaClientes();
-				 
-				 }
-				 }
-				 });
-				 this.add(btnExcluir, "3, 17");
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.setEnabled(false);
+		btnExcluir.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int opcaoSelecionada = JOptionPane.showConfirmDialog(null,
+						"Confirma a exclusão do cliente selecionado?");
+
+				if (opcaoSelecionada == JOptionPane.YES_OPTION) {
+
+					try {
+						clienteController.excluirCliente(clienteSelecionado);
+					} catch (ErroExcluirException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ErroConsultarException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} // .excluir(clienteSelecionado.getId());
+					JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
+					try {
+						clientes = (ArrayList<Cliente>) clienteController.listarTodosClientes();
+					} catch (ErroConsultarException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} // .consultarTodos();
+					atualizarTabelaClientes();
+
+				}
+			}
+		});
+		this.add(btnExcluir, "3, 17");
 
 		btnEditar = new JButton("Editar");
 		btnEditar.setEnabled(false);
@@ -303,7 +304,7 @@ public class PainelMostrarClientes extends JPanel {
 			// TODO Auto-generated catch block
 			// e1.printStackTrace();
 		}
-		//		
+		//
 		seletor.setDataNascimentoInicial(dtNascimentoInicial.getDate());
 		seletor.setDataNascimentoFinal(dtNascimentoFinal.getDate());
 		clientes = (ArrayList<Cliente>) clienteController.consultarComFiltros(seletor);

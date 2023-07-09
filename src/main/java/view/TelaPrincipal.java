@@ -64,6 +64,7 @@ public class TelaPrincipal extends JFrame {
 	 * @param cliente 
 	 */
 	public TelaPrincipal(Cliente cliente) {
+		setTitle("Sistema Lista de Mercado");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 610, 650);
 		contentPane = new JPanel();
