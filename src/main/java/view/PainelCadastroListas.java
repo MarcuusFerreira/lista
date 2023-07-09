@@ -36,13 +36,14 @@ import model.vo.Produto;
 import model.vo.ProdutoLista;
 
 public class PainelCadastroListas extends JPanel {
+	private int idCliente = 1;
 	private JComboBox cbNomeListas;
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCep;
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
 	private JTable tableProdutos;
-	private String[] nomesColunas = {"Nome do Produto", "Nome do Setor", "Unidade de medida", "Quantidade/Peso" };
+	private String[] nomesColunas = { "Nome do Produto", "Nome do Setor", "Unidade de medida", "Quantidade/Peso" };
 	public JFrame frmTelaPrincipal;
 	private JFormattedTextField textKgOuUnidade;
 	private JComboBox cbProdutos;
@@ -53,6 +54,7 @@ public class PainelCadastroListas extends JPanel {
 	private List<Lista> listas;
 	private List<Produto> produtos;
 	private List<ProdutoLista> itemLista;
+
 	/**
 	 * Create the panel.
 	 * 
@@ -61,46 +63,20 @@ public class PainelCadastroListas extends JPanel {
 	public PainelCadastroListas(Cliente cliente) {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
+		setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, },
+				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("default:grow"), FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
 
 		JLabel lblCadastroLista = new JLabel("Adicione uma Lista seus Produtos");
 		lblCadastroLista.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -112,23 +88,20 @@ public class PainelCadastroListas extends JPanel {
 		JLabel lblNomeLista = new JLabel("Nome da Lista:");
 		add(lblNomeLista, "4, 6, right, default");
 
+		ListaController listaController = new ListaController();
 		try {
-			listas = new ListaController().consultarListaController(cliente.getIdCliente());
-				
+			cbNomeListas = new JComboBox<>(listaController.consultarListasClientePorID(idCliente).toArray());
 		} catch (ErroConsultarException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		cbNomeListas = new JComboBox();
-		add(cbNomeListas, "6, 6, fill, default");
 		cbNomeListas.setSelectedIndex(-1);
 		add(cbNomeListas, "6, 6, fill, default");
 		cbNomeListas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			}
-		}
-		);
 
+			}
+		});
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -152,39 +125,37 @@ public class PainelCadastroListas extends JPanel {
 
 			}
 		});
-				
-				
-				
-				JLabel lblOuCrieUma = new JLabel("Ou Crie uma nova:");
-				add(lblOuCrieUma, "4, 8, right, default");
-				
-				tFListaNova = new JTextField();
-				add(tFListaNova, "6, 8, fill, default");
-				tFListaNova.setColumns(10);
-				
-				JButton btnAdicionar_2 = new JButton("+");
-				btnAdicionar_2.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						listaNova = new Lista();
-						listaNova.setNomeLista(tFListaNova.getText());
-						cbNomeListas.addItem(listaNova);
-					}
-				});
-				add(btnAdicionar_2, "8, 8, left, default");
-				
-				JLabel lblProduto = new JLabel("Produto:");
-				add(lblProduto, "4, 12, right, default");
-		
-				try {
-					produtos = new ProdutoController().consultarProdutos();
-					cbProdutos = new JComboBox(produtos.stream().map(Produto::getNome).toArray(String[]::new));
-				} catch (ErroConsultarException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				add(cbProdutos, "6, 12, fill, default");
-				cbProdutos.setSelectedIndex(-1);
+
+		JLabel lblOuCrieUma = new JLabel("Ou Crie uma nova:");
+		add(lblOuCrieUma, "4, 8, right, default");
+
+		tFListaNova = new JTextField();
+		add(tFListaNova, "6, 8, fill, default");
+		tFListaNova.setColumns(10);
+
+		JButton btnAdicionar_2 = new JButton("+");
+		btnAdicionar_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listaNova = new Lista();
+				listaNova.setNomeLista(tFListaNova.getText());
+				cbNomeListas.addItem(listaNova);
+			}
+		});
+		add(btnAdicionar_2, "8, 8, left, default");
+
+		JLabel lblProduto = new JLabel("Produto:");
+		add(lblProduto, "4, 12, right, default");
+
+		try {
+			produtos = new ProdutoController().consultarProdutos();
+			cbProdutos = new JComboBox(produtos.stream().map(Produto::getNome).toArray(String[]::new));
+		} catch (ErroConsultarException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		add(cbProdutos, "6, 12, fill, default");
+		cbProdutos.setSelectedIndex(-1);
 
 		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
 		add(lblNewLabel, "4, 14, left, default");
@@ -263,22 +234,22 @@ public class PainelCadastroListas extends JPanel {
 	}
 
 	private void limparTabelaProdutos() {
-	    DefaultTableModel model = (DefaultTableModel) tableProdutos.getModel();
-	    model.setRowCount(0);
+		DefaultTableModel model = (DefaultTableModel) tableProdutos.getModel();
+		model.setRowCount(0);
 	}
-	
+
 	private void AtualizarTabela() {
-	    this.limparTabelaProdutos();
-	    
-	    DefaultTableModel model = (DefaultTableModel) tableProdutos.getModel();
-	    
-	    for (ProdutoLista produto : itemLista) {
-	        Object[] novaLinha = new Object[4];
-	        novaLinha[0] = produto.getNome();
-	        novaLinha[1] = produto.getSetor();
-	        novaLinha[2] = produto.getUnidadeMedida();
-	        novaLinha[3] = produto.getValorMedida();
-	        model.addRow(novaLinha);
-	    }
+		this.limparTabelaProdutos();
+
+		DefaultTableModel model = (DefaultTableModel) tableProdutos.getModel();
+
+		for (ProdutoLista produto : itemLista) {
+			Object[] novaLinha = new Object[4];
+			novaLinha[0] = produto.getNome();
+			novaLinha[1] = produto.getSetor();
+			novaLinha[2] = produto.getUnidadeMedida();
+			novaLinha[3] = produto.getValorMedida();
+			model.addRow(novaLinha);
+		}
 	}
 }
