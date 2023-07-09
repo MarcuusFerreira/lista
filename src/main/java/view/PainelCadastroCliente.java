@@ -28,6 +28,7 @@ import controller.ClienteController;
 import model.exception.CpfInvalidoException;
 import model.exception.DataNascimentoInvalidaException;
 import model.exception.ErroCadastroException;
+import model.util.FormatadorData;
 import model.vo.Cliente;
 
 public class PainelCadastroCliente extends JPanel {
@@ -220,7 +221,7 @@ public class PainelCadastroCliente extends JPanel {
 	public void preencherCampos(Cliente cliente) {
 		textNome.setText(cliente.getNomeCliente());
 		textCpf.setText(cliente.getCpf());
-		dtNascimento.setText(cliente.getDataNascimento().format(null));
+		dtNascimento.setText(FormatadorData.formatarDataParaTela(cliente.getDataNascimento()));
 		textNomeUsuario.setText(cliente.getNomeUsuario());
 		textSenha.setText(cliente.getSenha());
 	}
