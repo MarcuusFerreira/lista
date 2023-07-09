@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -30,9 +30,8 @@ import com.jgoodies.forms.layout.RowSpec;
 import controller.ClienteController;
 import model.exception.ErroConsultarException;
 import model.seletor.ClienteSeletor;
+import model.util.FormatadorData;
 import model.vo.Cliente;
-
-import java.awt.Font;
 //import model.exception.ClienteComTelefoneException;
 //import model.seletor.ClienteSeletor;
 
@@ -87,8 +86,8 @@ public class PainelMostrarClientes extends JPanel {
 			novaLinhaDaTabela[0] = c.getIdCliente();
 			novaLinhaDaTabela[1] = c.getNomeCliente();
 			novaLinhaDaTabela[2] = c.getCpf();
-			novaLinhaDaTabela[3] = c.getDataNascimento();
-			novaLinhaDaTabela[4] = c.getDataCadastro();
+			novaLinhaDaTabela[3] = FormatadorData.formatarDataParaTela(c.getDataNascimento());
+			novaLinhaDaTabela[4] = FormatadorData.formataLocalDateTimeParaTela(c.getDataCadastro());	
 			if (c.getTipoUsuario() == USUARIO) {
 				novaLinhaDaTabela[5] = "USUARIO";
 			} else {

@@ -143,6 +143,8 @@ public class TelaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				painelMostrarClientes = new PainelMostrarClientes();
 				setContentPane(painelMostrarClientes);
+				setBounds(100, 100, 1000, 650);
+				setLocationRelativeTo(null);
 				revalidate();
 			}
 		});

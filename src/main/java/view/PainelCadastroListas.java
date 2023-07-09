@@ -122,6 +122,13 @@ public class PainelCadastroListas extends JPanel {
 		add(cbNomeListas, "6, 6, fill, default");
 		cbNomeListas.setSelectedIndex(-1);
 		add(cbNomeListas, "6, 6, fill, default");
+		cbNomeListas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		}
+		);
+
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -256,18 +263,22 @@ public class PainelCadastroListas extends JPanel {
 	}
 
 	private void limparTabelaProdutos() {
-		tableProdutos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
+	    DefaultTableModel model = (DefaultTableModel) tableProdutos.getModel();
+	    model.setRowCount(0);
 	}
 	
 	private void AtualizarTabela() {
-		this.limparTabelaProdutos();
-		
-		for(ProdutoLista produto : itemLista) {
-			Object[] novaLinha = new Object[4];
-			novaLinha[0] = produto.getNome();
-			novaLinha[1] = produto.getSetor();
-			novaLinha[2] = produto.getUnidadeMedida();
-			novaLinha[3] = produto.getValorMedida();
-		}
+	    this.limparTabelaProdutos();
+	    
+	    DefaultTableModel model = (DefaultTableModel) tableProdutos.getModel();
+	    
+	    for (ProdutoLista produto : itemLista) {
+	        Object[] novaLinha = new Object[4];
+	        novaLinha[0] = produto.getNome();
+	        novaLinha[1] = produto.getSetor();
+	        novaLinha[2] = produto.getUnidadeMedida();
+	        novaLinha[3] = produto.getValorMedida();
+	        model.addRow(novaLinha);
+	    }
 	}
 }
