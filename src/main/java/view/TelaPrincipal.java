@@ -132,7 +132,7 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Cadastrar Cliente");
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastro = new PainelCadastroCliente(cliente);
+				painelCadastro = new PainelCadastroCliente(null);
 				setContentPane(painelCadastro);
 				revalidate();
 			}

@@ -213,7 +213,9 @@ public class ListaDAO {
 			pstmt.setInt(1, idLista);
 			ResultSet resultado = pstmt.executeQuery();
 		} catch (SQLException exception) {
+			exception.printStackTrace();
 			throw new ErroExcluirException("Erro no método excluirProdutosDaLista\n" + exception.getCause());
+			
 		} finally {
 			Banco.closePreparedStatement(pstmt);
 			Banco.closeConnection(connection);
@@ -275,7 +277,6 @@ public class ListaDAO {
 	        Banco.closeStatement(stmt);
 	        Banco.closeConnection(connection);
 	    }
-
 	    return listasClienteID;
 	}
 
