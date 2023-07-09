@@ -103,16 +103,32 @@ public class PainelMostrarClientes extends JPanel {
 	public PainelMostrarClientes() {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(new FormLayout(
-				new ColumnSpec[] { FormSpecs.UNRELATED_GAP_COLSPEC, ColumnSpec.decode("61px"),
-						ColumnSpec.decode("94px"), ColumnSpec.decode("center:101px"), ColumnSpec.decode("94px"),
-						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, },
-				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.PARAGRAPH_GAP_ROWSPEC, RowSpec.decode("29px"), FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("30px"),
-						FormSpecs.LINE_GAP_ROWSPEC, RowSpec.decode("30px"), FormSpecs.LINE_GAP_ROWSPEC,
-						RowSpec.decode("35px"), FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, RowSpec.decode("133px"),
-						RowSpec.decode("22px"), RowSpec.decode("23px"), RowSpec.decode("33px"), }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("61px"),
+				ColumnSpec.decode("154px"),
+				ColumnSpec.decode("center:101px"),
+				ColumnSpec.decode("141px"),
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
+				RowSpec.decode("29px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("30px"),
+				FormSpecs.LINE_GAP_ROWSPEC,
+				RowSpec.decode("30px"),
+				FormSpecs.LINE_GAP_ROWSPEC,
+				RowSpec.decode("35px"),
+				FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC,
+				RowSpec.decode("234px"),
+				RowSpec.decode("22px"),
+				RowSpec.decode("23px"),
+				RowSpec.decode("33px"),}));
 
 		tblClientes = new JTable();
 		tblClientes.setFillsViewportHeight(true);
@@ -161,7 +177,7 @@ public class PainelMostrarClientes extends JPanel {
 			}
 		});
 		this.add(btnBuscar, "5, 12, fill, default");
-		this.add(tblClientes, "2, 14, 5, 1, fill, fill");
+		this.add(tblClientes, "2, 14, 5, 2, fill, fill");
 
 		lblNome = new JLabel("Nome:");
 		this.add(lblNome, "2, 4, fill, center");
