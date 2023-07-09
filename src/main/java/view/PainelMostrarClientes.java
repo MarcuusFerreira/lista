@@ -203,9 +203,6 @@ public class PainelMostrarClientes extends JPanel {
 			}
 		});
 
-		btnExcluir = new JButton("Excluir");
-		btnExcluir.setEnabled(false);
-
 		btnAvancarPagina = new JButton("Avançar>>");
 		btnAvancarPagina.setEnabled(false);
 		btnAvancarPagina.addActionListener(new ActionListener() {
@@ -217,28 +214,7 @@ public class PainelMostrarClientes extends JPanel {
 				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
 			}
 		});
-		// btnExcluir.addActionListener(new ActionListener() {
-
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		// int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a
-		// exclusão do cliente selecionado?");
-		//
-		// if(opcaoSelecionada == JOptionPane.YES_OPTION) {
-		// try {
-		// controller.excluir(clienteSelecionado.getId());
-		// JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
-		// clientes = (ArrayList<Cliente>) controller.consultarTodos();
-		// atualizarTabelaClientes();
-		// } catch (ClienteComTelefoneException e1) {
-		// JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção",
-		// JOptionPane.WARNING_MESSAGE);
-		// }
-		// }
-		// }
-		// });
-		// this.add(btnExcluir, "15, 14, fill, fill");
-		//
+		
 		btnVoltarPagina = new JButton("<< Voltar");
 		btnVoltarPagina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -250,12 +226,36 @@ public class PainelMostrarClientes extends JPanel {
 			}
 		});
 		btnVoltarPagina.setEnabled(false);
-		add(btnVoltarPagina, "3, 16, fill, top");
+		add(btnVoltarPagina, "3, 16");
 		add(btnAvancarPagina, "5, 16");
 
 		lblPaginacao = new JLabel("0 / 0");
 		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblPaginacao, "4, 16, fill, center");
+		
+				btnExcluir = new JButton("Excluir");
+				btnExcluir.setEnabled(false);
+				// btnExcluir.addActionListener(new ActionListener() {
+
+				// @Override
+				// public void actionPerformed(ActionEvent e) {
+				// int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a
+				// exclusão do cliente selecionado?");
+				//
+				// if(opcaoSelecionada == JOptionPane.YES_OPTION) {
+				// try {
+				// controller.excluir(clienteSelecionado.getId());
+				// JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso");
+				// clientes = (ArrayList<Cliente>) controller.consultarTodos();
+				// atualizarTabelaClientes();
+				// } catch (ClienteComTelefoneException e1) {
+				// JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção",
+				// JOptionPane.WARNING_MESSAGE);
+				// }
+				// }
+				// }
+				// });
+				 this.add(btnExcluir, "3, 17");
 
 		btnEditar = new JButton("Editar");
 		btnEditar.setEnabled(false);
