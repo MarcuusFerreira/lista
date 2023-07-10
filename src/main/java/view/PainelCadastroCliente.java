@@ -225,6 +225,4 @@ public class PainelCadastroCliente extends JPanel {
 		textNomeUsuario.setText(cliente.getNomeUsuario());
 		textSenha.setText(cliente.getSenha());
 	}
-	
-	
 }
