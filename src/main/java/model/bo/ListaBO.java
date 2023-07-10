@@ -26,7 +26,7 @@ public class ListaBO {
 		return dao.consultarListasDAO(idCliente);
 	}
 
-	public Lista consultarPorId(int idLista) throws ErroConsultarException {
+	public List<Lista> consultarPorId(int idLista) throws ErroConsultarException {
 		dao = new ListaDAO();
 		return dao.consultarPorId(idLista);
 	}

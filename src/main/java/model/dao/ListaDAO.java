@@ -163,19 +163,21 @@ public class ListaDAO {
 		return retorno;
 	}
 
-	public Lista consultarPorId(int idLista) throws ErroConsultarException {
-		Lista lista = new Lista();
+	public List<Lista> consultarPorId(int idLista) throws ErroConsultarException {
+		List<Lista> listas = new ArrayList<Lista>();
 		Connection connection = Banco.getConnection();
 		String sqlLista = "SELECT ID_LISTA, ID_CLIENTE, NOME, DATA_LISTA FROM LISTA WHERE ID_LISTA = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sqlLista);
 		try {
 			pstmt.setInt(1, idLista);
 			ResultSet resultado = pstmt.executeQuery();
-			if (resultado.next()) {
+			while (resultado.next()) {
+				Lista lista = new Lista();
 				lista.setIdLista(resultado.getInt(1));
 				lista.setIdCliente(resultado.getInt(2));
 				lista.setNomeLista(resultado.getString(3));
 				lista.setDataLista(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(5)));
+				listas.add(lista);
 			}
 		} catch (SQLException e) {
 			throw new ErroConsultarException("Erro no método, consultarPorId, Erro ao consultar as listas");
@@ -183,7 +185,7 @@ public class ListaDAO {
 			Banco.closePreparedStatement(pstmt);
 			Banco.closeConnection(connection);
 		}
-		return lista;
+		return listas;
 	}
 
 	public boolean excluirLista(int idLista) throws ErroExcluirException {

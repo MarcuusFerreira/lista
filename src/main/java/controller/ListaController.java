@@ -22,7 +22,7 @@ public class ListaController {
 		return bo.cadastrarListasBO(lista);
 	}
 
-	public Lista consultarListaPorId(int idCliente) throws ErroConsultarException {
+	public List<Lista> consultarListaPorId(int idCliente) throws ErroConsultarException {
 		bo = new ListaBO();
 		return bo.consultarPorId(idCliente);
 	}

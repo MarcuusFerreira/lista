@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
@@ -88,15 +89,17 @@ public class PainelCadastroListas extends JPanel {
 		JLabel lblNomeLista = new JLabel("Nome da Lista:");
 		add(lblNomeLista, "4, 6, right, default");
 
-		ListaController listaController = new ListaController();
-		try {
-			cbNomeListas = new JComboBox<>(listaController.consultarListasClientePorID(idCliente).toArray());
-		} catch (ErroConsultarException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		cbNomeListas = new JComboBox<>();
 		cbNomeListas.setSelectedIndex(-1);
 		add(cbNomeListas, "6, 6, fill, default");
+		try {
+			listas = new ListaController().consultarListaPorId(cliente.getIdCliente());
+		} catch (ErroConsultarException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao consultar" + e.getCause(), JOptionPane.ERROR_MESSAGE);
+		}
+		for(Lista lista : listas) {
+			cbNomeListas.addItem(lista.getNomeLista());
+		}
 		cbNomeListas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
