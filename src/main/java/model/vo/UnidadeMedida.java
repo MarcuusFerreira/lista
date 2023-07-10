@@ -2,7 +2,7 @@ package model.vo;
 
 public enum UnidadeMedida {
 	KG (1),
-	QUANTIDADE (2);
+	QTD (2);
 	
 	private int unidade;
 	

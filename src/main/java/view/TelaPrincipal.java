@@ -91,7 +91,7 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Mostrar Listas");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelMostrarListas = new PainelMostrarListas();
+				painelMostrarListas = new PainelMostrarListas(cliente);
 				setContentPane(painelMostrarListas);
 				revalidate();
 			}

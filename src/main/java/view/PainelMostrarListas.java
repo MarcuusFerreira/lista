@@ -63,8 +63,8 @@ public class PainelMostrarListas extends JPanel {
 	private JButton btnAvancarPagina_1;
 	private JLabel lblProdutos;
 //	private ClienteSeletor seletor = new ClienteSeletor();
-	private int idCliente = 1;
 	private JButton btnGerarPlanilhaDeTodasAsListas;
+	private List<Lista> listas;
 
 	private void limparTabelaClientes() {
 		tblClientes.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -87,7 +87,7 @@ public class PainelMostrarListas extends JPanel {
 //		}
 //	}
 
-	public PainelMostrarListas() {
+	public PainelMostrarListas(Cliente cliente) {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -154,16 +154,20 @@ public class PainelMostrarListas extends JPanel {
 		lblNome = new JLabel("Selecione a Lista:");
 		this.add(lblNome, "2, 4, 2, 1, fill, center");
 
+		cbNomeListas = new JComboBox<>();
+		cbNomeListas.setSelectedIndex(-1);
+		
 		try {
-			ListaController listaController = new ListaController();
-			cbNomeListas = new JComboBox<>(listaController.consultarListasClientePorID(idCliente).toArray());
-			cbNomeListas.setSelectedIndex(-1);
-//			List<Lista> lista = new ListaController().consultarListaController(idCliente);
-//			cbNomeListas = new JComboBox<>(lista.stream().map(Lista::getNomeLista).toArray(String[]::new));
+			listas = new ListaController().consultarListaPorId(cliente.getIdCliente());
 		} catch (ErroConsultarException e1) {
+			JOptionPane.showMessageDialog(null, e1, "Erro ao consultar " + e1.getCause(), JOptionPane.ERROR_MESSAGE);
 			e1.printStackTrace();
 		}
-		cbNomeListas.setSelectedIndex(-1);
+		
+		for(Lista lista : listas) {
+			cbNomeListas.addItem(lista.getNomeLista());
+		}
+		
 		this.add(cbNomeListas, "4, 4, 4, 1, fill, default");
 
 		try {

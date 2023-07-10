@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -35,9 +36,9 @@ import model.vo.Cliente;
 import model.vo.Lista;
 import model.vo.Produto;
 import model.vo.ProdutoLista;
+import model.vo.UnidadeMedida;
 
 public class PainelCadastroListas extends JPanel {
-	private int idCliente = 1;
 	private JComboBox cbNomeListas;
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCep;
@@ -54,7 +55,7 @@ public class PainelCadastroListas extends JPanel {
 	private Lista listaNova;
 	private List<Lista> listas;
 	private List<Produto> produtos;
-	private List<ProdutoLista> itemLista;
+	private List<ProdutoLista> itensLista;
 
 	/**
 	 * Create the panel.
@@ -95,9 +96,10 @@ public class PainelCadastroListas extends JPanel {
 		try {
 			listas = new ListaController().consultarListaPorId(cliente.getIdCliente());
 		} catch (ErroConsultarException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao consultar" + e.getCause(), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao consultar" + e.getCause(),
+					JOptionPane.ERROR_MESSAGE);
 		}
-		for(Lista lista : listas) {
+		for (Lista lista : listas) {
 			cbNomeListas.addItem(lista.getNomeLista());
 		}
 		cbNomeListas.addActionListener(new ActionListener() {
@@ -136,30 +138,34 @@ public class PainelCadastroListas extends JPanel {
 		add(tFListaNova, "6, 8, fill, default");
 		tFListaNova.setColumns(10);
 
-		JButton btnAdicionar_2 = new JButton("+");
-		btnAdicionar_2.addActionListener(new ActionListener() {
+		JButton btnAdicionarLista = new JButton("+");
+		btnAdicionarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaNova = new Lista();
 				listaNova.setNomeLista(tFListaNova.getText());
-				cbNomeListas.addItem(listaNova);
+				cbNomeListas.addItem(listaNova.getNomeLista());
+				tFListaNova.setText("");
 			}
 		});
-		add(btnAdicionar_2, "8, 8, left, default");
+		add(btnAdicionarLista, "8, 8, left, default");
 
 		JLabel lblProduto = new JLabel("Produto:");
 		add(lblProduto, "4, 12, right, default");
 
+		cbProdutos = new JComboBox<>();
+		add(cbProdutos, "6, 12, fill, default");
+		
+
 		try {
 			produtos = new ProdutoController().consultarProdutos();
-			cbProdutos = new JComboBox(produtos.stream().map(Produto::getNome).toArray(String[]::new));
 		} catch (ErroConsultarException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getCause(), "Erro ao consultar", JOptionPane.ERROR_MESSAGE);
 		}
 
-		add(cbProdutos, "6, 12, fill, default");
+		for (Produto produto : produtos) {
+			cbProdutos.addItem(produto.getNome());
+		}
 		cbProdutos.setSelectedIndex(-1);
-
 		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
 		add(lblNewLabel, "4, 14, left, default");
 
@@ -187,12 +193,34 @@ public class PainelCadastroListas extends JPanel {
 		textKgOuUnidade.setHorizontalAlignment(SwingConstants.CENTER);
 		add(textKgOuUnidade, "6, 18, fill, default");
 
-		JButton btnAdicionar = new JButton("+");
-		add(btnAdicionar, "8, 18, left, default");
-		btnAdicionar.addActionListener(new ActionListener() {
+		itensLista = new ArrayList<ProdutoLista>();
+		JButton btnAdicionarProduto = new JButton("+");
+		add(btnAdicionarProduto, "8, 18, left, default");
+		btnAdicionarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cbProdutos.getSelectedIndex();
+				String selecionado = cbProdutos.getSelectedItem().toString();
 				ProdutoLista itemLista = new ProdutoLista();
+				for (Produto produto : produtos) {
+					if (produto.getNome().equals(selecionado)) {
+						itemLista.setIdProduto(produto.getIdProduto());
+						itemLista.setNome(produto.getNome());
+						itemLista.setMarca(produto.getMarca());
+						if (rdbtnKilogramas.isSelected()) {
+							itemLista.setUnidadeMedida(UnidadeMedida.KG);
+						}
+						if (rdbtnQuantidade.isSelected()) {
+							itemLista.setUnidadeMedida(UnidadeMedida.QTD);
+						}
+						try {
+							itemLista.setValorMedida(Double.parseDouble(textKgOuUnidade.getText()));
+						} catch (NumberFormatException excecao) {
+							JOptionPane.showInternalMessageDialog(null, "O campo só aceita números", "Campo Inválido",
+									JOptionPane.ERROR_MESSAGE);
+						}
+						itensLista.add(itemLista);
+					}
+				}
+				AtualizarTabela();
 			}
 		});
 
@@ -201,11 +229,11 @@ public class PainelCadastroListas extends JPanel {
 		add(lblProdutoSelecionados, "6, 20");
 
 		tableProdutos = new JTable();
-		this.limparTabelaProdutos();
+		this.limparTabela();
 		add(tableProdutos, "6, 22, 1, 3, fill, fill");
 
-		JButton btnAdicionar_1 = new JButton("-");
-		add(btnAdicionar_1, "8, 22, left, top");
+		JButton btnRemover = new JButton("-");
+		add(btnRemover, "8, 22, left, top");
 		add(btnVoltar, "4, 30");
 		add(btnCadastrarLista, "6, 30");
 
@@ -232,21 +260,16 @@ public class PainelCadastroListas extends JPanel {
 		rdbtnKilogramas.setSelected(false);
 
 		// Limpar tabela de produtos
-		limparTabelaProdutos();
+		limparTabela();
 
-	}
-
-	private void limparTabelaProdutos() {
-		DefaultTableModel model = (DefaultTableModel) tableProdutos.getModel();
-		model.setRowCount(0);
 	}
 
 	private void AtualizarTabela() {
-		this.limparTabelaProdutos();
+		this.limparTabela();
 
 		DefaultTableModel model = (DefaultTableModel) tableProdutos.getModel();
 
-		for (ProdutoLista produto : itemLista) {
+		for (ProdutoLista produto : itensLista) {
 			Object[] novaLinha = new Object[4];
 			novaLinha[0] = produto.getNome();
 			novaLinha[1] = produto.getSetor();
@@ -254,5 +277,9 @@ public class PainelCadastroListas extends JPanel {
 			novaLinha[3] = produto.getValorMedida();
 			model.addRow(novaLinha);
 		}
+	}
+	
+	public void limparTabela() {
+		tableProdutos.setModel(new DefaultTableModel(new Object[][] { nomesColunas,}, nomesColunas));
 	}
 }
