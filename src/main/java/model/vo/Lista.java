@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Lista {
 	
-	private int idLista;
+	private Integer idLista;
 	private int idCliente;
 	private String nomeLista;
 	private List<ProdutoLista> produtosLista;
@@ -15,11 +15,11 @@ public class Lista {
 		
 	}
 
-	public int getIdLista() {
+	public Integer getIdLista() {
 		return idLista;
 	}
 
-	public void setIdLista(int idLista) {
+	public void setIdLista(Integer idLista) {
 		this.idLista = idLista;
 	}
 

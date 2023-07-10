@@ -31,7 +31,9 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ListaController;
 import controller.ProdutoController;
+import model.exception.ErroCadastroException;
 import model.exception.ErroConsultarException;
+import model.exception.ErroListaCadastradaException;
 import model.vo.Cliente;
 import model.vo.Lista;
 import model.vo.Produto;
@@ -40,8 +42,6 @@ import model.vo.UnidadeMedida;
 
 public class PainelCadastroListas extends JPanel {
 	private JComboBox cbNomeListas;
-	private MaskFormatter mascaraCpf;
-	private MaskFormatter mascaraCep;
 	private DatePickerSettings dateSettings;
 	private DateTimePicker dataTeste;
 	private JTable tableProdutos;
@@ -56,6 +56,7 @@ public class PainelCadastroListas extends JPanel {
 	private List<Lista> listas;
 	private List<Produto> produtos;
 	private List<ProdutoLista> itensLista;
+	private ListaController controller;
 
 	/**
 	 * Create the panel.
@@ -102,26 +103,24 @@ public class PainelCadastroListas extends JPanel {
 		for (Lista lista : listas) {
 			cbNomeListas.addItem(lista.getNomeLista());
 		}
-		cbNomeListas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-
-		try {
-			mascaraCpf = new MaskFormatter("###.###.###-##");
-			mascaraCpf.setValueContainsLiteralCharacters(false);
-		} catch (ParseException e) {
-			// não faz nada
-		}
-
+		
 		// Configurações da parte de DATAS do componente
 		dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
-
+		controller = new ListaController();
 		JButton btnCadastrarLista = new JButton("Salvar Lista");
 		btnCadastrarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				for(Lista lista : listas) {
+					if(lista.getIdLista() == null) {
+						try {
+							controller.cadastrarListasController(lista);
+						} catch (ErroCadastroException | ErroListaCadastradaException e1) {
+							JOptionPane.showMessageDialog(null, "Erro ao cadastrar" + e1.getCause(), "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+							e1.printStackTrace();
+						}
+					}
+				}
 			}
 		});
 		JButton btnVoltar = new JButton("Voltar");
@@ -144,6 +143,7 @@ public class PainelCadastroListas extends JPanel {
 				listaNova = new Lista();
 				listaNova.setNomeLista(tFListaNova.getText());
 				cbNomeListas.addItem(listaNova.getNomeLista());
+				listas.add(listaNova);
 				tFListaNova.setText("");
 			}
 		});
@@ -155,11 +155,11 @@ public class PainelCadastroListas extends JPanel {
 		cbProdutos = new JComboBox<>();
 		add(cbProdutos, "6, 12, fill, default");
 		
-
 		try {
 			produtos = new ProdutoController().consultarProdutos();
 		} catch (ErroConsultarException e1) {
-			JOptionPane.showMessageDialog(null, e1.getCause(), "Erro ao consultar", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Erro ao consultar");
+			e1.printStackTrace();
 		}
 
 		for (Produto produto : produtos) {
@@ -220,6 +220,16 @@ public class PainelCadastroListas extends JPanel {
 						itensLista.add(itemLista);
 					}
 				}
+				textKgOuUnidade.setText("");
+				if(rdbtnKilogramas.isSelected()) {
+					rdbtnKilogramas.setSelected(false);
+				}
+				
+				if(rdbtnQuantidade.isSelected()) {
+					rdbtnQuantidade.setSelected(false);
+				}
+				cbProdutos.setSelectedIndex(-1);
+				listaNova.setProdutos(itensLista);
 				AtualizarTabela();
 			}
 		});
