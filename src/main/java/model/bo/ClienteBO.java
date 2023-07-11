@@ -52,9 +52,6 @@ public class ClienteBO {
 		if (ValidadorCpf.validarCpf(cliente.getCpf())) {
 			throw new CpfInvalidoException("CPF é Inválido!");
 		}
-		if(!dao.clienteExiste(cliente.getIdCliente())) {
-			throw new ErroClienteNaoCadastradoException("Cliente não cadastrado");
-		}
 		cliente.setNomeCliente(cliente.getNomeCliente().toUpperCase());
 		return dao.atualizarCliente(cliente);
 	}

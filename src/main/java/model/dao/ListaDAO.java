@@ -35,8 +35,7 @@ public class ListaDAO {
 			}
 			cadastrado = true;
 		} catch (SQLException e) {
-			throw new ErroCadastroException(
-					"Erro método cadastrarLista, Erro ao cadastrar a lista. " + "\n Causa: " + e.getCause());
+			throw new ErroCadastroException("Erro método cadastrarLista, Erro ao cadastrar a lista. " + "\n Causa: " + e.getCause());
 		} finally {
 			Banco.closePreparedStatement(pstmtLista);
 			Banco.closeConnection(connection);
@@ -145,7 +144,7 @@ public class ListaDAO {
 	public boolean cadastrouMesmoNome(int idCliente, String nome) {
 		boolean retorno = false;
 		Connection connection = Banco.getConnection();
-		String sql = "select id_lista from lista where id_cliente = ? and upper(nome) = ?";
+		String sql = "SELECT ID_LISTA FROM LISTA WHERE ID_CLIENTE = ? AND UPPER(NOME) = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
 		try {
 			pstmt.setInt(1, idCliente);

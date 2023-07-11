@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,11 +59,6 @@ public class PainelCadastroListas extends JPanel {
 	private List<ProdutoLista> itensLista;
 	private ListaController controller;
 
-	/**
-	 * Create the panel.
-	 * 
-	 * @throws ParseException
-	 */
 	public PainelCadastroListas(Cliente cliente) {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -117,7 +113,7 @@ public class PainelCadastroListas extends JPanel {
 						try {
 							controller.cadastrarListasController(lista);
 						} catch (ErroCadastroException | ErroListaCadastradaException e1) {
-							JOptionPane.showMessageDialog(null, "Erro ao cadastrar" + e1.getMessage(), "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Erro ao cadastrar" + e1.getCause(), "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 							e1.printStackTrace();
 						}
 					}
@@ -130,7 +126,6 @@ public class PainelCadastroListas extends JPanel {
 
 			}
 		});
-
 		JLabel lblOuCrieUma = new JLabel("Ou Crie uma nova:");
 		add(lblOuCrieUma, "4, 8, right, default");
 
@@ -142,7 +137,9 @@ public class PainelCadastroListas extends JPanel {
 		btnAdicionarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaNova = new Lista();
+				listaNova.setIdCliente(cliente.getIdCliente());
 				listaNova.setNomeLista(tFListaNova.getText());
+				listaNova.setDataLista(LocalDateTime.now());
 				cbNomeListas.addItem(listaNova.getNomeLista());
 				listas.add(listaNova);
 				tFListaNova.setText("");
