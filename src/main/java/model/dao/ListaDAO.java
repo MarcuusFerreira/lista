@@ -49,8 +49,8 @@ public class ListaDAO {
 	private boolean inserirProdutoNaLista(ProdutoLista produto, int idLista) throws ErroCadastroException {
 		boolean cadastrado = false;
 		Connection connection = Banco.getConnection();
-		String insertListaProdutos = " INSERT INTO LISTA_PRODUTO " + " ID_LISTA, ID_PRODUTO, MARCADO, "
-				+ " UNIDADE_MEDIDA, VALOR_MEDIDA, OBS " + " VALUES (?, ?, ?, ?, ?, ?) ";
+		String insertListaProdutos = " INSERT INTO LISTA_PRODUTO " + " (ID_LISTA, ID_PRODUTO, MARCADO, "
+				+ " UNIDADE_MEDIDA, VALOR_MEDIDA, OBS) " + " VALUES (?, ?, ?, ?, ?, ?) ";
 		PreparedStatement pstmtListaProduto = Banco.getPreparedStatement(connection, insertListaProdutos);
 
 		try {
@@ -73,7 +73,7 @@ public class ListaDAO {
 	public List<Lista> consultarListasDAO(int idCliente) throws ErroConsultarException {
 		List<Lista> listas = new ArrayList<Lista>();
 		Connection connection = Banco.getConnection();
-		String sql = "select id_lista, nome, data_lista from lista where id_cliente = ?";
+		String sql = "SELECT ID_LISTA, NOME, DATA_LISTA FROM LISTA WHERE ID_CLIENTE = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
 		try {
 			pstmt.setInt(1, idCliente);
@@ -172,6 +172,7 @@ public class ListaDAO {
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sqlLista);
 		try {
 			pstmt.setInt(1, idLista);
+			System.out.println(pstmt);
 			ResultSet resultado = pstmt.executeQuery();
 			while (resultado.next()) {
 				Lista lista = new Lista();
@@ -182,7 +183,7 @@ public class ListaDAO {
 				listas.add(lista);
 			}
 		} catch (SQLException e) {
-			throw new ErroConsultarException("Erro no método, consultarPorId, Erro ao consultar as listas");
+			throw new ErroConsultarException("Erro no método consultarPorId, Erro ao consultar as listas");
 		} finally {
 			Banco.closePreparedStatement(pstmt);
 			Banco.closeConnection(connection);

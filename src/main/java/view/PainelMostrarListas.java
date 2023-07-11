@@ -155,10 +155,9 @@ public class PainelMostrarListas extends JPanel {
 		this.add(lblNome, "2, 4, 2, 1, fill, center");
 
 		cbNomeListas = new JComboBox<>();
-		cbNomeListas.setSelectedIndex(-1);
 		
 		try {
-			listas = new ListaController().consultarListaPorId(cliente.getIdCliente());
+			listas = new ListaController().consultarListaController(cliente.getIdCliente());
 		} catch (ErroConsultarException e1) {
 			JOptionPane.showMessageDialog(null, e1, "Erro ao consultar " + e1.getCause(), JOptionPane.ERROR_MESSAGE);
 			e1.printStackTrace();
@@ -168,6 +167,7 @@ public class PainelMostrarListas extends JPanel {
 			cbNomeListas.addItem(lista.getNomeLista());
 		}
 		
+		cbNomeListas.setSelectedIndex(-1);
 		this.add(cbNomeListas, "4, 4, 4, 1, fill, default");
 
 		try {
