@@ -17,11 +17,14 @@ import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
 import model.exception.ErroConsultarException;
 import model.vo.Cliente;
+import model.vo.UnidadeMedida;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ButtonGroup;
 
 public class TelaPrincipal extends JFrame {
+	private static final Integer ADM = 2;
 	private PainelMostrarClientes painelMostrarClientes;
 	private PainelCadastroCliente painelCadastro;
 	private PainelMostrarListas painelMostrarListas;
@@ -42,6 +45,7 @@ public class TelaPrincipal extends JFrame {
 	private JMenuItem mntmIrsCompras;
 	private TelaMobile telaMobile;
 	private JPanel contentPane;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -61,7 +65,8 @@ public class TelaPrincipal extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param cliente 
+	 * 
+	 * @param cliente
 	 */
 	public TelaPrincipal(Cliente cliente) {
 		setTitle("Sistema Lista de Mercado");
@@ -124,6 +129,7 @@ public class TelaPrincipal extends JFrame {
 				JOptionPane.showMessageDialog(null, message, "Sobre nós", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
+		
 		mnNewMenu_1.add(mntmNewMenuItem_3);
 
 		JMenu mnNewMenu_2 = new JMenu("Adm");

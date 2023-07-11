@@ -1,5 +1,6 @@
 package model.vo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Produto {
@@ -7,6 +8,7 @@ public class Produto {
 	private Integer idProduto;
 	private String nome;
 	private LocalDateTime dataCadastro;
+	private LocalDate dataExclusao;
 	private String setor;
 	private Integer tipoProduto;
 	private String marca;
@@ -49,5 +51,12 @@ public class Produto {
 	}
 	public void setMarca(String marca) {
 		this.marca = marca;
+	}
+	
+	public LocalDate getDataExclusao() {
+		return dataExclusao;
+	}
+	public void setDataExclusao(LocalDate dataExclusao) {
+		this.dataExclusao = dataExclusao;
 	}
 }
