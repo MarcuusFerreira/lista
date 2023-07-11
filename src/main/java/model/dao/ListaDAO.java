@@ -19,9 +19,10 @@ import model.vo.UnidadeMedida;
 public class ListaDAO {
 
 	public boolean cadastrarLista(Lista lista) throws ErroCadastroException {
+		System.out.println("passei no cadastrarLista");
 		boolean cadastrado = false;
 		Connection connection = Banco.getConnection();
-		String insertLista = "INSERT INTO LISTA ID_CLIENTE, NOME, DATA_LISTA VALUES (?, ?, ?)";
+		String insertLista = "INSERT INTO LISTA (ID_CLIENTE, NOME, DATA_LISTA) VALUES (?, ?, ?)";
 		PreparedStatement pstmtLista = Banco.getPreparedStatementWithPk(connection, insertLista);
 		try {
 			pstmtLista.setInt(1, lista.getIdCliente());
@@ -29,7 +30,9 @@ public class ListaDAO {
 			pstmtLista.setObject(3, lista.getDataLista());
 			pstmtLista.execute();
 			ResultSet resultado = pstmtLista.getGeneratedKeys();
+			if(resultado.next()) {
 			lista.setIdLista(resultado.getInt(1));
+			}
 			for (ProdutoLista itemDaListaDeProdutos : lista.getProdutosListas()) {
 				inserirProdutoNaLista(itemDaListaDeProdutos, lista.getIdLista());
 			}

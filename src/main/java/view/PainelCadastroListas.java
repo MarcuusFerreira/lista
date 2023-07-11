@@ -113,7 +113,7 @@ public class PainelCadastroListas extends JPanel {
 						try {
 							controller.cadastrarListasController(lista);
 						} catch (ErroCadastroException | ErroListaCadastradaException e1) {
-							JOptionPane.showMessageDialog(null, "Erro ao cadastrar" + e1.getCause(), "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Erro ao cadastrar " + e1.getCause(), "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 							e1.printStackTrace();
 						}
 					}

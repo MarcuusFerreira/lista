@@ -34,6 +34,7 @@ public class ClienteDAO {
 			stmt.setInt(5, cliente.getTipoUsuario());
 			stmt.setString(6, cliente.getNomeUsuario());
 			stmt.setString(7, cliente.getSenha());
+			System.out.println(stmt);
 			stmt.execute();
 			ResultSet resultado = stmt.getGeneratedKeys();
 			if (resultado.next()) {
