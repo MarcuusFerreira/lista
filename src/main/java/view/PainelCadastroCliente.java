@@ -27,7 +27,10 @@ import com.jgoodies.forms.layout.RowSpec;
 import controller.ClienteController;
 import model.exception.CpfInvalidoException;
 import model.exception.DataNascimentoInvalidaException;
+import model.exception.ErroAtualizarException;
 import model.exception.ErroCadastroException;
+import model.exception.ErroClienteNaoCadastradoException;
+import model.exception.ErroConsultarException;
 import model.util.FormatadorData;
 import model.vo.Cliente;
 
@@ -168,6 +171,8 @@ public class PainelCadastroCliente extends JPanel {
 				Cliente cliente = new Cliente();
 				cliente.setNomeCliente(textNome.getText());
 				String cpfSemMascara = null;
+				
+				
 				try {
 					cpfSemMascara = (String) mascaraCpf.stringToValue(textCpf.getText());
 					cliente.setCpf(cpfSemMascara);
@@ -180,11 +185,14 @@ public class PainelCadastroCliente extends JPanel {
 				cliente.setNomeUsuario(textNomeUsuario.getText());
 				cliente.setSenha(textSenha.getText());
 				try {
-					if(controller.cadastrarNovoClienteController(cliente)) {
+					if(cliente.getIdCliente() == null ) {
+						controller.cadastrarNovoClienteController(cliente);
 						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 						limparCampos();
+					} else {
+						controller.atualizarCliente(cliente);
 					}
-				} catch (ErroCadastroException | CpfInvalidoException | DataNascimentoInvalidaException excecao) {
+				} catch (ErroCadastroException | CpfInvalidoException | DataNascimentoInvalidaException | ErroAtualizarException | ErroConsultarException | ErroClienteNaoCadastradoException excecao) {
 					JOptionPane.showMessageDialog(null, excecao.getMessage());
 				}
 			}

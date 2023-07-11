@@ -119,6 +119,7 @@ public class ClienteController {
 			if(validarSenha(cliente.getSenha())) {
 				throw new ErroCadastroException("Senha Inválida!");
 			}
+			
 		}
 		cliente.setNomeCliente(cliente.getNomeCliente().trim());
 		return bo.atualizarCliente(cliente);
