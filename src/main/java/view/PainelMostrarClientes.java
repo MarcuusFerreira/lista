@@ -130,7 +130,9 @@ public class PainelMostrarClientes extends JPanel {
 				RowSpec.decode("234px"),
 				RowSpec.decode("22px"),
 				RowSpec.decode("23px"),
-				RowSpec.decode("33px"),}));
+				RowSpec.decode("33px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,}));
 
 		tblClientes = new JTable();
 		tblClientes.setFillsViewportHeight(true);
@@ -206,22 +208,6 @@ public class PainelMostrarClientes extends JPanel {
 
 		dtNascimentoFinal = new DatePicker();
 		this.add(dtNascimentoFinal, "4, 10, 3, 1, fill, default");
-
-		btnGerarPlanilha = new JButton("Gerar Planilha");
-		btnGerarPlanilha.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
-				janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
-
-				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
-				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
-					String destinoArquivo = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
-					clienteController = new ClienteController();
-					clienteController.exportarDadosController(clientes, destinoArquivo);
-				}
-			}
-		});
-		add(btnGerarPlanilha ,"3, 15");
 
 		btnAvancarPagina = new JButton("Avançar>>");
 		btnAvancarPagina.setEnabled(false);
@@ -299,6 +285,22 @@ public class PainelMostrarClientes extends JPanel {
 		
 		btnEditar.setEnabled(false);
 		this.add(btnEditar, "5, 17, fill, default");
+		
+				btnGerarPlanilha = new JButton("Gerar Planilha");
+				btnGerarPlanilha.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
+						janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
+
+						int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
+						if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
+							String destinoArquivo = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
+							clienteController = new ClienteController();
+							clienteController.exportarDadosController(clientes, destinoArquivo);
+						}
+					}
+				});
+				add(btnGerarPlanilha ,"4, 19");
 
 		atualizarQuantidadePaginas();
 	}
