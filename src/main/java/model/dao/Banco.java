@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class Banco {
 	
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver"; //MYSQL versão 8
-	private static final String BANCODADOS = "db_lista_minimo";
+	private static final String BANCODADOS = "DB_LISTA_MINIMO";
 	private static final String CONEXAO = "jdbc:mysql://localhost:3306/" 
 					+ BANCODADOS + "?useSSL=false&serverTimezone=UTC&useTimezone=true&allowPublicKeyRetrieval=true";
 	private static final String USER = "SISTEMA_MINIMO";

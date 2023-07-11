@@ -113,7 +113,7 @@ public class ListaDAO {
 				produtoLista.setDataCadastro(FormatadorData.formatarLocalDateTimeMySQL(resultado.getString(5)));
 				produtoLista.setMarcado(resultado.getInt(6));
 				produtoLista.setUnidadeMedida(UnidadeMedida.valueOf(resultado.getString(7)));
-				produtoLista.setValorMedida(resultado.getDouble(8));
+				produtoLista.setValorMedida(resultado.getInt(8));
 				listas.add(produtoLista);
 			}
 		} catch (SQLException e) {

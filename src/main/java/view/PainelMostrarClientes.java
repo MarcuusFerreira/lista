@@ -221,6 +221,7 @@ public class PainelMostrarClientes extends JPanel {
 				}
 			}
 		});
+		add(btnGerarPlanilha ,"3, 15");
 
 		btnAvancarPagina = new JButton("Avançar>>");
 		btnAvancarPagina.setEnabled(false);
@@ -276,11 +277,9 @@ public class PainelMostrarClientes extends JPanel {
 					try {
 						clientes = (ArrayList<Cliente>) clienteController.listarTodosClientes();
 					} catch (ErroConsultarException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} // .consultarTodos();
 					atualizarTabelaClientes();
-
 				}
 			}
 		});

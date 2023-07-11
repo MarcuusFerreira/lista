@@ -107,6 +107,7 @@ public class PainelCadastroListas extends JPanel {
 		// Configurações da parte de DATAS do componente
 		dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
+		
 		controller = new ListaController();
 		JButton btnCadastrarLista = new JButton("Salvar Lista");
 		btnCadastrarLista.addActionListener(new ActionListener() {
@@ -116,7 +117,7 @@ public class PainelCadastroListas extends JPanel {
 						try {
 							controller.cadastrarListasController(lista);
 						} catch (ErroCadastroException | ErroListaCadastradaException e1) {
-							JOptionPane.showMessageDialog(null, "Erro ao cadastrar" + e1.getCause(), "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Erro ao cadastrar" + e1.getMessage(), "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 							e1.printStackTrace();
 						}
 					}
@@ -169,7 +170,7 @@ public class PainelCadastroListas extends JPanel {
 		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
 		add(lblNewLabel, "4, 14, left, default");
 
-		rdbtnQuantidade = new JRadioButton("Quantidade");
+		rdbtnQuantidade = new JRadioButton("Quantidade"); 
 		rdbtnQuantidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rdbtnKilogramas.setSelected(false);
@@ -212,7 +213,7 @@ public class PainelCadastroListas extends JPanel {
 							itemLista.setUnidadeMedida(UnidadeMedida.QTD);
 						}
 						try {
-							itemLista.setValorMedida(Double.parseDouble(textKgOuUnidade.getText()));
+							itemLista.setValorMedida(Integer.parseInt(textKgOuUnidade.getText()));
 						} catch (NumberFormatException excecao) {
 							JOptionPane.showInternalMessageDialog(null, "O campo só aceita números", "Campo Inválido",
 									JOptionPane.ERROR_MESSAGE);

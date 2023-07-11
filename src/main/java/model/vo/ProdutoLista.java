@@ -3,7 +3,7 @@ package model.vo;
 public class ProdutoLista extends Produto{
 
 	private UnidadeMedida unidadeMedida;
-	private double valorMedida;
+	private Integer valorMedida;
 	private int marcado;
 	private String obs;
 	
@@ -19,11 +19,11 @@ public class ProdutoLista extends Produto{
 		this.unidadeMedida = unidadeMedida;
 	}
 
-	public double getValorMedida() {
+	public Integer getValorMedida() {
 		return valorMedida;
 	}
 
-	public void setValorMedida(double valorMedida) {
+	public void setValorMedida(Integer valorMedida) {
 		this.valorMedida = valorMedida;
 	}
 
