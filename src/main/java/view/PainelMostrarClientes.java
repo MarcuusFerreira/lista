@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -73,6 +75,7 @@ public class PainelMostrarClientes extends JPanel {
 	private JLabel lblMostrarClientes;
 	private JButton btnAvancarPagina_1;
 	private ClienteSeletor seletor = new ClienteSeletor();
+	private JButton btnVoltar;
 
 	private void limparTabelaClientes() {
 		tblClientes.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -300,6 +303,19 @@ public class PainelMostrarClientes extends JPanel {
 						}
 					}
 				});
+				
+				btnVoltar = new JButton("Voltar");
+				btnVoltar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Window window = SwingUtilities.getWindowAncestor(PainelMostrarClientes.this);
+		                if (window != null) {
+		                    window.dispose(); // Fecha a janela anterior
+		                }
+					TelaPrincipal frame = new TelaPrincipal(null);
+					frame.setVisible(true);
+			}
+				});
+				add(btnVoltar, "3, 19");
 				add(btnGerarPlanilha ,"4, 19");
 
 		atualizarQuantidadePaginas();
