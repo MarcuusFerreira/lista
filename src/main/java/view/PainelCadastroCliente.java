@@ -163,38 +163,31 @@ public class PainelCadastroCliente extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				controller = new ClienteController();
 				Cliente clienteNovo = new Cliente();
-				if (cliente.getIdCliente() == null) {
-					clienteNovo.setNomeCliente(textNome.getText());
-					String cpfSemMascara = null;
+				clienteNovo.setNomeCliente(textNome.getText());
+				String cpfSemMascara = null;
+				try {
+					cpfSemMascara = (String) mascaraCpf.stringToValue(textCpf.getText());
+					clienteNovo.setCpf(cpfSemMascara);
+				} catch (ParseException mensagem) {
+				}
+				clienteNovo.setDataNascimento(dtNascimento.getDate());
+				clienteNovo.setDataCadastro(LocalDateTime.now());
+				clienteNovo.setTipoUsuario(USUARIO);
+				clienteNovo.setNomeUsuario(textNomeUsuario.getText());
+				clienteNovo.setSenha(textSenha.getText());
 
+				if (cliente.getIdCliente() == null) {
 					try {
-						cpfSemMascara = (String) mascaraCpf.stringToValue(textCpf.getText());
-						clienteNovo.setCpf(cpfSemMascara);
-					} catch (ParseException mensagem) {
-//					JOptionPane.showMessageDialog(null, "Erro de conversão!");
+						controller.cadastrarNovoClienteController(cliente);
+					} catch (ErroCadastroException | CpfInvalidoException | DataNascimentoInvalidaException e1) {
+						JOptionPane.showMessageDialog(null, e1);
 					}
-					clienteNovo.setDataNascimento(dtNascimento.getDate());
-					clienteNovo.setDataCadastro(LocalDateTime.now());
-					clienteNovo.setTipoUsuario(USUARIO);
-					clienteNovo.setNomeUsuario(textNomeUsuario.getText());
-					clienteNovo.setSenha(textSenha.getText());
-					try {
-						if (cliente.getIdCliente() == null) {
-							controller.cadastrarNovoClienteController(cliente);
-							JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
-							limparCampos();
-						} else {
-							controller.atualizarCliente(cliente);
-						}
-					} catch (ErroCadastroException | CpfInvalidoException | DataNascimentoInvalidaException
-							| ErroAtualizarException | ErroConsultarException
-							| ErroClienteNaoCadastradoException excecao) {
-						JOptionPane.showMessageDialog(null, excecao.getMessage());
-					}
+					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+					limparCampos();
 				} else {
 					clienteNovo.setIdCliente(cliente.getIdCliente());
 					try {
-						if(controller.atualizarCliente(clienteNovo)) {
+						if (controller.atualizarCliente(clienteNovo)) {
 							JOptionPane.showMessageDialog(null, "Cliente Atualizado com Sucesso!");
 						}
 					} catch (ErroAtualizarException | ErroConsultarException | ErroClienteNaoCadastradoException
