@@ -21,6 +21,9 @@ import model.vo.UnidadeMedida;
 
 public class ListaDAO {
 
+	private static final int KG = 1;
+	private static final int QTD = 2;
+
 	public boolean cadastrarLista(Lista lista) throws ErroCadastroException {
 		System.out.println("passei no cadastrarLista");
 		boolean cadastrado = false;
@@ -37,9 +40,10 @@ public class ListaDAO {
 			lista.setIdLista(resultado.getInt(1));
 			}
 			for (ProdutoLista itemDaListaDeProdutos : lista.getProdutosListas()) {
-				inserirProdutoNaLista(itemDaListaDeProdutos, lista.getIdLista());
+				if(!inserirProdutoNaLista(itemDaListaDeProdutos, lista.getIdLista())) {
+					cadastrado = true;
+				}
 			}
-			cadastrado = true;
 		} catch (SQLException e) {
 			throw new ErroCadastroException("Erro método cadastrarLista, Erro ao cadastrar a lista. " + "\n Causa: " + e.getCause());
 		} finally {
@@ -53,18 +57,26 @@ public class ListaDAO {
 		boolean cadastrado = false;
 		Connection connection = Banco.getConnection();
 		String insertListaProdutos = " INSERT INTO LISTA_PRODUTO " + " (ID_LISTA, ID_PRODUTO, MARCADO, "
-				+ " UNIDADE_MEDIDA, VALOR_MEDIDA, OBS) " + " VALUES (?, ?, ?, ?, ?, ?) ";
+				+ " UNIDADE_MEDIDA, VALOR_UNIDADE) " + " VALUES (?, ?, ?, ?, ?) ";
 		PreparedStatement pstmtListaProduto = Banco.getPreparedStatement(connection, insertListaProdutos);
 
 		try {
 			pstmtListaProduto.setInt(1, idLista);
 			pstmtListaProduto.setInt(2, produto.getIdProduto());
 			pstmtListaProduto.setInt(3, produto.getMarcado());
-			pstmtListaProduto.setObject(4, produto.getUnidadeMedida());
-			pstmtListaProduto.setDouble(4, produto.getValorMedida());
-			pstmtListaProduto.setString(6, produto.getObs());
-			cadastrado = true;
+			if (produto.getUnidadeMedida().getUnidade() == KG) {
+				pstmtListaProduto.setString(4, "KG");
+			} else if (produto.getUnidadeMedida().getUnidade() == QTD) {
+				pstmtListaProduto.setString(4, "QTD");
+			}
+			
+			pstmtListaProduto.setInt(5, produto.getValorMedida());
+			boolean resultado = pstmtListaProduto.execute();
+			if (resultado) {
+				cadastrado = true;
+			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new ErroCadastroException("Erro no método inserirProdutoNaLista, Erro ao cadastrar a lista");
 		} finally {
 			Banco.closePreparedStatement(pstmtListaProduto);

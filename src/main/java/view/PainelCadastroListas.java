@@ -107,7 +107,10 @@ public class PainelCadastroListas extends JPanel {
 				listaNova.setDataLista(LocalDateTime.now());
 				listaNova.setProdutos(itensLista);
 				try {
-					controller.cadastrarListasController(listaNova);
+					if(controller.cadastrarListasController(listaNova)) {
+						JOptionPane.showMessageDialog(null, "Lista salca com sucesso!");
+						limparCampos();
+					}
 				} catch (ErroCadastroException | ErroListaCadastradaException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Erro ao consultar" + e1.getCause(),
 							JOptionPane.ERROR_MESSAGE);

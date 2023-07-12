@@ -5,7 +5,6 @@ public class ProdutoLista extends Produto{
 	private UnidadeMedida unidadeMedida;
 	private Integer valorMedida;
 	private int marcado;
-	private String obs;
 	
 	public ProdutoLista() {
 		super();
@@ -33,13 +32,5 @@ public class ProdutoLista extends Produto{
 
 	public void setMarcado(int marcado) {
 		this.marcado = marcado;
-	}
-
-	public String getObs() {
-		return obs;
-	}
-
-	public void setObs(String obs) {
-		this.obs = obs;
 	}
 }
