@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Event;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -24,6 +25,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -117,7 +119,12 @@ public class PainelCadastroListas extends JPanel {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				Window window = SwingUtilities.getWindowAncestor(PainelCadastroListas.this);
+				if (window != null) {
+					window.dispose(); // Fecha a janela anterior
+				}
+				TelaPrincipal frame = new TelaPrincipal(null);
+				frame.setVisible(true);
 			}
 		});
 		
@@ -128,16 +135,16 @@ public class PainelCadastroListas extends JPanel {
 				JLabel lblProduto = new JLabel("Produto:");
 				add(lblProduto, "4, 10, right, default");
 
-		try {
-			produtos = new ProdutoController().consultarProdutos();
-		} catch (ErroConsultarException e1) {
-			JOptionPane.showMessageDialog(null, "Erro ao consultar");
-			e1.printStackTrace();
-		}
-
-		for (Produto produto : produtos) {
-			cbProdutos.addItem(produto.getNome());
-		}
+//		try {
+//			produtos = new ProdutoController().consultarProdutos();
+//		} catch (ErroConsultarException e1) {
+//			JOptionPane.showMessageDialog(null, "Erro ao consultar");
+//			e1.printStackTrace();
+//		}
+//
+//		for (Produto produto : produtos) {
+//			cbProdutos.addItem(produto.getNome());
+//		}
 		
 				cbProdutos = new JComboBox<>();
 				add(cbProdutos, "6, 10, fill, default");
