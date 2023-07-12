@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -8,12 +9,14 @@ import java.time.LocalDateTime;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
@@ -48,7 +51,8 @@ public class PainelCadastroCliente extends JPanel {
 	private JLabel lblCliente;
 	private DatePicker dtNascimento;
 	private Cliente clienteSelecionado;
-	
+	private TelaPrincipal telaPrincipal;
+	private PainelCadastroCliente painelCadastro;
 	/**
 	 * Create the panel.
 	 * 
@@ -198,10 +202,18 @@ public class PainelCadastroCliente extends JPanel {
 			}
 		});
 
+		
+		
+		
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+	               Window window = SwingUtilities.getWindowAncestor(PainelCadastroCliente.this);
+	                if (window != null) {
+	                    window.dispose(); // Fecha a janela anterior
+	                }
+				TelaPrincipal frame = new TelaPrincipal(null);
+				frame.setVisible(true);
 			}
 		});
 
@@ -233,4 +245,6 @@ public class PainelCadastroCliente extends JPanel {
 		textNomeUsuario.setText(cliente.getNomeUsuario());
 		textSenha.setText(cliente.getSenha());
 	}
+	
+	
 }
