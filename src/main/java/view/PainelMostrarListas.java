@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -64,6 +66,7 @@ public class PainelMostrarListas extends JPanel {
 	private MaskFormatter dataMascarada;
 	private JButton btnBuscar;
 	private ListaSeletor seletor;
+	private JButton btnVoltar;
 
 	private void limparTabelaClientes() {
 		tblListas.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -297,6 +300,19 @@ public class PainelMostrarListas extends JPanel {
 				atualizarTabela();
 			}
 		});
+		
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Window window = SwingUtilities.getWindowAncestor(PainelMostrarListas.this);
+				if (window != null) {
+					window.dispose(); // Fecha a janela anterior
+				}
+				TelaPrincipal frame = new TelaPrincipal(null);
+				frame.setVisible(true);
+			}
+		});
+		add(btnVoltar, "2, 20");
 		btnGerarPlanilhaDeTodasAsListas = new JButton("Gerar Planilha de Todas as Listas");
 		btnGerarPlanilhaDeTodasAsListas.setEnabled(false);
 		add(btnGerarPlanilhaDeTodasAsListas, "3, 20, 4, 1, fill, default");

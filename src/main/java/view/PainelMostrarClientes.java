@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -73,6 +75,7 @@ public class PainelMostrarClientes extends JPanel {
 	private JLabel lblMostrarClientes;
 	private JButton btnAvancarPagina_1;
 	private ClienteSeletor seletor = new ClienteSeletor();
+	private JButton btnVoltar;
 
 	private void limparTabelaClientes() {
 		tblClientes.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -105,34 +108,17 @@ public class PainelMostrarClientes extends JPanel {
 	public PainelMostrarClientes() {
 		setBounds(100, 100, 610, 650);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("61px"),
-				ColumnSpec.decode("154px"),
-				ColumnSpec.decode("center:101px"),
-				ColumnSpec.decode("141px"),
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("29px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("30px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("30px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("35px"),
-				FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC,
-				RowSpec.decode("234px"),
-				RowSpec.decode("22px"),
-				RowSpec.decode("23px"),
-				RowSpec.decode("33px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
+		setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.UNRELATED_GAP_COLSPEC, ColumnSpec.decode("61px"),
+						ColumnSpec.decode("154px"), ColumnSpec.decode("center:101px"), ColumnSpec.decode("141px"),
+						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, },
+				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.PARAGRAPH_GAP_ROWSPEC, RowSpec.decode("29px"), FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("30px"),
+						FormSpecs.LINE_GAP_ROWSPEC, RowSpec.decode("30px"), FormSpecs.LINE_GAP_ROWSPEC,
+						RowSpec.decode("35px"), FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, RowSpec.decode("234px"),
+						RowSpec.decode("22px"), RowSpec.decode("23px"), RowSpec.decode("33px"),
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
 
 		tblClientes = new JTable();
 		tblClientes.setFillsViewportHeight(true);
@@ -273,34 +259,45 @@ public class PainelMostrarClientes extends JPanel {
 
 		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        painelCadastroCliente = new PainelCadastroCliente(clienteSelecionado);
-		        painelCadastroCliente.preencherCampos(clienteSelecionado);
-		        
-		        JOptionPane.showMessageDialog(null, painelCadastroCliente, "Editar Cliente", JOptionPane.PLAIN_MESSAGE);
-		    }
+			public void actionPerformed(ActionEvent e) {
+				painelCadastroCliente = new PainelCadastroCliente(clienteSelecionado);
+				painelCadastroCliente.preencherCampos(clienteSelecionado);
+
+				JOptionPane.showMessageDialog(null, painelCadastroCliente, "Editar Cliente", JOptionPane.PLAIN_MESSAGE);
+			}
 		});
 
-			
-		
 		btnEditar.setEnabled(false);
 		this.add(btnEditar, "5, 17, fill, default");
-		
-				btnGerarPlanilha = new JButton("Gerar Planilha");
-				btnGerarPlanilha.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
-						janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
 
-						int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
-						if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
-							String destinoArquivo = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
-							clienteController = new ClienteController();
-							clienteController.exportarDadosController(clientes, destinoArquivo);
-						}
-					}
-				});
-				add(btnGerarPlanilha ,"4, 19");
+		btnGerarPlanilha = new JButton("Gerar Planilha");
+		btnGerarPlanilha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
+				janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
+
+				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
+				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
+					String destinoArquivo = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
+					clienteController = new ClienteController();
+					clienteController.exportarDadosController(clientes, destinoArquivo);
+				}
+			}
+		});
+
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Window window = SwingUtilities.getWindowAncestor(PainelMostrarClientes.this);
+				if (window != null) {
+					window.dispose(); // Fecha a janela anterior
+				}
+				TelaPrincipal frame = new TelaPrincipal(null);
+				frame.setVisible(true);
+			}
+		});
+		add(btnVoltar, "3, 19");
+		add(btnGerarPlanilha, "4, 19");
 
 		atualizarQuantidadePaginas();
 	}
