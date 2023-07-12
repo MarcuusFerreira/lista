@@ -290,13 +290,12 @@ public class PainelMostrarListas extends JPanel {
 					}
 				} else {
 					try {
-						listas =controller.consultarListaController(cliente.getIdCliente());
+						listas = controller.consultarListaController(cliente.getIdCliente());
 					} catch (ErroConsultarException e1) {
 						e1.printStackTrace();
 						JOptionPane.showMessageDialog(null, e1, "Erro ao consultar", JOptionPane.ERROR_MESSAGE);
 					}
 				}
-				
 				atualizarTabela();
 			}
 		});
