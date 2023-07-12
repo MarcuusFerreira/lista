@@ -175,10 +175,9 @@ public class PainelCadastroCliente extends JPanel {
 				clienteNovo.setTipoUsuario(USUARIO);
 				clienteNovo.setNomeUsuario(textNomeUsuario.getText());
 				clienteNovo.setSenha(textSenha.getText());
-
-				if (cliente.getIdCliente() == null) {
+				if (cliente == null || clienteNovo.getIdCliente() == null) {
 					try {
-						controller.cadastrarNovoClienteController(cliente);
+						controller.cadastrarNovoClienteController(clienteNovo);
 					} catch (ErroCadastroException | CpfInvalidoException | DataNascimentoInvalidaException e1) {
 						JOptionPane.showMessageDialog(null, e1);
 					}
