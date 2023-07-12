@@ -7,6 +7,7 @@ import model.exception.ErroAtualizarException;
 import model.exception.ErroCadastroException;
 import model.exception.ErroConsultarException;
 import model.exception.ErroExcluirException;
+import model.seletor.ProdutoSeletor;
 import model.vo.Produto;
 
 public class ProdutoController {
@@ -77,5 +78,14 @@ public class ProdutoController {
 			validado = false;
 		}
 		return validado;
+	}
+
+	public List<Produto> consultarComFiltro(ProdutoSeletor produtoSeletor) throws ErroConsultarException {
+		bo = new ProdutoBO();
+		return bo.consultarComFiltros(produtoSeletor);
+	}
+
+	public int contarTotalRegistros() {
+		return 0;
 	}
 }

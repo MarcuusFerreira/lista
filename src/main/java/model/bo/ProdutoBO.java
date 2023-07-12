@@ -7,6 +7,7 @@ import model.exception.ErroAtualizarException;
 import model.exception.ErroCadastroException;
 import model.exception.ErroConsultarException;
 import model.exception.ErroExcluirException;
+import model.seletor.ProdutoSeletor;
 import model.vo.Produto;
 
 public class ProdutoBO {
@@ -42,6 +43,11 @@ public class ProdutoBO {
 	public boolean excluirProduto(Produto produto) throws ErroExcluirException {
 		dao = new ProdutoDAO();
 		return  dao.excluirProduto(produto);
+	}
+
+	public List<Produto> consultarComFiltros(ProdutoSeletor produtoSeletor) throws ErroConsultarException {
+		dao = new ProdutoDAO();
+		return dao.consultarComFiltros(produtoSeletor);
 	}
 	
 }

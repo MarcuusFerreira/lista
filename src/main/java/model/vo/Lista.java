@@ -1,5 +1,6 @@
 package model.vo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class Lista {
 	private String nomeLista;
 	private List<ProdutoLista> produtosLista;
 	private LocalDateTime dataLista;
+	private LocalDate dataExclusao;
 	
 	public Lista() {
 		

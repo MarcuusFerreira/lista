@@ -1,9 +1,11 @@
 package model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import model.exception.ErroAtualizarException;
 import model.exception.ErroCadastroException;
 import model.exception.ErroConsultarException;
 import model.exception.ErroExcluirException;
+import model.seletor.ListaSeletor;
 import model.util.FormatadorData;
 import model.vo.Lista;
 import model.vo.ProdutoLista;
@@ -73,7 +76,7 @@ public class ListaDAO {
 	public List<Lista> consultarListasDAO(int idCliente) throws ErroConsultarException {
 		List<Lista> listas = new ArrayList<Lista>();
 		Connection connection = Banco.getConnection();
-		String sql = "SELECT ID_LISTA, NOME, DATA_LISTA FROM LISTA WHERE ID_CLIENTE = ?";
+		String sql = "SELECT ID_LISTA, NOME, DATA_LISTA FROM LISTA WHERE ID_CLIENTE = ? AND DATA_EXCLUSAO IS NULL";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
 		try {
 			pstmt.setInt(1, idCliente);
@@ -89,6 +92,7 @@ public class ListaDAO {
 				lista.setProdutos(buscarProdutosDaLista(lista.getIdLista()));
 			}
 		} catch (SQLException e) {
+			e.getCause();
 			throw new ErroConsultarException("Erro no metodo consultarListas, Erro ao consultar as listas");
 		} finally {
 			Banco.closePreparedStatement(pstmt);
@@ -195,12 +199,15 @@ public class ListaDAO {
 		boolean excluiu = false;
 		excluirProdutosDaLista(idLista);
 		Connection connection = Banco.getConnection();
-		String sql = "DELETE FROM LISTA WHERE ID_LISTA = ?";
+		String sql = "UPDATE LISTA SET DATA_EXCLUSAO = ? WHERE ID_LISTA = ?";
 		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
 		try {
-			pstmt.setInt(1, idLista);
-			pstmt.execute();
-			excluiu = true;
+			pstmt.setDate(1, Date.valueOf(LocalDate.now()));
+			pstmt.setInt(2, idLista);
+			int atualizou = pstmt.executeUpdate();
+			if(atualizou > 0) {
+				excluiu = true;
+			}
 		} catch (SQLException e) {
 			throw new ErroExcluirException("Erro no método excluirLista\n" + e.getCause());
 		} finally {
@@ -283,6 +290,44 @@ public class ListaDAO {
 	        Banco.closeConnection(connection);
 	    }
 	    return listasClienteID;
+	}
+
+	public List<Lista> consultarComFiltro(Integer idCliente, ListaSeletor seletor) throws ErroConsultarException {
+		List<Lista> listas = new ArrayList<Lista>();
+		Connection connection = Banco.getConnection();
+		String sql = "SELECT ID_LISTA, NOME, DATA_LISTA FROM LISTA WHERE ID_CLIENTE = ? AND DATA_EXCLUSAO IS NULL ";
+		if(seletor.temFiltro()) {
+			sql = montaConsultaComFiltros(sql, seletor);
+		}
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		try {
+			pstmt.setInt(1, idCliente);
+			ResultSet resutado = pstmt.executeQuery();
+			while(resutado.next()) {
+				Lista lista = new Lista();
+				lista.setIdLista(idCliente);
+				lista.setIdLista(resutado.getInt(1));
+				lista.setNomeLista(resutado.getString(2));
+				lista.setDataLista(FormatadorData.formatarLocalDateTimeMySQL(resutado.getString(3)));
+				listas.add(lista);
+			}
+		} catch (SQLException e) {
+			throw new ErroConsultarException("Erro no método consultarComFiltro");
+		}
+		return listas;
+	}
+
+	private String montaConsultaComFiltros(String sql, ListaSeletor seletor) {
+		if(!seletor.getNome().isBlank() && seletor.getNome() != null) {
+			sql += " AND NOME LIKE '%" + seletor.getNome() + "%'";
+		}
+		if(seletor.getDataCadastroInicio() != null) {
+			sql += " AND DATA_CADASTRO >= " + seletor.getDataCadastroInicio();
+		}
+		if(seletor.getDataCadastroFim() != null) {
+			sql += " AND DATA_CADASTRO <= " + seletor.getDataCadastroFim();
+		}
+		return sql;
 	}
 
 }

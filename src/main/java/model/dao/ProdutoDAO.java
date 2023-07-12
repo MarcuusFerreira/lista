@@ -13,6 +13,7 @@ import model.exception.ErroAtualizarException;
 import model.exception.ErroCadastroException;
 import model.exception.ErroConsultarException;
 import model.exception.ErroExcluirException;
+import model.seletor.ProdutoSeletor;
 import model.util.FormatadorData;
 import model.vo.Produto;
 
@@ -131,5 +132,50 @@ public class ProdutoDAO {
 			Banco.closeConnection(connection);
 		}
 		return produto;
+	}
+
+	public List<Produto> consultarComFiltros(ProdutoSeletor produtoSeletor) throws ErroConsultarException {
+		List<Produto> produtos = new ArrayList<Produto>();
+		Connection connection = Banco.getConnection();
+		String sql = "SELECT ID_PRODUTO, SETOR, MARCA, NOME, DATA_CADASTRO FROM PRODUTO WHERE DATA_EXCLUSAO IS NULL";
+		
+		if(produtoSeletor.temFiltro()) {
+			sql = preencherFiltros(sql, produtoSeletor);
+		}
+		
+		if(produtoSeletor.temPaginacao()) {
+			sql += " LIMIT " + produtoSeletor.getLimite() +
+					" OFFSET " + produtoSeletor.getOffset();
+		}
+		PreparedStatement pstmt = Banco.getPreparedStatement(connection, sql);
+		try {
+			ResultSet resultado = pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ErroConsultarException("Erro no método consultarComFiltros");
+		}finally {
+			Banco.closePreparedStatement(pstmt);
+			Banco.closeConnection(connection);
+		}
+		return produtos;
+	}
+
+	private String preencherFiltros(String sql, ProdutoSeletor produtoSeletor) {
+		if(produtoSeletor.getNome().isBlank() && produtoSeletor.getNome() != null) {
+			sql += " AND NOME LIKE '%" + produtoSeletor.getNome() + "%' ";
+		}
+		if(produtoSeletor.getMarca().isBlank() && produtoSeletor.getMarca() != null) {
+			sql += " AND NOME LIKE '%" + produtoSeletor.getMarca() + "%' ";
+		}
+		if(produtoSeletor.getSetor().isBlank() && produtoSeletor.getSetor() != null) {
+			sql += " AND NOME LIKE '%" + produtoSeletor.getSetor() + "%' ";
+		}
+		if(produtoSeletor.getDataCadastroInicial() != null) {
+			sql += " AND DATA_CADASTRO >= " + produtoSeletor.getDataCadastroInicial();
+		}
+		if(produtoSeletor.getDataCadastroFim() != null) {
+			sql += " AND DATA_CADASTRO <= " + produtoSeletor.getDataCadastroFim();
+		}
+		return sql;
 	}
 }

@@ -10,7 +10,6 @@ public class Produto {
 	private LocalDateTime dataCadastro;
 	private LocalDate dataExclusao;
 	private String setor;
-	private Integer tipoProduto;
 	private String marca;
 	
 	public Produto() {
@@ -39,12 +38,6 @@ public class Produto {
 	}
 	public void setSetor(String setor) {
 		this.setor = setor;
-	}
-	public Integer getTipoProduto() {
-		return tipoProduto;
-	}
-	public void setTipoProduto(Integer tipoProduto) {
-		this.tipoProduto = tipoProduto;
 	}
 	public String getMarca() {
 		return marca;

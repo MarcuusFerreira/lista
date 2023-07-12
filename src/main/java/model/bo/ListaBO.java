@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.dao.ListaDAO;
 import model.exception.*;
+import model.seletor.ListaSeletor;
 import model.vo.Lista;
 import model.vo.ProdutoLista;
 
@@ -50,5 +51,10 @@ public class ListaBO {
 	public ArrayList<String> consultarListasClientePorIDBO(int idCliente) throws ErroConsultarException {
 		dao = new ListaDAO();
 		return dao.consultarListasClientePorIDDAO(idCliente);
+	}
+
+	public List<Lista> consultarComFiltro(Integer idCliente, ListaSeletor seletor) throws ErroConsultarException{
+		dao = new ListaDAO();
+		return dao.consultarComFiltro(idCliente, seletor);
 	}
 }

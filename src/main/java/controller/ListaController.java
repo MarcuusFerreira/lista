@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.bo.ListaBO;
 import model.exception.*;
+import model.seletor.ListaSeletor;
 import model.vo.Lista;
 
 public class ListaController {
@@ -18,6 +19,9 @@ public class ListaController {
 
 	public boolean cadastrarListasController(Lista lista) throws ErroCadastroException, ErroListaCadastradaException {
 		bo = new ListaBO();
+		if(lista.getNomeLista().isBlank()) {
+			throw new ErroCadastroException("Nome da Lista em branco");
+		}
 		lista.setNomeLista(lista.getNomeLista().trim());
 		return bo.cadastrarListasBO(lista);
 	}
@@ -41,6 +45,11 @@ public class ListaController {
 	public ArrayList<String> consultarListasClientePorID(int idCliente) throws ErroConsultarException {
 		bo = new ListaBO();
 		return bo.consultarListasClientePorIDBO(idCliente);
+	}
+
+	public List<Lista> consultarComFiltro(Integer idCliente, ListaSeletor seletor) throws ErroConsultarException{
+		bo = new ListaBO();
+		return bo.consultarComFiltro(idCliente, seletor);
 	}
 
 }
