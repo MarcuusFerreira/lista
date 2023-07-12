@@ -101,7 +101,7 @@ public class PainelCadastroListas extends JPanel {
 				listaNova.setProdutos(itensLista);
 				try {
 					if(controller.cadastrarListasController(listaNova)) {
-						JOptionPane.showMessageDialog(null, "Lista salca com sucesso!");
+						JOptionPane.showMessageDialog(null, "Lista salva com sucesso!");
 						limparCampos();
 					}
 				} catch (ErroCadastroException | ErroListaCadastradaException e1) {

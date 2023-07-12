@@ -158,8 +158,6 @@ public class PainelMostrarListas extends JPanel {
 			dataMascarada = new MaskFormatter("##/##/####");
 			dataMascarada.setValueContainsLiteralCharacters(false);
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		
 		ftxtDtIni = new JFormattedTextField(dataMascarada);
@@ -258,6 +256,13 @@ public class PainelMostrarListas extends JPanel {
 				btnEditar = new JButton("Editar");
 				btnEditar.setEnabled(false);
 				this.add(btnEditar, "4, 16, 2, 1");
+				btnEditar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						PainelCadastroListas painel = new PainelCadastroListas(cliente);
+						painel.setVisible(true);
+						revalidate();
+					}
+				});
 		
 		btnBuscar = new JButton("Buscar");
 		add(btnBuscar, "4, 18, 2, 1");
