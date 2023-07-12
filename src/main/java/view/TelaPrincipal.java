@@ -46,6 +46,7 @@ public class TelaPrincipal extends JFrame {
 	private TelaMobile telaMobile;
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private TelaPrincipal telaPrincipal;
 
 	/**
 	 * Launch the application.
@@ -174,4 +175,14 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel.setBounds(149, 181, 367, 14);
 		contentPane.add(lblNewLabel);
 	}
+	
+    public void mostrarPrincipal() {
+        setContentPane(telaPrincipal);
+    }
+
+    public void mostrarPainelPersonalizado() {
+        setContentPane(painelCadastro);
+    }
+    
+   
 }
