@@ -1,17 +1,11 @@
 package view;
 
-import java.awt.Event;
 import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -28,7 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.DateTimePicker;
@@ -47,8 +40,6 @@ import model.vo.Lista;
 import model.vo.Produto;
 import model.vo.ProdutoLista;
 import model.vo.UnidadeMedida;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class PainelCadastroListas extends JPanel {
 	private DatePickerSettings dateSettings;
@@ -138,7 +129,6 @@ public class PainelCadastroListas extends JPanel {
 				JLabel lblProduto = new JLabel("Produto:");
 				add(lblProduto, "4, 10, right, default");
 
-<<<<<<< HEAD
 		try {
 			produtos = new ProdutoController().consultarProdutos();
 		} catch (ErroConsultarException e1) {
@@ -153,18 +143,6 @@ public class PainelCadastroListas extends JPanel {
 			cbProdutos.addItem(produto.getNome());
 		}
 		cbProdutos.setSelectedIndex(-1);
-=======
-//		try {
-//			produtos = new ProdutoController().consultarProdutos();
-//		} catch (ErroConsultarException e1) {
-//			JOptionPane.showMessageDialog(null, "Erro ao consultar");
-//			e1.printStackTrace();
-//		}
-//
-//		for (Produto produto : produtos) {
-//			cbProdutos.addItem(produto.getNome());
-//		}
->>>>>>> branch 'main' of https://github.com/MarcuusFerreira/lista.git
 		
 				
 		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
