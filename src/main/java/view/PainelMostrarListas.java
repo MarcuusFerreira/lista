@@ -32,6 +32,7 @@ import controller.ListaController;
 import model.exception.ErroConsultarException;
 import model.exception.ErroExcluirException;
 import model.seletor.ListaSeletor;
+import model.util.FormatadorData;
 import model.vo.Cliente;
 import model.vo.Lista;
 
@@ -77,7 +78,7 @@ public class PainelMostrarListas extends JPanel {
 			Object[] novaLinha = new Object[3];
 			novaLinha[0] = lista.getIdLista();
 			novaLinha[1] = lista.getNomeLista();
-			novaLinha[2] = lista.getDataLista();
+			novaLinha[2] = FormatadorData.formataLocalDateTimeParaTela(lista.getDataLista());
 			modelo.addRow(novaLinha);
 		}
 	}

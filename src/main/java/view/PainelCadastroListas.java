@@ -135,13 +135,15 @@ public class PainelCadastroListas extends JPanel {
 			e1.printStackTrace();
 		}
 
+		cbProdutos = new JComboBox<>();
+		add(cbProdutos, "6, 10, fill, default");
+		
 		for (Produto produto : produtos) {
 			cbProdutos.addItem(produto.getNome());
 		}
+		cbProdutos.setSelectedIndex(-1);
 		
-				cbProdutos = new JComboBox<>();
-				add(cbProdutos, "6, 10, fill, default");
-				cbProdutos.setSelectedIndex(-1);
+				
 		JLabel lblNewLabel = new JLabel("Unidade de Medida:");
 		add(lblNewLabel, "4, 12, left, default");
 		
@@ -203,7 +205,6 @@ public class PainelCadastroListas extends JPanel {
 					rdbtnQuantidade.setSelected(false);
 				}
 				cbProdutos.setSelectedIndex(-1);
-				listaNova.setProdutos(itensLista);
 				AtualizarTabela();
 			}
 		});
