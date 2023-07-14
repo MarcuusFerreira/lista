@@ -182,7 +182,7 @@ public class PainelCadastroCliente extends JPanel {
 							limparCampos();
 						}
 					} catch (ErroCadastroException | CpfInvalidoException | DataNascimentoInvalidaException e1) {
-						JOptionPane.showMessageDialog(null, e1);
+						JOptionPane.showMessageDialog(null, e1.getMessage());
 					}
 				} else {
 					clienteNovo.setIdCliente(cliente.getIdCliente());
